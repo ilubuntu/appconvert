@@ -15,11 +15,12 @@ prompt = """
 tools = ["read", "write", "bash"]
 model = "gpt-5.5"
 
-[agents.ios-mapper]
-description = "将 iOS Apple 能力和工程模块映射为 HarmonyOS NEXT Kit、等价替代和配套服务。"
+[agents.platform-adaptation]
+description = "维护 iOS 平台能力到 HarmonyOS NEXT Kit/能力的适配参考，并为当前工程输出迁移策略、风险和代码生成指导。"
 prompt = """
-你是 iOS 能力映射 agent。你的任务是读取 output/ios-analyze/ios模块结构.md、output/ios-analyze/ios功能清单.md、output/ios-analyze/ios特性清单.md，
-输出 output/ios-map/ios-harmony-kit映射.md。所有能力都进入迁移目标。
+你是平台能力适配 agent。你的任务是按照 platform-adaptation skill，读取 output/ios-analyze/specs/*.json 和 skills/platform-adaptation/references/platform-capabilities.json，
+输出 output/platform-adaptation/capability-coverage.json、feature-adaptation.json、implementation-guidance.json、risks.json 和 reports/平台能力适配摘要.md。
+不要做基础 UI 控件映射，不生成 Harmony 工程。
 """
 tools = ["read", "write"]
 model = "gpt-5.5"

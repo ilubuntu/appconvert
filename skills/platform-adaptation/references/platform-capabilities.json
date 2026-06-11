@@ -1,0 +1,431 @@
+{
+  "schema_version": "1.0",
+  "description": "Initial iOS platform capability to HarmonyOS NEXT adaptation reference. This is intentionally expandable; current coverage prioritizes capabilities observed in NewsMobile.",
+  "capabilities": [
+    {
+      "id": "notification.usernotifications",
+      "category": "notification",
+      "ios": {
+        "frameworks": ["UserNotifications"],
+        "apis": ["UNUserNotificationCenter", "UNMutableNotificationContent", "UNNotificationRequest"],
+        "entitlements": ["aps-environment"],
+        "permissions": ["alert", "badge", "sound"]
+      },
+      "harmony": {
+        "kit": "Notification Kit",
+        "api_area": "notificationManager",
+        "target_boundary": "platform/NotificationAdapter"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": true,
+        "notes": "Implement explicit permission/query flow and local notification publish API."
+      },
+      "manifest": {
+        "required": true,
+        "notes": "Declare notification-related permission/configuration according to target HarmonyOS NEXT SDK."
+      },
+      "risk_level": "medium",
+      "implementation_notes": [
+        "Separate permission state from publish API.",
+        "Preserve settings switch and request-permission entry.",
+        "Badge behavior may require platform-specific handling."
+      ],
+      "fallback": "Keep in-app keyword match badge and foreground alert if background/local notification delivery is unavailable."
+    },
+    {
+      "id": "background.bgapprefresh",
+      "category": "background",
+      "ios": {
+        "frameworks": ["BackgroundTasks"],
+        "apis": ["BGTaskScheduler", "BGAppRefreshTask", "BGAppRefreshTaskRequest"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "Background Task / Work Scheduler equivalent",
+        "api_area": "backgroundTaskManager or workScheduler",
+        "target_boundary": "platform/BackgroundRefreshAdapter"
+      },
+      "strategy": "api_replacement",
+      "permission": {
+        "required": false,
+        "notes": "Background execution policy differs; exact API depends on SDK and app type."
+      },
+      "manifest": {
+        "required": true,
+        "notes": "May require background mode/task declaration."
+      },
+      "risk_level": "high",
+      "implementation_notes": [
+        "Do not assume 15-minute background execution parity.",
+        "Keep foreground refresh as primary path.",
+        "Wrap scheduling behind adapter so product can degrade gracefully."
+      ],
+      "fallback": "Foreground refresh plus refresh-on-launch if background execution is not available."
+    },
+    {
+      "id": "location.corelocation",
+      "category": "location",
+      "ios": {
+        "frameworks": ["CoreLocation"],
+        "apis": ["CLLocationManager", "requestWhenInUseAuthorization", "requestLocation"],
+        "entitlements": [],
+        "permissions": ["when_in_use_location"]
+      },
+      "harmony": {
+        "kit": "Location Kit",
+        "api_area": "geoLocationManager",
+        "target_boundary": "platform/LocationAdapter"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": true,
+        "notes": "Request location permission before weather lookup."
+      },
+      "manifest": {
+        "required": true,
+        "notes": "Declare approximate/precise location permission as needed."
+      },
+      "risk_level": "medium",
+      "implementation_notes": [
+        "Expose one-shot current location API.",
+        "Support manual city/ZIP fallback for local news."
+      ],
+      "fallback": "Use manually selected city/ZIP when location permission is denied."
+    },
+    {
+      "id": "audio.avspeech",
+      "category": "audio",
+      "ios": {
+        "frameworks": ["AVFoundation"],
+        "apis": ["AVSpeechSynthesizer", "AVSpeechUtterance", "AVAudioSession"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "Speech Kit / Audio Kit",
+        "api_area": "textToSpeech and audio session equivalent",
+        "target_boundary": "platform/TextToSpeechAdapter"
+      },
+      "strategy": "api_replacement",
+      "permission": {
+        "required": false,
+        "notes": "TTS engine availability and voice selection differ."
+      },
+      "manifest": {
+        "required": false,
+        "notes": "Add audio-related configuration only if required by selected Kit."
+      },
+      "risk_level": "medium",
+      "implementation_notes": [
+        "Expose start/pause/resume/next/previous/stop state machine.",
+        "Keep article index and current article in store to drive UI.",
+        "Do not bind UI directly to platform TTS object."
+      ],
+      "fallback": "Show textual briefing list if TTS engine is unavailable."
+    },
+    {
+      "id": "webview.webkit",
+      "category": "web",
+      "ios": {
+        "frameworks": ["WebKit"],
+        "apis": ["WKWebView", "WKNavigationDelegate", "URLRequest"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkWeb",
+        "api_area": "Web component",
+        "target_boundary": "platform/WebViewAdapter or pages/ArticleWebPage"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": false,
+        "notes": "Network permission/config may still be needed."
+      },
+      "manifest": {
+        "required": true,
+        "notes": "Declare internet access if required."
+      },
+      "risk_level": "medium",
+      "implementation_notes": [
+        "Preserve loading state and close/share actions.",
+        "Use a page-level wrapper so WebView lifecycle is isolated."
+      ],
+      "fallback": "Open original URL externally if embedded WebView is blocked."
+    },
+    {
+      "id": "widget.widgetkit",
+      "category": "widget",
+      "ios": {
+        "frameworks": ["WidgetKit"],
+        "apis": ["Widget", "TimelineProvider", "TimelineEntry", "WidgetFamily"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "Form Kit / Service Widget equivalent",
+        "api_area": "atomic service card or widget form",
+        "target_boundary": "cards/NewsCard"
+      },
+      "strategy": "api_replacement",
+      "permission": {
+        "required": false,
+        "notes": "Widget/card publish model differs from WidgetKit."
+      },
+      "manifest": {
+        "required": true,
+        "notes": "May require card/form metadata and service extension declaration."
+      },
+      "risk_level": "high",
+      "implementation_notes": [
+        "Treat widget as separate deliverable from main app.",
+        "Start with one card size if full small/medium/large parity is costly.",
+        "Define cached headline/weather/trending input contract."
+      ],
+      "fallback": "Defer widget/card implementation while preserving shared cache service."
+    },
+    {
+      "id": "sync.icloud_kv",
+      "category": "cloud_sync",
+      "ios": {
+        "frameworks": ["Foundation"],
+        "apis": ["NSUbiquitousKeyValueStore"],
+        "entitlements": ["com.apple.developer.icloud-container-identifiers", "com.apple.developer.ubiquity-kvstore-identifier"],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "Cloud Foundation / AppGallery Connect cloud storage equivalent",
+        "api_area": "cloud key-value or account cloud sync",
+        "target_boundary": "platform/CloudSyncAdapter"
+      },
+      "strategy": "product_degradation",
+      "permission": {
+        "required": false,
+        "notes": "Requires product decision around Huawei account/cloud backend."
+      },
+      "manifest": {
+        "required": false,
+        "notes": "Depends on chosen cloud service."
+      },
+      "risk_level": "high",
+      "implementation_notes": [
+        "Do not block local settings and saved articles on cloud sync.",
+        "Keep CloudSyncAdapter interface but default to local no-op until backend is chosen."
+      ],
+      "fallback": "Local-only persistence with sync UI disabled or marked unavailable."
+    },
+    {
+      "id": "storage.app_groups",
+      "category": "shared_storage",
+      "ios": {
+        "frameworks": ["Foundation"],
+        "apis": ["UserDefaults(suiteName:)"],
+        "entitlements": ["com.apple.security.application-groups"],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "Preferences / shared storage equivalent",
+        "api_area": "preferences and card shared data",
+        "target_boundary": "platform/SharedStorageAdapter"
+      },
+      "strategy": "api_replacement",
+      "permission": {
+        "required": false,
+        "notes": "Sharing model depends on widget/card architecture."
+      },
+      "manifest": {
+        "required": false,
+        "notes": "May require module/card data-sharing configuration."
+      },
+      "risk_level": "medium",
+      "implementation_notes": [
+        "Expose cached headline/weather/trending read-write API.",
+        "Do not leak iOS App Group terminology into app code."
+      ],
+      "fallback": "Use app-local preferences until card/widget support is implemented."
+    },
+    {
+      "id": "storage.userdefaults",
+      "category": "storage",
+      "ios": {
+        "frameworks": ["Foundation"],
+        "apis": ["UserDefaults", "JSONEncoder", "JSONDecoder"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "Preferences",
+        "api_area": "preferences",
+        "target_boundary": "stores/PersistenceStore"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": false,
+        "notes": "Local key-value persistence."
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "low",
+      "implementation_notes": [
+        "Keep typed settings and saved-article serialization.",
+        "Use explicit migration keys and default values."
+      ],
+      "fallback": "In-memory store for preview/testing."
+    },
+    {
+      "id": "network.urlsession",
+      "category": "network",
+      "ios": {
+        "frameworks": ["Foundation"],
+        "apis": ["URLSession", "URLRequest"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "Network Kit",
+        "api_area": "httpRequest",
+        "target_boundary": "services/HttpClient"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": true,
+        "notes": "Internet/network access permission may be required."
+      },
+      "manifest": {
+        "required": true,
+        "notes": "Declare internet access capability."
+      },
+      "risk_level": "low",
+      "implementation_notes": [
+        "Create shared HttpClient for RSS, weather and local news.",
+        "Preserve timeout/error fallback behavior."
+      ],
+      "fallback": "Use fixed sample data when network fails."
+    },
+    {
+      "id": "parser.xmlparser",
+      "category": "parser",
+      "ios": {
+        "frameworks": ["Foundation"],
+        "apis": ["XMLParser"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkTS XML parser or bundled parser",
+        "api_area": "XML parsing utility",
+        "target_boundary": "services/RssParser"
+      },
+      "strategy": "api_replacement",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "medium",
+      "implementation_notes": [
+        "Implement RSS and Atom parsing as pure service utility.",
+        "Normalize date parsing and HTML stripping behavior."
+      ],
+      "fallback": "Skip malformed feed items and continue parsing."
+    },
+    {
+      "id": "ml.naturallanguage",
+      "category": "machine_learning",
+      "ios": {
+        "frameworks": ["NaturalLanguage"],
+        "apis": ["NLTagger", "sentimentScore", "nameType"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "Text/NLP service or local heuristic implementation",
+        "api_area": "natural language analysis",
+        "target_boundary": "services/AnalysisService"
+      },
+      "strategy": "product_degradation",
+      "permission": {
+        "required": false,
+        "notes": "Exact on-device NLP parity may not be available."
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "high",
+      "implementation_notes": [
+        "Keep sentiment/entity APIs stable.",
+        "Start with heuristic or disabled analysis if no equivalent Kit is available.",
+        "Do not block feed display on analysis failure."
+      ],
+      "fallback": "Show article without sentiment/entity badges."
+    },
+    {
+      "id": "sharelink.system_share",
+      "category": "share",
+      "ios": {
+        "frameworks": ["SwiftUI"],
+        "apis": ["ShareLink"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "Share Kit / system sharing ability",
+        "api_area": "system share",
+        "target_boundary": "platform/ShareAdapter"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "low",
+      "implementation_notes": [
+        "Expose shareUrl(url, title?) API.",
+        "Keep share button placement in article detail and WebView."
+      ],
+      "fallback": "Copy URL to clipboard if share sheet is unavailable."
+    },
+    {
+      "id": "network.nwlistener",
+      "category": "local_network",
+      "ios": {
+        "frameworks": ["Network"],
+        "apis": ["NWListener", "NWConnection"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "Network Kit socket/server equivalent",
+        "api_area": "socket or local HTTP server",
+        "target_boundary": "platform/LocalApiAdapter"
+      },
+      "strategy": "unsupported_pending_decision",
+      "permission": {
+        "required": true,
+        "notes": "Local server behavior may require special permission or may not be suitable for mobile app store distribution."
+      },
+      "manifest": {
+        "required": true,
+        "notes": "Depends on whether local API is retained."
+      },
+      "risk_level": "high",
+      "implementation_notes": [
+        "Confirm whether local loopback API is required in Harmony version.",
+        "If retained, isolate behind optional LocalApiAdapter."
+      ],
+      "fallback": "Disable local API and keep internal status service only."
+    }
+  ]
+}
