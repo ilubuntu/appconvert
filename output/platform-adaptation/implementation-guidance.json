@@ -1,0 +1,483 @@
+{
+  "schema_version": "1.0",
+  "platform_modules": [
+    {
+      "id": "platform.http_client",
+      "target_path": "entry/src/main/ets/services/HttpClient.ets",
+      "source_capabilities": ["network.urlsession"],
+      "used_by_features": [
+        "feature.news.home_feed",
+        "feature.custom_feeds.manage_feeds",
+        "feature.local_news.location_feed",
+        "feature.weather.current_conditions"
+      ],
+      "public_api": [
+        "request(url: string, options?: RequestOptions): Promise<Response>",
+        "get(url: string): Promise<Response>",
+        "post(url: string, body: object): Promise<Response>"
+      ],
+      "implementation_tasks": [
+        "Create HttpClient class wrapping @ohos.net.http",
+        "Implement timeout and error handling",
+        "Support JSON and raw response types",
+        "Add request/response logging for debug builds"
+      ],
+      "verification": [
+        "Fetch RSS feed URL and receive valid XML",
+        "Fetch Open-Meteo weather endpoint and receive JSON",
+        "Handle network timeout with error callback"
+      ]
+    },
+    {
+      "id": "platform.rss_parser",
+      "target_path": "entry/src/main/ets/services/RssParser.ets",
+      "source_capabilities": ["parser.xmlparser"],
+      "used_by_features": [
+        "feature.news.home_feed",
+        "feature.custom_feeds.manage_feeds"
+      ],
+      "public_api": [
+        "parse(xmlData: string, source: NewsSource): NewsArticle[]",
+        "parseRSS(xml: string, source: NewsSource): NewsArticle[]",
+        "parseAtom(xml: string, source: NewsSource): NewsArticle[]"
+      ],
+      "implementation_tasks": [
+        "Implement XML parser using @ohos.xml or custom parser",
+        "Handle RSS 2.0 and Atom feed formats",
+        "Normalize date parsing across formats",
+        "Strip HTML from description fields"
+      ],
+      "verification": [
+        "Parse sample RSS feed into NewsArticle array",
+        "Parse sample Atom feed into NewsArticle array",
+        "Handle malformed XML without crash"
+      ]
+    },
+    {
+      "id": "platform.analysis_service",
+      "target_path": "entry/src/main/ets/services/AnalysisService.ets",
+      "source_capabilities": ["ml.naturallanguage", "ml.local_algorithm"],
+      "used_by_features": [
+        "feature.ml.sentiment_entities",
+        "feature.ml.story_clusters",
+        "feature.ml.trending_topics"
+      ],
+      "public_api": [
+        "analyzeSentiment(text: string): SentimentResult",
+        "extractEntities(text: string): ExtractedEntity[]",
+        "clusterArticles(articles: NewsArticle[]): StoryCluster[]",
+        "analyzeTrending(articles: NewsArticle[]): TrendingTopic[]"
+      ],
+      "implementation_tasks": [
+        "Port SentimentAnalyzer to ArkTS (heuristic or NLP Kit)",
+        "Port EntityExtractor to ArkTS (heuristic or NLP Kit)",
+        "Port StoryClusterEngine clustering algorithm to pure ArkTS",
+        "Port TrendingTopicsEngine frequency analysis to pure ArkTS",
+        "Add feature flag to disable NLP when Kit unavailable"
+      ],
+      "verification": [
+        "Sentiment analysis returns positive/neutral/negative",
+        "Entity extraction returns named entities",
+        "Clustering groups related articles",
+        "Trending topics returns top N topics by frequency"
+      ]
+    },
+    {
+      "id": "platform.persistence_store",
+      "target_path": "entry/src/main/ets/stores/PersistenceStore.ets",
+      "source_capabilities": ["storage.userdefaults"],
+      "used_by_features": [
+        "feature.settings.preferences",
+        "feature.watch_later.manage_saved",
+        "feature.personalization.for_you",
+        "feature.custom_feeds.manage_feeds"
+      ],
+      "public_api": [
+        "getSettings(): NewsMobileSettings",
+        "saveSettings(settings: NewsMobileSettings): void",
+        "resetToDefaults(): void",
+        "getSavedItems(): WatchLaterItem[]",
+        "addSavedItem(article: NewsArticle): void",
+        "removeSavedItem(id: string): void",
+        "toggleSavedItem(article: NewsArticle): void",
+        "markAsRead(id: string): void",
+        "getCustomFeeds(): CustomRSSFeed[]",
+        "saveCustomFeeds(feeds: CustomRSSFeed[]): void",
+        "getUserPreference(): UserPreference",
+        "saveUserPreference(pref: UserPreference): void"
+      ],
+      "implementation_tasks": [
+        "Create PersistenceStore wrapping @ohos.data.preferences",
+        "Implement typed JSON serialization/deserialization",
+        "Add migration keys and default values",
+        "Implement settings, saved items, custom feeds, and user preference storage"
+      ],
+      "verification": [
+        "Settings persist across app restarts",
+        "Saved items persist and sync with UI",
+        "Custom feeds persist across app restarts",
+        "Reset to defaults clears all stored data"
+      ]
+    },
+    {
+      "id": "platform.notification_adapter",
+      "target_path": "entry/src/main/ets/platform/NotificationAdapter.ets",
+      "source_capabilities": ["notification.usernotifications"],
+      "used_by_features": [
+        "feature.notifications.breaking_keyword",
+        "feature.settings.preferences"
+      ],
+      "public_api": [
+        "requestPermission(): Promise<boolean>",
+        "isAuthorized(): boolean",
+        "publishLocalNotification(title: string, body: string, id?: number): void",
+        "cancelNotification(id: number): void"
+      ],
+      "implementation_tasks": [
+        "Wrap @ohos.notification or Notification Kit API",
+        "Implement permission request flow",
+        "Implement local notification publish",
+        "Separate permission state from publish API"
+      ],
+      "verification": [
+        "Permission request shows system dialog",
+        "Local notification appears in system tray",
+        "Settings toggle reflects authorization state"
+      ]
+    },
+    {
+      "id": "platform.background_refresh_adapter",
+      "target_path": "entry/src/main/ets/platform/BackgroundRefreshAdapter.ets",
+      "source_capabilities": ["background.bgapprefresh"],
+      "used_by_features": [
+        "feature.background.refresh",
+        "feature.settings.preferences"
+      ],
+      "public_api": [
+        "registerBackgroundTask(): void",
+        "scheduleRefresh(intervalMinutes: number): void",
+        "cancelRefresh(): void"
+      ],
+      "implementation_tasks": [
+        "Investigate HarmonyOS background task / WorkScheduler API",
+        "Wrap scheduling behind adapter for graceful degradation",
+        "Keep foreground refresh as primary path",
+        "Register background task if supported by platform"
+      ],
+      "verification": [
+        "Background task registers without crash",
+        "Foreground refresh works regardless of background support",
+        "Settings toggle persists"
+      ]
+    },
+    {
+      "id": "platform.tts_adapter",
+      "target_path": "entry/src/main/ets/platform/TextToSpeechAdapter.ets",
+      "source_capabilities": ["audio.avspeech"],
+      "used_by_features": [
+        "feature.audio.briefing",
+        "feature.news.article_detail"
+      ],
+      "public_api": [
+        "startBriefing(articles: NewsArticle[], startIndex?: number): void",
+        "pause(): void",
+        "resume(): void",
+        "next(): void",
+        "previous(): void",
+        "stop(): void",
+        "isPlaying(): boolean",
+        "getCurrentArticle(): NewsArticle | null",
+        "getCurrentIndex(): number"
+      ],
+      "implementation_tasks": [
+        "Wrap @ohos.ai.tts or Speech Kit TTS API",
+        "Implement start/pause/resume/next/previous/stop state machine",
+        "Keep article index and current article in store for UI binding",
+        "Do not bind UI directly to platform TTS object"
+      ],
+      "verification": [
+        "TTS plays article source, title, and description",
+        "Pause/resume works without resetting position",
+        "Next/previous advances article index correctly",
+        "Stop releases all audio resources"
+      ]
+    },
+    {
+      "id": "platform.location_adapter",
+      "target_path": "entry/src/main/ets/platform/LocationAdapter.ets",
+      "source_capabilities": ["location.corelocation"],
+      "used_by_features": [
+        "feature.weather.current_conditions",
+        "feature.local_news.location_feed",
+        "feature.settings.preferences"
+      ],
+      "public_api": [
+        "requestPermission(): Promise<boolean>",
+        "isAuthorized(): boolean",
+        "getCurrentLocation(): Promise<Location>",
+        "requestLocation(): void"
+      ],
+      "implementation_tasks": [
+        "Wrap @ohos.geoLocationManager or Location Kit API",
+        "Implement one-shot current location request",
+        "Support manual city/ZIP fallback",
+        "Handle permission denied gracefully"
+      ],
+      "verification": [
+        "Location permission shows system dialog",
+        "getCurrentLocation returns coordinates when authorized",
+        "Manual ZIP/city fallback works without location"
+      ]
+    },
+    {
+      "id": "platform.webview_adapter",
+      "target_path": "entry/src/main/ets/platform/WebViewAdapter.ets",
+      "source_capabilities": ["webview.webkit"],
+      "used_by_features": [
+        "feature.news.web_reader"
+      ],
+      "public_api": [
+        "loadUrl(url: string): void",
+        "isLoading(): boolean",
+        "getTitle(): string",
+        "canGoBack(): boolean",
+        "goBack(): void"
+      ],
+      "implementation_tasks": [
+        "Create Web component wrapper page",
+        "Preserve loading state and progress indicator",
+        "Add close and share actions to toolbar",
+        "Isolate WebView lifecycle in page-level wrapper"
+      ],
+      "verification": [
+        "WebView loads article URL and displays content",
+        "Loading indicator shows and hides correctly",
+        "Close button returns to previous page"
+      ]
+    },
+    {
+      "id": "platform.share_adapter",
+      "target_path": "entry/src/main/ets/platform/ShareAdapter.ets",
+      "source_capabilities": ["sharelink.system_share"],
+      "used_by_features": [
+        "feature.news.article_detail",
+        "feature.news.web_reader"
+      ],
+      "public_api": [
+        "shareUrl(url: string, title?: string): void",
+        "copyToClipboard(text: string): void"
+      ],
+      "implementation_tasks": [
+        "Wrap @ohos.share or system share API",
+        "Implement shareUrl with title parameter",
+        "Add clipboard fallback"
+      ],
+      "verification": [
+        "Share sheet appears with correct URL and title",
+        "Clipboard fallback works when share sheet unavailable"
+      ]
+    },
+    {
+      "id": "platform.cloud_sync_adapter",
+      "target_path": "entry/src/main/ets/platform/CloudSyncAdapter.ets",
+      "source_capabilities": ["sync.icloud_kv"],
+      "used_by_features": [
+        "feature.sync.icloud",
+        "feature.watch_later.manage_saved",
+        "feature.settings.preferences"
+      ],
+      "public_api": [
+        "syncToCloud(settings: NewsMobileSettings, savedItems: WatchLaterItem[]): Promise<void>",
+        "syncFromCloud(): Promise<SyncResult>",
+        "isAvailable(): boolean",
+        "getLastSyncTime(): Date | null"
+      ],
+      "implementation_tasks": [
+        "Create adapter interface defaulting to local no-op",
+        "Do not block local settings or saved articles on cloud sync",
+        "Add cloud backend integration when product decision is made",
+        "Preserve syncToCloud/syncFromCloud API contract"
+      ],
+      "verification": [
+        "No-op adapter does not crash when sync is called",
+        "Local persistence works without cloud backend",
+        "UI hides sync controls when isAvailable() returns false"
+      ]
+    },
+    {
+      "id": "platform.shared_storage_adapter",
+      "target_path": "entry/src/main/ets/platform/SharedStorageAdapter.ets",
+      "source_capabilities": ["storage.app_groups"],
+      "used_by_features": [
+        "feature.widget.home_screen"
+      ],
+      "public_api": [
+        "cacheHeadlines(articles: NewsArticle[]): void",
+        "cacheWeather(weather: WeatherData): void",
+        "cacheTrending(topics: TrendingTopic[]): void",
+        "getCachedHeadlines(): NewsArticle[]",
+        "getCachedWeather(): WeatherData | null",
+        "getCachedTrending(): TrendingTopic[]"
+      ],
+      "implementation_tasks": [
+        "Implement shared storage for main app and card/widget extension",
+        "Do not leak iOS App Group terminology",
+        "Expose read-write API for cached data",
+        "Handle missing data gracefully"
+      ],
+      "verification": [
+        "Cached data is readable by card/widget extension",
+        "Missing cache returns empty/default values",
+        "Cache updates are visible to extension"
+      ]
+    },
+    {
+      "id": "platform.news_card",
+      "target_path": "entry/src/main/ets/cards/NewsCard.ets",
+      "source_capabilities": ["widget.widgetkit"],
+      "used_by_features": [
+        "feature.widget.home_screen"
+      ],
+      "public_api": [
+        "createFormCard(context: FormExtensionContext): FormBindingData",
+        "updateFormCard(formId: string): void"
+      ],
+      "implementation_tasks": [
+        "Treat card as separate deliverable from main app",
+        "Start with small card layout if full parity is costly",
+        "Define cached headline/weather/trending input contract",
+        "Implement placeholder and timeline lifecycle",
+        "Support 30-minute refresh interval"
+      ],
+      "verification": [
+        "Card displays on home screen with cached headline",
+        "Card updates when main app refreshes cache",
+        "Placeholder shows when no cached data"
+      ]
+    },
+    {
+      "id": "platform.local_api_adapter",
+      "target_path": "entry/src/main/ets/platform/LocalApiAdapter.ets",
+      "source_capabilities": ["network.nwlistener"],
+      "used_by_features": [
+        "feature.local_api.status"
+      ],
+      "public_api": [
+        "start(port: number): void",
+        "stop(): void",
+        "isRunning(): boolean"
+      ],
+      "implementation_tasks": [
+        "Confirm whether local loopback API is required in Harmony version",
+        "If retained, isolate behind optional LocalApiAdapter",
+        "Bind only to loopback interface",
+        "Implement /api/status and /api/ping endpoints"
+      ],
+      "verification": [
+        "Local API starts on loopback only",
+        "/api/status returns valid JSON",
+        "Snapshot mode does not start local API"
+      ]
+    }
+  ],
+  "manifest_requirements": [
+    {
+      "requirement": "ohos.permission.INTERNET",
+      "reason": "Network access for RSS feeds, weather API, and local news",
+      "capabilities": ["network.urlsession", "webview.webkit"]
+    },
+    {
+      "requirement": "ohos.permission.LOCATION",
+      "reason": "Precise location for weather and local news",
+      "capabilities": ["location.corelocation"]
+    },
+    {
+      "requirement": "ohos.permission.APPROXIMATELY_LOCATION",
+      "reason": "Approximate location fallback",
+      "capabilities": ["location.corelocation"]
+    },
+    {
+      "requirement": "ohos.permission.NOTIFICATION_CONTROLLER",
+      "reason": "Local notification publish and permission",
+      "capabilities": ["notification.usernotifications"]
+    },
+    {
+      "requirement": "background mode declaration",
+      "reason": "Background task for periodic news refresh",
+      "capabilities": ["background.bgapprefresh"]
+    },
+    {
+      "requirement": "internet access capability",
+      "reason": "WebView loads external article URLs",
+      "capabilities": ["webview.webkit"]
+    },
+    {
+      "requirement": "card/form metadata",
+      "reason": "Home screen widget card declaration",
+      "capabilities": ["widget.widgetkit"],
+      "optional": true
+    }
+  ],
+  "permission_requirements": [
+    {
+      "permission": "ohos.permission.INTERNET",
+      "risk_level": "low",
+      "user_facing": false
+    },
+    {
+      "permission": "ohos.permission.APPROXIMATELY_LOCATION",
+      "risk_level": "medium",
+      "user_facing": true,
+      "trigger": "User enables weather or local news feature"
+    },
+    {
+      "permission": "ohos.permission.LOCATION",
+      "risk_level": "medium",
+      "user_facing": true,
+      "trigger": "User enables precise location for weather"
+    },
+    {
+      "permission": "ohos.permission.NOTIFICATION_CONTROLLER",
+      "risk_level": "medium",
+      "user_facing": true,
+      "trigger": "User enables notifications in settings"
+    }
+  ],
+  "service_requirements": [
+    {
+      "service": "Cloud sync backend",
+      "status": "pending_decision",
+      "alternatives": ["AppGallery Connect cloud storage", "Custom backend", "No cloud sync"],
+      "affected_capabilities": ["sync.icloud_kv"]
+    },
+    {
+      "service": "NLP / Text analysis",
+      "status": "investigate",
+      "alternatives": ["HarmonyOS NLP Kit", "Local heuristic implementation", "Disable analysis"],
+      "affected_capabilities": ["ml.naturallanguage"]
+    },
+    {
+      "service": "TTS engine",
+      "status": "investigate",
+      "alternatives": ["HarmonyOS Speech Kit", "Third-party TTS"],
+      "affected_capabilities": ["audio.avspeech"]
+    }
+  ],
+  "store_requirements": [
+    {
+      "requirement": "Widget/card distribution",
+      "description": "Home screen card/widget may require separate review or form extension packaging",
+      "status": "investigate"
+    },
+    {
+      "requirement": "Background task policy",
+      "description": "Background refresh behavior must comply with HarmonyOS battery/background policies",
+      "status": "investigate"
+    },
+    {
+      "requirement": "Local network server",
+      "description": "Local loopback API may not be suitable for app store distribution",
+      "status": "pending_decision"
+    }
+  ]
+}

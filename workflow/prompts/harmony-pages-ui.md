@@ -3,9 +3,9 @@
 工作目录：{{WORKDIR}}
 
 必须读取：
-- output/harmony-generate/harmony模块实现计划.md
-- output/ios-analyze/ios界面清单.md
-- output/ios-analyze/ios功能清单.md
+- output/harmony-generate/harmony模块实现计划.json
+- output/ios-analyze/specs/screens.json
+- output/ios-analyze/specs/features.json
 - output/ios-analyze/screenshots/png/
 - output/harmony-generate/harmony全量实现追踪.md
 

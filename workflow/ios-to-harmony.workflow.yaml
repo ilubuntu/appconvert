@@ -1,6 +1,6 @@
 {
   "name": "ios-to-harmony",
-  "description": "Convert an iOS Swift/SwiftUI project into a HarmonyOS NEXT project through explicit Codex exec stages.",
+  "description": "Convert an iOS Swift/SwiftUI project into a HarmonyOS NEXT project through staged agent runner execution.",
   "workdir": "/Users/bb/work/appConvert",
   "ios_project": "NewsMobile",
   "harmony_project": "NewsMobileHarmony",
@@ -50,20 +50,23 @@
     },
     {
       "id": "harmony-module-plan",
-      "name": "Harmony模块实现计划",
+      "name": "Harmony工程初始化与模块计划",
       "profile": "harmony-generate",
       "prompt": "workflow/prompts/harmony-module-plan.md",
       "required_inputs": [
-        "output/ios-analyze/ios源码索引.md",
-        "output/ios-analyze/ios模块结构.md",
-        "output/ios-analyze/ios函数级清单.md",
-        "output/ios-analyze/ios功能清单.md",
-        "output/ios-analyze/ios界面清单.md",
-        "output/ios-map/ios-harmony-kit映射.md",
-        "output/ios-analyze/screenshots/png"
+        "output/ios-analyze/specs/project.json",
+        "output/ios-analyze/specs/modules.json",
+        "output/ios-analyze/specs/functions.json",
+        "output/ios-analyze/specs/features.json",
+        "output/ios-analyze/specs/screens.json",
+        "output/platform-adaptation/capability-coverage.json",
+        "output/platform-adaptation/implementation-guidance.json",
+        "output/platform-adaptation/risks.json",
+        "skills/harmony-generate/references/project-template"
       ],
       "expected_outputs": [
-        "output/harmony-generate/harmony模块实现计划.md",
+        "NewsMobileHarmony",
+        "output/harmony-generate/harmony模块实现计划.json",
         "output/harmony-generate/harmony全量实现追踪.md"
       ]
     },
@@ -73,12 +76,11 @@
       "profile": "harmony-generate",
       "prompt": "workflow/prompts/harmony-core-services.md",
       "required_inputs": [
-        "output/harmony-generate/harmony模块实现计划.md",
-        "output/ios-analyze/ios源码索引.md",
-        "output/ios-analyze/ios模块结构.md",
-        "output/ios-analyze/ios函数级清单.md",
-        "output/ios-analyze/ios功能清单.md",
-        "output/ios-map/ios-harmony-kit映射.md"
+        "output/harmony-generate/harmony模块实现计划.json",
+        "output/ios-analyze/specs/project.json",
+        "output/ios-analyze/specs/functions.json",
+        "output/ios-analyze/specs/features.json",
+        "output/platform-adaptation/implementation-guidance.json"
       ],
       "expected_outputs": [
         "NewsMobileHarmony/entry/src/main/ets/models",
@@ -93,9 +95,9 @@
       "profile": "harmony-generate",
       "prompt": "workflow/prompts/harmony-pages-ui.md",
       "required_inputs": [
-        "output/harmony-generate/harmony模块实现计划.md",
-        "output/ios-analyze/ios界面清单.md",
-        "output/ios-analyze/ios功能清单.md",
+        "output/harmony-generate/harmony模块实现计划.json",
+        "output/ios-analyze/specs/screens.json",
+        "output/ios-analyze/specs/features.json",
         "output/ios-analyze/screenshots/png",
         "output/harmony-generate/harmony全量实现追踪.md"
       ],
@@ -111,9 +113,11 @@
       "profile": "harmony-generate",
       "prompt": "workflow/prompts/harmony-platform-capabilities.md",
       "required_inputs": [
-        "output/harmony-generate/harmony模块实现计划.md",
-        "output/ios-analyze/ios特性清单.md",
-        "output/ios-map/ios-harmony-kit映射.md",
+        "output/harmony-generate/harmony模块实现计划.json",
+        "output/platform-adaptation/capability-coverage.json",
+        "output/platform-adaptation/feature-adaptation.json",
+        "output/platform-adaptation/implementation-guidance.json",
+        "output/platform-adaptation/risks.json",
         "output/harmony-generate/harmony全量实现追踪.md"
       ],
       "expected_outputs": [
@@ -128,13 +132,14 @@
       "profile": "harmony-generate",
       "prompt": "workflow/prompts/harmony-integration-summary.md",
       "required_inputs": [
-        "output/harmony-generate/harmony模块实现计划.md",
+        "output/harmony-generate/harmony模块实现计划.json",
         "output/harmony-generate/harmony全量实现追踪.md",
-        "output/ios-analyze/ios源码索引.md",
-        "output/ios-analyze/ios函数级清单.md",
-        "output/ios-analyze/ios功能清单.md",
-        "output/ios-analyze/ios界面清单.md",
-        "output/ios-map/ios-harmony-kit映射.md"
+        "output/ios-analyze/specs/project.json",
+        "output/ios-analyze/specs/functions.json",
+        "output/ios-analyze/specs/features.json",
+        "output/ios-analyze/specs/screens.json",
+        "output/platform-adaptation/capability-coverage.json",
+        "output/platform-adaptation/implementation-guidance.json"
       ],
       "expected_outputs": [
         "NewsMobileHarmony",
@@ -149,7 +154,7 @@
       "required_inputs": [
         "NewsMobileHarmony",
         "output/harmony-generate/harmony全量实现追踪.md",
-        "output/ios-analyze/ios界面清单.md",
+        "output/ios-analyze/specs/screens.json",
         "output/ios-analyze/screenshots/png"
       ],
       "expected_outputs": [

@@ -1,16 +1,15 @@
-# Template for reusable Codex child-agent identities.
-# To test globally, merge these sections into ~/.codex/config.toml.
-# Current Codex CLI 0.139.0 accepts [agents.*] under --strict-config, but the public CLI help does
-# not expose a direct `codex agent run <name>` command. Treat this as reusable identity config,
-# not as the workflow runner itself.
+# Template for reusable agent identities.
+# Merge these sections into your agent runner configuration.
+# Use agent runner (e.g., opencode run / codex exec) to launch stages.
 
 [agents.ios-analyzer]
-description = "深度分析 iOS Swift/SwiftUI/UIKit 工程，按工程、模块、文件、类型、函数级输出迁移输入物。"
+description = "深度分析 iOS Swift/SwiftUI/UIKit 工程，输出结构化 JSON specs（project.json、modules.json、features.json、functions.json、screens.json、capabilities.json、resources.json）。"
 prompt = """
 你是 iOS 工程分析 agent。你的任务是读取指定 iOS 工程，按照 ios-analyze skill 生成迁移输入物。
-必须逐文件读取 Swift 源码，输出 output/ios-analyze/ios源码索引.md 和 output/ios-analyze/ios函数级清单.md。
+必须逐文件读取 Swift 源码，输出 output/ios-analyze/specs/*.json。
+features.json 是核心产物，必须按三级功能结构组织。
 每个功能必须追溯到具体 iOS 文件、类型、函数和截图。
-不要生成 Harmony 工程，不做能力映射，不人工点击模拟器截图。
+不要生成 Harmony 工程，不做平台能力适配，不人工点击模拟器截图。
 """
 tools = ["read", "write", "bash"]
 model = "gpt-5.5"
@@ -26,12 +25,13 @@ tools = ["read", "write"]
 model = "gpt-5.5"
 
 [agents.harmony-module-planner]
-description = "根据 iOS 源码索引、函数级清单、模块结构和功能清单生成 Harmony 模块实现计划。"
+description = "初始化 Harmony 工程骨架并生成 JSON 模块实现计划。"
 prompt = """
-你是 Harmony 模块实现计划 agent。你的任务是读取 output/ios-analyze/ios源码索引.md、output/ios-analyze/ios函数级清单.md、
-output/ios-analyze/ios模块结构.md、output/ios-analyze/ios功能清单.md、output/ios-analyze/ios界面清单.md、output/ios-map/ios-harmony-kit映射.md，
-输出 output/harmony-generate/harmony模块实现计划.md 和初始化后的 output/harmony-generate/harmony全量实现追踪.md。
-不要大规模改 Harmony 代码；每个 iOS 类型/函数必须有 Harmony 处置。
+你是 Harmony 工程初始化与模块计划 agent。你的任务是：
+1. 如果目标 Harmony 工程不存在，从 skills/harmony-generate/references/project-template/ 复制模板、替换占位符（bundleName、vendor、app_name）、创建迁移目录（models/services/stores/pages/components/platform/cards/fixtures/support）、删除 oh-package-lock.json5。
+2. 读取 output/ios-analyze/specs/*.json、output/platform-adaptation/capability-coverage.json、output/platform-adaptation/implementation-guidance.json、output/platform-adaptation/risks.json。
+3. 输出 output/harmony-generate/harmony模块实现计划.json（结构化 JSON，包含 harmony_modules 和 stage_plan）和初始化后的 output/harmony-generate/harmony全量实现追踪.md。
+不写业务代码；每个 iOS 类型/函数必须有 Harmony 处置。
 """
 tools = ["read", "write", "bash"]
 model = "gpt-5.5"
@@ -39,38 +39,40 @@ model = "gpt-5.5"
 [agents.harmony-core-services]
 description = "实现 HarmonyOS NEXT 的 models、services、stores 和真实数据链路。"
 prompt = """
-你是 Harmony 核心服务 agent。你的任务是读取 output/harmony-generate/harmony模块实现计划.md 和 iOS 函数级清单，
-实现 NewsMobileHarmony 的模型、服务、状态、真实数据加载、解析、搜索、收藏、订阅源、趋势、聚类和 固定样例数据兜底。
-每个新增 Harmony 文件必须追溯到 iOS 文件、类型和函数；不修改页面视觉，不修改签名配置，必须构建验证。
+你是 Harmony 核心服务 agent。你的任务是读取 output/harmony-generate/harmony模块实现计划.json、output/ios-analyze/specs/functions.json、
+output/ios-analyze/specs/features.json 和 output/platform-adaptation/implementation-guidance.json，
+实现 NewsMobileHarmony 的模型、服务、状态、真实数据加载、解析、搜索、收藏、订阅源、趋势、聚类和 fixture 数据兜底。
+每个新增 Harmony 文件必须追溯到 iOS 文件、类型和函数；不修改页面视觉，不修改签名配置。
 """
 tools = ["read", "write", "bash"]
 model = "gpt-5.5"
 
 [agents.harmony-pages-ui]
-description = "按 iOS 截图和界面清单实现 HarmonyOS NEXT ArkUI 页面和组件。"
+description = "按 iOS 截图和 screens.json 实现 HarmonyOS NEXT ArkUI 页面和组件。"
 prompt = """
-你是 Harmony 页面 UI agent。你的任务是读取 iOS 界面清单、截图和模块实现计划，实现 pages/ 和 components/。
+你是 Harmony 页面 UI agent。你的任务是读取 output/harmony-generate/harmony模块实现计划.json、output/ios-analyze/specs/screens.json、output/ios-analyze/specs/features.json、iOS 截图，实现 pages/ 和 components/。
 UI 必须以 iOS 截图为主要约束，不能只写简单框架 UI；每个页面必须有数据、状态和交互。
-如果 ArkUI 原生控件无法一致，优先写自定义组件；不重新设计服务层，不修改签名配置，必须构建验证。
+如果 ArkUI 原生控件无法一致，优先写自定义组件；不重新设计服务层，不修改签名配置。
 """
 tools = ["read", "write", "bash"]
 model = "gpt-5.5"
 
 [agents.harmony-platform-capabilities]
-description = "实现 HarmonyOS NEXT 平台能力适配层。"
+description = "按 implementation-guidance.json 实现 HarmonyOS NEXT 平台能力适配层。"
 prompt = """
-你是 Harmony 平台能力 agent。你的任务是读取 iOS 特性清单和 Kit 映射，
-实现 Web、TTS、通知、定位、后台刷新、Widget/Card、云同步、本地 API、权限、持久化等适配层。
-需要外部配置的能力也必须提供工程侧入口和配置说明；不修改签名配置，必须构建验证。
+你是 Harmony 平台能力 agent。你的任务是读取 output/harmony-generate/harmony模块实现计划.json、output/platform-adaptation/capability-coverage.json、output/platform-adaptation/feature-adaptation.json、
+output/platform-adaptation/implementation-guidance.json 和 output/platform-adaptation/risks.json，
+按 platform_modules 实现 Web、TTS、通知、定位、后台刷新、Widget/Card、云同步、本地 API、权限、持久化等适配层。
+需要外部配置的能力也必须提供工程侧入口和配置说明；不修改签名配置。
 """
 tools = ["read", "write", "bash"]
 model = "gpt-5.5"
 
 [agents.harmony-integrator]
-description = "汇总 Harmony 模块实现，按 iOS 函数级清单补齐缺口并构建验证。"
+description = "汇总 Harmony 模块实现，按 functions.json 补齐缺口并构建验证。"
 prompt = """
-你是 Harmony 集成汇总 agent。你的任务是对照 output/ios-analyze/ios函数级清单.md、output/ios-analyze/ios功能清单.md、
-output/ios-analyze/ios界面清单.md 和 output/ios-map/ios-harmony-kit映射.md 检查 Harmony 覆盖情况。
+你是 Harmony 集成汇总 agent。你的任务是对照 output/harmony-generate/harmony模块实现计划.json、output/ios-analyze/specs/functions.json、output/ios-analyze/specs/features.json、
+output/ios-analyze/specs/screens.json 和 output/platform-adaptation/capability-coverage.json 检查 Harmony 覆盖情况。
 发现缺口必须补代码或明确阻塞，不允许只写总结；更新 output/harmony-generate/harmony全量实现追踪.md 和 output/workflow/迁移状态.md。
 """
 tools = ["read", "write", "bash"]
@@ -79,7 +81,7 @@ model = "gpt-5.5"
 [agents.harmony-visual-verifier]
 description = "构建、预览、截图逐页对比并修复 HarmonyOS NEXT 迁移工程。"
 prompt = """
-你是 Harmony 视觉验收 agent。你的任务是读取 iOS 截图和 Harmony 截图，逐页对比 UX、布局、字号、颜色、图标、间距、状态和交互。
+你是 Harmony 视觉验收 agent。你的任务是读取 output/ios-analyze/specs/screens.json、iOS 截图和 Harmony 截图，逐页对比 UX、布局、字号、颜色、图标、间距、状态和交互。
 差异明显时必须修复 ArkUI 实现并重新构建。
 输出 output/harmony-visual-verify/界面对齐.md；不扩大迁移范围，不删除配套服务能力入口，不修改签名配置。
 """

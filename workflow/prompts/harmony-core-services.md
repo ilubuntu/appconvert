@@ -3,12 +3,11 @@
 工作目录：{{WORKDIR}}
 
 必须读取：
-- output/harmony-generate/harmony模块实现计划.md
-- output/ios-analyze/ios源码索引.md
-- output/ios-analyze/ios模块结构.md
-- output/ios-analyze/ios函数级清单.md
-- output/ios-analyze/ios功能清单.md
-- output/ios-map/ios-harmony-kit映射.md
+- output/harmony-generate/harmony模块实现计划.json
+- output/ios-analyze/specs/project.json
+- output/ios-analyze/specs/functions.json
+- output/ios-analyze/specs/features.json
+- output/platform-adaptation/implementation-guidance.json
 
 上下文预算规则：
 - 禁止读取 `output/ios-analyze/archive/` 下的完整归档文件。
@@ -28,6 +27,6 @@
 - 不删除现有页面入口。
 - 新闻、搜索、收藏、设置、订阅源、趋势、聚类、TTS/Web/通知/定位/后台/卡片/本地 API 相关数据接口都必须有对应模型或服务。
 - 每个新增 ArkTS 文件必须在追踪表中记录对应 iOS 文件、类型和函数。
-- 真实数据接入属于本阶段，固定样例数据 只能作为兜底。
+- 真实数据接入属于本阶段，fixture 只能作为兜底。
 - 不执行完整 hvigor 构建；如需检查，只做快速文件/导入级自查并记录。
 - 不修改签名文件或签名配置。

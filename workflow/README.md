@@ -42,9 +42,9 @@ workflow/agents.config.toml
 
 Stage boundaries:
 
-- `ios-analyze`: deep iOS analysis. It must read Swift source file by file and produce `output/ios-analyze/ios源码索引.md`, `output/ios-analyze/ios函数级清单.md`, module/function/feature/UI/capability specs, and iOS screenshots.
-- `ios-map`: map iOS native capabilities to HarmonyOS NEXT Kit or adapter layers.
-- `harmony-module-plan`: create `output/harmony-generate/harmony模块实现计划.md` from the iOS module/function specs.
+- `ios-analyze`: deep iOS analysis. It must read Swift source file by file and produce `output/ios-analyze/specs/*.json` (7 JSON specs), reports, and iOS screenshots.
+- `platform-adaptation`: map iOS native capabilities to HarmonyOS NEXT Kit or adapter layers; output capability coverage, feature adaptation, implementation guidance, and risks.
+- `harmony-module-plan`: initialize Harmony project from template + create `output/harmony-generate/harmony模块实现计划.json` from the iOS module/function specs.
 - `harmony-core-services`: implement Harmony models, services, stores, real-data loading, parsing, persistence, and 固定样例数据 fallback.
 - `harmony-pages-ui`: implement ArkUI pages and components from iOS screenshots and UI specs.
 - `harmony-platform-capabilities`: implement platform adapters for Web, TTS, notification, location, background, card/widget, cloud sync, local API, and permissions.

@@ -3,4 +3,3 @@ model_reasoning_effort = "high"
 
 [features]
 memories = true
-
