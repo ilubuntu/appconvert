@@ -5,7 +5,7 @@ NewsMobileHarmony/
 .hvigor-home/
 .preview-clt/
 
-output/00-workflow/rendered-prompts/
+output/workflow/rendered-prompts/
 
 *.pyc
 __pycache__/

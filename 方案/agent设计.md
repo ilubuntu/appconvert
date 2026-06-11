@@ -51,7 +51,7 @@ skill 是操作手册，agent 是执行单元。
 codex exec \
   -C /Users/bb/work/appConvert \
   -p harmony-generate \
-  < workflow/prompts/03-harmony-generate.md
+  < workflow/prompts/harmony-generate.md
 ```
 
 这回答“怎么跑起来”。
@@ -119,25 +119,25 @@ skills/ios-analyze/SKILL.md
 ```bash
 python3 workflow/run_ios_to_harmony.py \
   --execute \
-  --from-stage 03a-harmony-module-plan \
-  --to-stage 03e-harmony-integration-summary
+  --from-stage harmony-module-plan \
+  --to-stage harmony-integration-summary
 ```
 
 或直接运行：
 
 ```bash
-codex exec -C /Users/bb/work/appConvert - < workflow/prompts/03a-harmony-module-plan.md
+codex exec -C /Users/bb/work/appConvert - < workflow/prompts/harmony-module-plan.md
 ```
 
 ### 调试用调用语句
 
 ```text
-python3 workflow/run_ios_to_harmony.py --execute --from-stage 03a-harmony-module-plan --to-stage 03e-harmony-integration-summary
+python3 workflow/run_ios_to_harmony.py --execute --from-stage harmony-module-plan --to-stage harmony-integration-summary
 ```
 
 执行完整工作流时，runner 读取：
 
-- `output/00-workflow/迁移状态.md`
+- `output/workflow/迁移状态.md`
 - `agent设计.md`
 - `多agent迁移工作流.md`
 
@@ -189,13 +189,13 @@ fork_context: false
 
 ### 职责
 
-- 读取 `output/00-workflow/迁移状态.md`。
+- 读取 `output/workflow/迁移状态.md`。
 - 判断当前阶段。
 - 检查输入文件是否齐全。
 - 生成阶段 prompt。
 - 调用 `codex exec`。
 - 验收阶段输出。
-- 更新 `output/00-workflow/迁移状态.md`。
+- 更新 `output/workflow/迁移状态.md`。
 
 ### 使用 Skill
 
@@ -205,14 +205,14 @@ fork_context: false
 
 ### 允许读
 
-- `output/00-workflow/迁移状态.md`
+- `output/workflow/迁移状态.md`
 - `agent设计.md`
 - `多agent迁移工作流.md`
 - 各阶段输出文档
 
 ### 允许写
 
-- `output/00-workflow/迁移状态.md`
+- `output/workflow/迁移状态.md`
 - 阶段总结文档
 
 ### 不应该做
@@ -245,13 +245,13 @@ python3 workflow/run_ios_to_harmony.py --execute
 
 ### 输出
 
-- `output/01-ios-analyze/ios源码索引.md`
-- `output/01-ios-analyze/ios模块结构.md`
-- `output/01-ios-analyze/ios函数级清单.md`
-- `output/01-ios-analyze/ios功能清单.md`
-- `output/01-ios-analyze/ios界面清单.md`
-- `output/01-ios-analyze/ios特性清单.md`
-- `output/01-ios-analyze/screenshots/png/screenshots-manifest.json`
+- `output/ios-analyze/ios源码索引.md`
+- `output/ios-analyze/ios模块结构.md`
+- `output/ios-analyze/ios函数级清单.md`
+- `output/ios-analyze/ios功能清单.md`
+- `output/ios-analyze/ios界面清单.md`
+- `output/ios-analyze/ios特性清单.md`
+- `output/ios-analyze/screenshots/png/screenshots-manifest.json`
 
 ### 允许写
 
@@ -277,13 +277,13 @@ python3 workflow/run_ios_to_harmony.py --execute
 - NewsMobile/
 
 必须输出：
-- output/01-ios-analyze/ios源码索引.md
-- output/01-ios-analyze/ios模块结构.md
-- output/01-ios-analyze/ios函数级清单.md
-- output/01-ios-analyze/ios功能清单.md
-- output/01-ios-analyze/ios界面清单.md
-- output/01-ios-analyze/ios特性清单.md
-- output/01-ios-analyze/screenshots/png/screenshots-manifest.json
+- output/ios-analyze/ios源码索引.md
+- output/ios-analyze/ios模块结构.md
+- output/ios-analyze/ios函数级清单.md
+- output/ios-analyze/ios功能清单.md
+- output/ios-analyze/ios界面清单.md
+- output/ios-analyze/ios特性清单.md
+- output/ios-analyze/screenshots/png/screenshots-manifest.json
 
 约束：
 - 不生成 Harmony 工程。
@@ -304,17 +304,17 @@ python3 workflow/run_ios_to_harmony.py --execute
 
 ### 输入
 
-- `output/01-ios-analyze/ios模块结构.md`
-- `output/01-ios-analyze/ios功能清单.md`
-- `output/01-ios-analyze/ios特性清单.md`
+- `output/ios-analyze/ios模块结构.md`
+- `output/ios-analyze/ios功能清单.md`
+- `output/ios-analyze/ios特性清单.md`
 
 ### 输出
 
-- `output/02-ios-map/ios-harmony-kit映射.md`
+- `output/ios-map/ios-harmony-kit映射.md`
 
 ### 允许写
 
-- `output/02-ios-map/ios-harmony-kit映射.md`
+- `output/ios-map/ios-harmony-kit映射.md`
 
 ### 不允许做
 
@@ -331,12 +331,12 @@ python3 workflow/run_ios_to_harmony.py --execute
 使用 ios-map skill 生成能力映射。
 
 必须读取：
-- output/01-ios-analyze/ios模块结构.md
-- output/01-ios-analyze/ios功能清单.md
-- output/01-ios-analyze/ios特性清单.md
+- output/ios-analyze/ios模块结构.md
+- output/ios-analyze/ios功能清单.md
+- output/ios-analyze/ios特性清单.md
 
 必须输出：
-- output/02-ios-map/ios-harmony-kit映射.md
+- output/ios-map/ios-harmony-kit映射.md
 
 约束：
 - 不读取完整 iOS 源码，除非文档证据不足。
@@ -349,8 +349,8 @@ python3 workflow/run_ios_to_harmony.py --execute
 ### 职责
 
 - 根据 iOS 源码索引、函数级清单、模块结构和功能清单拆分 Harmony 实现任务。
-- 生成 `output/03-harmony-generate/harmony模块实现计划.md`。
-- 初始化或更新 `output/03-harmony-generate/harmony全量实现追踪.md`。
+- 生成 `output/harmony-generate/harmony模块实现计划.md`。
+- 初始化或更新 `output/harmony-generate/harmony全量实现追踪.md`。
 - 明确后续核心服务、页面 UI、平台能力、集成汇总 agent 的输入和验收点。
 
 ### 使用 Skill
@@ -359,23 +359,23 @@ python3 workflow/run_ios_to_harmony.py --execute
 
 ### 输入
 
-- `output/01-ios-analyze/ios源码索引.md`
-- `output/01-ios-analyze/ios模块结构.md`
-- `output/01-ios-analyze/ios函数级清单.md`
-- `output/01-ios-analyze/ios功能清单.md`
-- `output/01-ios-analyze/ios界面清单.md`
-- `output/02-ios-map/ios-harmony-kit映射.md`
-- `output/01-ios-analyze/screenshots/png/`
+- `output/ios-analyze/ios源码索引.md`
+- `output/ios-analyze/ios模块结构.md`
+- `output/ios-analyze/ios函数级清单.md`
+- `output/ios-analyze/ios功能清单.md`
+- `output/ios-analyze/ios界面清单.md`
+- `output/ios-map/ios-harmony-kit映射.md`
+- `output/ios-analyze/screenshots/png/`
 
 ### 输出
 
-- `output/03-harmony-generate/harmony模块实现计划.md`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
+- `output/harmony-generate/harmony模块实现计划.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
 
 ### 允许写
 
-- `output/03-harmony-generate/harmony模块实现计划.md`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
+- `output/harmony-generate/harmony模块实现计划.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
 
 ### 不允许做
 
@@ -393,17 +393,17 @@ python3 workflow/run_ios_to_harmony.py --execute
 使用 harmony-generate skill 为 NewsMobileHarmony 生成模块实现计划。
 
 必须读取：
-- output/01-ios-analyze/ios源码索引.md
-- output/01-ios-analyze/ios模块结构.md
-- output/01-ios-analyze/ios函数级清单.md
-- output/01-ios-analyze/ios功能清单.md
-- output/01-ios-analyze/ios界面清单.md
-- output/02-ios-map/ios-harmony-kit映射.md
-- output/01-ios-analyze/screenshots/png/
+- output/ios-analyze/ios源码索引.md
+- output/ios-analyze/ios模块结构.md
+- output/ios-analyze/ios函数级清单.md
+- output/ios-analyze/ios功能清单.md
+- output/ios-analyze/ios界面清单.md
+- output/ios-map/ios-harmony-kit映射.md
+- output/ios-analyze/screenshots/png/
 
 必须输出：
-- output/03-harmony-generate/harmony模块实现计划.md
-- output/03-harmony-generate/harmony全量实现追踪.md
+- output/harmony-generate/harmony模块实现计划.md
+- output/harmony-generate/harmony全量实现追踪.md
 
 约束：
 - 不重新完整分析 iOS 工程。
@@ -417,7 +417,7 @@ python3 workflow/run_ios_to_harmony.py --execute
 ### 职责
 
 - 实现 `models/`、`services/`、`stores/`。
-- 接入真实数据加载、解析、搜索、收藏、设置、订阅源、趋势、聚类和 fixture 兜底。
+- 接入真实数据加载、解析、搜索、收藏、设置、订阅源、趋势、聚类和 固定样例数据兜底。
 - 更新实现追踪表并构建验证。
 
 ### 使用 Skill
@@ -427,18 +427,18 @@ python3 workflow/run_ios_to_harmony.py --execute
 
 ### 输入
 
-- `output/03-harmony-generate/harmony模块实现计划.md`
-- `output/01-ios-analyze/ios源码索引.md`
-- `output/01-ios-analyze/ios函数级清单.md`
-- `output/01-ios-analyze/ios功能清单.md`
-- `output/02-ios-map/ios-harmony-kit映射.md`
+- `output/harmony-generate/harmony模块实现计划.md`
+- `output/ios-analyze/ios源码索引.md`
+- `output/ios-analyze/ios函数级清单.md`
+- `output/ios-analyze/ios功能清单.md`
+- `output/ios-map/ios-harmony-kit映射.md`
 
 ### 输出
 
 - `NewsMobileHarmony/entry/src/main/ets/models/`
 - `NewsMobileHarmony/entry/src/main/ets/services/`
 - `NewsMobileHarmony/entry/src/main/ets/stores/`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
 - 构建结果
 
 ## 6. Harmony 页面 UI Agent
@@ -456,17 +456,17 @@ python3 workflow/run_ios_to_harmony.py --execute
 
 ### 输入
 
-- `output/03-harmony-generate/harmony模块实现计划.md`
-- `output/01-ios-analyze/ios界面清单.md`
-- `output/01-ios-analyze/ios功能清单.md`
-- `output/01-ios-analyze/screenshots/png/`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
+- `output/harmony-generate/harmony模块实现计划.md`
+- `output/ios-analyze/ios界面清单.md`
+- `output/ios-analyze/ios功能清单.md`
+- `output/ios-analyze/screenshots/png/`
+- `output/harmony-generate/harmony全量实现追踪.md`
 
 ### 输出
 
 - `NewsMobileHarmony/entry/src/main/ets/pages/`
 - `NewsMobileHarmony/entry/src/main/ets/components/`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
 - 构建结果
 
 ## 7. Harmony 平台能力 Agent
@@ -483,24 +483,24 @@ python3 workflow/run_ios_to_harmony.py --execute
 
 ### 输入
 
-- `output/03-harmony-generate/harmony模块实现计划.md`
-- `output/01-ios-analyze/ios特性清单.md`
-- `output/02-ios-map/ios-harmony-kit映射.md`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
+- `output/harmony-generate/harmony模块实现计划.md`
+- `output/ios-analyze/ios特性清单.md`
+- `output/ios-map/ios-harmony-kit映射.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
 
 ### 输出
 
 - `NewsMobileHarmony/entry/src/main/ets/platform/`
 - `NewsMobileHarmony/entry/src/main/module.json5`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
 - 构建结果
 
 ## 8. Harmony 集成汇总 Agent
 
 ### 职责
 
-- 对照 `output/01-ios-analyze/ios函数级清单.md` 检查每个 iOS 类型/函数的 Harmony 去向。
-- 对照 `output/01-ios-analyze/ios功能清单.md` 检查页面、服务、状态和验收点。
+- 对照 `output/ios-analyze/ios函数级清单.md` 检查每个 iOS 类型/函数的 Harmony 去向。
+- 对照 `output/ios-analyze/ios功能清单.md` 检查页面、服务、状态和验收点。
 - 补齐缺口并构建验证。
 
 ### 使用 Skill
@@ -510,19 +510,19 @@ python3 workflow/run_ios_to_harmony.py --execute
 
 ### 输入
 
-- `output/03-harmony-generate/harmony模块实现计划.md`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
-- `output/01-ios-analyze/ios源码索引.md`
-- `output/01-ios-analyze/ios函数级清单.md`
-- `output/01-ios-analyze/ios功能清单.md`
-- `output/01-ios-analyze/ios界面清单.md`
-- `output/02-ios-map/ios-harmony-kit映射.md`
+- `output/harmony-generate/harmony模块实现计划.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
+- `output/ios-analyze/ios源码索引.md`
+- `output/ios-analyze/ios函数级清单.md`
+- `output/ios-analyze/ios功能清单.md`
+- `output/ios-analyze/ios界面清单.md`
+- `output/ios-map/ios-harmony-kit映射.md`
 
 ### 输出
 
 - `NewsMobileHarmony/`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
-- `output/00-workflow/迁移状态.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
+- `output/workflow/迁移状态.md`
 - 构建结果
 
 ## 9. Harmony 视觉验收 Agent
@@ -541,9 +541,9 @@ python3 workflow/run_ios_to_harmony.py --execute
 ### 输入
 
 - `NewsMobileHarmony/`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
-- `output/01-ios-analyze/ios界面清单.md`
-- `output/01-ios-analyze/screenshots/png/`
+- `output/harmony-generate/harmony全量实现追踪.md`
+- `output/ios-analyze/ios界面清单.md`
+- `output/ios-analyze/screenshots/png/`
 
 ### 输出
 
@@ -551,15 +551,15 @@ python3 workflow/run_ios_to_harmony.py --execute
 - Harmony 截图或预览结果。
 - 差异记录。
 - 修复后的工程。
-- 更新后的 `output/03-harmony-generate/harmony全量实现追踪.md`。
-- 更新后的 `output/00-workflow/迁移状态.md`。
+- 更新后的 `output/harmony-generate/harmony全量实现追踪.md`。
+- 更新后的 `output/workflow/迁移状态.md`。
 
 ### 允许写
 
 - `NewsMobileHarmony/entry/src/main/ets/`
 - 验收截图产物。
-- `output/03-harmony-generate/harmony全量实现追踪.md`
-- `output/00-workflow/迁移状态.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
+- `output/workflow/迁移状态.md`
 
 ### 不允许做
 
@@ -577,16 +577,16 @@ python3 workflow/run_ios_to_harmony.py --execute
 
 必须读取：
 - NewsMobileHarmony/
-- output/03-harmony-generate/harmony全量实现追踪.md
-- output/01-ios-analyze/ios界面清单.md
-- output/01-ios-analyze/screenshots/png/
+- output/harmony-generate/harmony全量实现追踪.md
+- output/ios-analyze/ios界面清单.md
+- output/ios-analyze/screenshots/png/
 
 必须输出：
 - 构建结果
 - 差异记录
 - 修复说明
-- 更新后的 output/03-harmony-generate/harmony全量实现追踪.md
-- 更新后的 output/00-workflow/迁移状态.md
+- 更新后的 output/harmony-generate/harmony全量实现追踪.md
+- 更新后的 output/workflow/迁移状态.md
 
 约束：
 - 不扩大迁移范围。
@@ -598,12 +598,12 @@ python3 workflow/run_ios_to_harmony.py --execute
 
 runner 执行下一阶段时：
 
-1. 读取 `output/00-workflow/迁移状态.md`。
+1. 读取 `output/workflow/迁移状态.md`。
 2. 根据当前阶段选择 workflow stage。
 3. 渲染对应 prompt 文件。
 4. 用 `codex exec` 启动阶段。
 5. 阶段执行完成后检查输出文件。
-6. 更新 `output/00-workflow/迁移状态.md`。
+6. 更新 `output/workflow/迁移状态.md`。
 
 ## 当前建议
 
@@ -617,7 +617,7 @@ iOS 工程分析阶段
 
 目标：
 
-- 补齐 `output/01-ios-analyze/ios源码索引.md`。
-- 补齐 `output/01-ios-analyze/ios函数级清单.md`。
+- 补齐 `output/ios-analyze/ios源码索引.md`。
+- 补齐 `output/ios-analyze/ios函数级清单.md`。
 - 让每个功能都能追溯到 iOS 文件、类型、函数和截图。
-- 然后再执行 `03a-harmony-module-plan` 到 `03e-harmony-integration-summary`。
+- 然后再执行 `harmony-module-plan` 到 `harmony-integration-summary`。

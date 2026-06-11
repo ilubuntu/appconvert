@@ -1,17 +1,27 @@
 #!/usr/bin/env python3
 import argparse
+import json
 import re
 from pathlib import Path
 
 
-VIEW_RE = re.compile(r"\bstruct\s+(\w+)\s*:\s*View\b")
-CLASS_RE = re.compile(r"\b(?:final\s+)?class\s+(\w+)")
-STRUCT_RE = re.compile(r"\bstruct\s+(\w+)")
-ENUM_RE = re.compile(r"\benum\s+(\w+)")
-PROTOCOL_RE = re.compile(r"\bprotocol\s+(\w+)")
-FUNC_RE = re.compile(r"^\s*(?:public\s+|internal\s+)?func\s+([A-Za-z0-9_]+)\s*\(", re.MULTILINE)
 IMPORT_RE = re.compile(r"^\s*import\s+([A-Za-z0-9_]+)", re.MULTILINE)
-NAV_PATTERNS = [
+TYPE_RE = re.compile(r"\b(class|struct|enum|protocol|actor)\s+([A-Za-z_][A-Za-z0-9_]*)")
+VIEW_RE = re.compile(r"\bstruct\s+([A-Za-z_][A-Za-z0-9_]*)\s*:\s*View\b")
+FUNC_RE = re.compile(
+    r"^\s*(?:(?:public|private|fileprivate|internal|open)\s+)?"
+    r"(?:static\s+|class\s+|mutating\s+)?func\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(([^)]*)\)"
+    r"(?:\s*(?:async\s*)?(?:throws\s*)?(?:->\s*([^\n{]+))?)?",
+    re.MULTILINE,
+)
+PROPERTY_RE = re.compile(
+    r"^\s*(?:(?:public|private|fileprivate|internal|open)\s+)?"
+    r"(?:@(?:State|Published|ObservedObject|StateObject|EnvironmentObject|Environment|AppStorage|Binding)[^\n]*\s+)?"
+    r"(let|var)\s+([A-Za-z_][A-Za-z0-9_]*)",
+    re.MULTILINE,
+)
+
+UI_PATTERNS = [
     "TabView",
     "NavigationStack",
     "NavigationView",
@@ -22,144 +32,204 @@ NAV_PATTERNS = [
     ".refreshable",
     "Form",
     "List",
+    "ScrollView",
     "LazyVStack",
     "LazyHStack",
     "ForEach",
+    "WebView",
+    "WKWebView",
 ]
+
+CAPABILITY_IMPORTS = {
+    "AVFoundation": "media.avfoundation",
+    "AVKit": "media.avkit",
+    "CoreLocation": "location.corelocation",
+    "MapKit": "map.mapkit",
+    "PhotosUI": "photo.photosui",
+    "UserNotifications": "notification.usernotifications",
+    "WebKit": "webview.webkit",
+    "WidgetKit": "widget.widgetkit",
+}
+
+EXCLUDED_DIR_NAMES = {
+    ".build",
+    ".git",
+    "build",
+    "DerivedData",
+    "Pods",
+    "Carthage",
+    ".swiftpm",
+}
 
 
 def rel(path: Path, root: Path) -> str:
     return str(path.relative_to(root))
 
 
+def read_text(path: Path) -> str:
+    return path.read_text(encoding="utf-8", errors="ignore")
+
+
+def is_excluded(path: Path, root: Path) -> bool:
+    try:
+        parts = path.relative_to(root).parts
+    except ValueError:
+        return True
+    return any(part in EXCLUDED_DIR_NAMES or part.endswith(".noindex") for part in parts)
+
+
+def project_files(root: Path, pattern: str) -> list[Path]:
+    return sorted(path for path in root.rglob(pattern) if not is_excluded(path, root))
+
+
+def infer_module(path: Path, root: Path) -> str:
+    relative = path.relative_to(root)
+    parts = relative.parts
+    if len(parts) <= 1:
+        return "root"
+    parent_parts = parts[:-1]
+    useful = [part for part in parent_parts if not part.endswith(".xcodeproj")]
+    if not useful:
+        return "root"
+    return ".".join(part.lower().replace(" ", "_") for part in useful[-2:])
+
+
 def scan_swift_file(path: Path, root: Path) -> dict:
-    text = path.read_text(errors="ignore")
+    text = read_text(path)
+    imports = sorted(set(IMPORT_RE.findall(text)))
+    functions = []
+    for name, params, output in FUNC_RE.findall(text):
+        functions.append({
+            "name": name,
+            "inputs": params.strip(),
+            "output": output.strip(),
+        })
+
+    properties = []
+    for kind, name in PROPERTY_RE.findall(text):
+        properties.append({"kind": kind, "name": name})
+
     return {
         "path": rel(path, root),
-        "imports": sorted(set(IMPORT_RE.findall(text))),
+        "module_hint": infer_module(path, root),
+        "imports": imports,
+        "types": [
+            {"kind": kind, "name": name}
+            for kind, name in TYPE_RE.findall(text)
+        ],
         "views": VIEW_RE.findall(text),
-        "classes": CLASS_RE.findall(text),
-        "structs": STRUCT_RE.findall(text),
-        "enums": ENUM_RE.findall(text),
-        "protocols": PROTOCOL_RE.findall(text),
-        "functions": FUNC_RE.findall(text),
-        "ui_patterns": [p for p in NAV_PATTERNS if p in text],
+        "functions": functions,
+        "properties": properties,
+        "ui_patterns": [pattern for pattern in UI_PATTERNS if pattern in text],
+        "capability_hints": [
+            CAPABILITY_IMPORTS[item]
+            for item in imports
+            if item in CAPABILITY_IMPORTS
+        ],
+        "line_count": text.count("\n") + 1,
     }
 
 
-def module_name(path: str) -> str:
-    parts = path.split("/")
-    if len(parts) >= 2 and parts[0] == "NewsMobile":
-        if parts[1] in {"Views", "Services", "Models", "ML", "Resources"}:
-            if parts[1] == "Views" and len(parts) >= 3 and parts[2] == "Components":
-                return "Views/Components"
-            return parts[1]
-        return "App"
-    if len(parts) >= 1 and parts[0] == "NewsMobileWidget":
-        return "Widget"
-    if len(parts) >= 1 and parts[0] == "NewsMobileTests":
-        return "Tests"
-    return parts[0] if parts else "Unknown"
+def build_module_index(files: list[dict]) -> list[dict]:
+    modules: dict[str, dict] = {}
+    for item in files:
+        module_id = item["module_hint"]
+        module = modules.setdefault(module_id, {
+            "id": module_id,
+            "files": [],
+            "imports": set(),
+            "types": [],
+            "views": [],
+            "function_count": 0,
+            "capability_hints": set(),
+        })
+        module["files"].append(item["path"])
+        module["imports"].update(item["imports"])
+        module["types"].extend(item["types"])
+        module["views"].extend(item["views"])
+        module["function_count"] += len(item["functions"])
+        module["capability_hints"].update(item["capability_hints"])
+
+    result = []
+    for module in modules.values():
+        result.append({
+            "id": module["id"],
+            "files": sorted(module["files"]),
+            "imports": sorted(module["imports"]),
+            "types": module["types"],
+            "views": sorted(set(module["views"])),
+            "function_count": module["function_count"],
+            "capability_hints": sorted(module["capability_hints"]),
+        })
+    return sorted(result, key=lambda item: item["id"])
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="Create a neutral JSON scan index for an iOS project.")
     parser.add_argument("--project-root", required=True)
     parser.add_argument("--output-dir", required=True)
     args = parser.parse_args()
 
     root = Path(args.project_root).resolve()
-    out = Path(args.output_dir).resolve()
-    out.mkdir(parents=True, exist_ok=True)
+    if not root.exists():
+        raise SystemExit(f"Project root does not exist: {root}")
 
-    swift_files = sorted(root.rglob("*.swift"))
-    entitlements = sorted(root.rglob("*.entitlements"))
-    plists = sorted(root.rglob("*.plist"))
-    pbxproj = sorted(root.rglob("project.pbxproj"))
+    output_dir = Path(args.output_dir).resolve()
+    scan_dir = output_dir / "scan"
+    scan_dir.mkdir(parents=True, exist_ok=True)
 
-    swift_scan = [scan_swift_file(path, root) for path in swift_files]
-    imports = sorted({imp for item in swift_scan for imp in item["imports"]})
-    views = [item for item in swift_scan if item["views"]]
-    ui_files = [item for item in swift_scan if item["ui_patterns"]]
-    modules: dict[str, list[dict]] = {}
-    for item in swift_scan:
-        modules.setdefault(module_name(item["path"]), []).append(item)
+    swift_files = project_files(root, "*.swift")
+    source_files = [scan_swift_file(path, root) for path in swift_files]
 
-    lines = [
-        "# iOS 功能清单草稿",
-        "",
-        "## 工程概览",
-        "",
-        f"- Swift 文件数：{len(swift_files)}",
-        f"- Apple/Swift imports：{', '.join(imports)}",
-        "",
-        "## 页面候选",
-        "",
+    project = {
+        "root": str(root),
+        "swift_file_count": len(swift_files),
+        "xcodeproj": [rel(path, root) for path in project_files(root, "*.xcodeproj")],
+        "xcworkspace": [rel(path, root) for path in project_files(root, "*.xcworkspace")],
+        "package_swift": [rel(path, root) for path in project_files(root, "Package.swift")],
+        "podfile": [rel(path, root) for path in project_files(root, "Podfile")],
+        "plist_files": [rel(path, root) for path in project_files(root, "*.plist")],
+        "entitlements": [rel(path, root) for path in project_files(root, "*.entitlements")],
+        "asset_catalogs": [rel(path, root) for path in project_files(root, "*.xcassets")],
+    }
+
+    imports = sorted({item for source in source_files for item in source["imports"]})
+    views = [
+        {
+            "path": source["path"],
+            "module_hint": source["module_hint"],
+            "views": source["views"],
+            "ui_patterns": source["ui_patterns"],
+        }
+        for source in source_files
+        if source["views"] or source["ui_patterns"]
     ]
+    capability_hints = sorted({
+        hint
+        for source in source_files
+        for hint in source["capability_hints"]
+    })
 
-    for item in views:
-        lines.append(f"### {', '.join(item['views'])}")
-        lines.append("")
-        lines.append(f"- 文件：`{item['path']}`")
-        lines.append(f"- UI 线索：{', '.join(item['ui_patterns']) or '待人工确认'}")
-        lines.append("- 用户价值：待根据代码和截图补充")
-        lines.append("- 数据来源：待根据 Services/Models 补充")
-        lines.append("- Harmony 迁移方式：待根据能力映射确认")
-        lines.append("")
-
-    lines.extend([
-        "## 系统能力候选",
-        "",
-    ])
-    for imp in imports:
-        lines.append(f"- `{imp}`")
-    lines.append("")
-
-    (out / "ios功能清单.draft.md").write_text("\n".join(lines), encoding="utf-8")
-
-    module_lines = [
-        "# iOS 模块结构草稿",
-        "",
-        "## 工程概览",
-        "",
-        f"- Swift 文件数：{len(swift_files)}",
-        f"- 模块数：{len(modules)}",
-        "",
-        "## 模块清单",
-        "",
-    ]
-
-    for name, entries in sorted(modules.items()):
-        module_imports = sorted({imp for entry in entries for imp in entry["imports"]})
-        module_types = sorted({
-            typ
-            for entry in entries
-            for typ in entry["classes"] + entry["structs"] + entry["enums"] + entry["protocols"]
-        })
-        module_functions = sorted({fn for entry in entries for fn in entry["functions"]})
-        module_lines.append(f"### {name}")
-        module_lines.append("")
-        module_lines.append(f"- 文件数：{len(entries)}")
-        module_lines.append(f"- 文件：{', '.join(f'`{entry['path']}`' for entry in entries)}")
-        module_lines.append(f"- 类型：{', '.join(module_types) or '无'}")
-        module_lines.append(f"- 对外方法线索：{', '.join(module_functions) or '无'}")
-        module_lines.append(f"- Apple/Swift imports：{', '.join(module_imports) or '无'}")
-        module_lines.append("- 模块职责：待根据代码补充")
-        module_lines.append("- 对外接口：待根据调用关系补充")
-        module_lines.append("- 依赖模块：待根据调用关系补充")
-        module_lines.append("- HarmonyOS NEXT 参考拆分：待补充")
-        module_lines.append("")
-
-    module_lines.extend([
-        "## 模块依赖关系",
-        "",
-        "| 上游模块 | 下游模块 | 依赖内容 | 依赖原因 | Harmony 迁移校验 |",
-        "| --- | --- | --- | --- | --- |",
-        "| 待补充 | 待补充 | 待补充 | 待补充 | 待补充 |",
-        "",
-    ])
-
-    (out / "ios模块结构.draft.md").write_text("\n".join(module_lines), encoding="utf-8")
+    (scan_dir / "project.scan.json").write_text(
+        json.dumps(project, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    (scan_dir / "source_index.json").write_text(
+        json.dumps({"files": source_files}, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    (scan_dir / "module_hints.json").write_text(
+        json.dumps({"modules": build_module_index(source_files)}, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    (scan_dir / "ui_hints.json").write_text(
+        json.dumps({"views": views}, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    (scan_dir / "capability_hints.json").write_text(
+        json.dumps({"imports": imports, "capability_hints": capability_hints}, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
 
 
 if __name__ == "__main__":

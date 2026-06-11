@@ -96,7 +96,7 @@ def main() -> int:
             raise SystemExit(f"Prompt not found: {prompt_path}")
 
         prompt = render_prompt(prompt_path.read_text(encoding="utf-8"), values)
-        prompt_output = workdir / "output" / "00-workflow" / "rendered-prompts" / f"{stage['id']}.prompt.md"
+        prompt_output = workdir / "output" / "workflow" / "rendered-prompts" / f"{stage['id']}.prompt.md"
         prompt_output.parent.mkdir(parents=True, exist_ok=True)
         prompt_output.write_text(prompt, encoding="utf-8")
 

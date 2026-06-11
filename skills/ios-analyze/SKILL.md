@@ -1,303 +1,364 @@
 ---
 name: ios-analyze
-description: 当需要分析 iOS Swift/SwiftUI/UIKit 工程并产出迁移输入物时使用。本 skill 负责审计 iOS 工程结构、模块职责、模块对外接口、模块依赖、功能规格、Apple 能力使用情况，并要求通过 XCUITest 或启动参数直达页面的方式自动采集模拟器截图。它不负责映射 HarmonyOS NEXT Kit，也不生成鸿蒙代码。
+description: 当需要读取 iOS Swift/SwiftUI/UIKit 工程，并生成后续迁移模型可消费的结构化功能清单时使用。本 skill 负责源码分析、模块关系、功能清单、轻量函数索引、页面/系统能力/资源清单和少量人工摘要；截图只是辅助证据，不是主产物。
 ---
 
 # iOS 工程分析
 
+## 目标
+
+把一个 iOS 工程转换成后续模型稳定理解的“迁移任务索引”。
+
+本 skill 的核心不是截图，也不是大段说明文档，而是从源码中抽取结构化规格：
+
+```text
+iOS 工程源码
+  -> 源码索引
+  -> 模块结构
+  -> 功能清单
+  -> 页面 / 函数 / 系统能力 / 资源补全
+  -> 给后续 Harmony 迁移模型消费的 JSON specs
+```
+
 ## 职责边界
 
-本 skill 只负责把 iOS 原应用分析成稳定的迁移证据：
+本 skill 只产出 iOS 侧事实和证据：
 
-- `output/01-ios-analyze/ios功能清单.md`
-- `output/01-ios-analyze/ios模块结构.md`
-- `output/01-ios-analyze/ios界面清单.md`
-- `output/01-ios-analyze/ios特性清单.md`
-- `output/01-ios-analyze/ios源码索引.md`
-- `output/01-ios-analyze/ios函数级清单.md`
-- iOS 自动化截图产物
+- 不做 iOS 到 HarmonyOS Kit 映射。
+- 不生成 ArkTS / ArkUI 代码。
+- 不主观重组 Harmony 模块，只给出可参考的迁移边界。
+- 不把 Markdown 表格作为后续模型主输入。
 
-不要用本 skill 决定 HarmonyOS NEXT Kit 映射。不要用本 skill 生成 ArkTS 或鸿蒙工程文件。这些属于其他独立 skill 的职责。
+主产物必须是机器可读 JSON。Markdown 只作为人工审阅摘要。
 
-## 强制规则
+```text
+output/ios-analyze/
+  specs/
+    project.json
+    modules.json
+    features.json
+    functions.json
+    screens.json
+    capabilities.json
+    resources.json
+  assets/
+    ios/
+    symbols/
+    crops/
+  screenshots/png/
+  reports/
+    ios工程分析.md
+    ios功能摘要.md
+    ios界面摘要.md
+```
 
-UI 截图不能依赖人工点击模拟器。截图采集必须通过 XCUITest，或通过 `-uiSnapshotMode` / `-snapshotScreen` 启动参数直达页面，再配合 `simctl io screenshot` 自动完成。
+后续 agent 默认读取 `specs/*.json`。`reports/*.md` 只给人看，不作为唯一事实来源。
 
-## 工作流
+## 内部编排流程
 
-### 1. 审计 iOS 工程
+必须按下面顺序执行。不要跳过前置步骤直接写总结。
 
-先运行工程扫描脚本：
+### Step 1. 建立工程索引
+
+运行扫描脚本生成初始素材：
 
 ```bash
 python3 skills/ios-analyze/scripts/inspect_ios_project.py \
-  --project-root NewsMobile \
-  --output-dir output/01-ios-analyze
+  --project-root {{IOS_PROJECT}} \
+  --output-dir output/ios-analyze
 ```
 
-然后必须按工程真实文件逐个读取源码。不能只读 README、根 View 或脚本扫描结果后直接总结。分析颗粒度固定为：
+脚本只生成中间索引，不能当作最终结论：
 
 ```text
-工程 -> Target/目录模块 -> Swift 文件 -> 类型(class/struct/enum/extension) -> 函数/属性 -> UI/业务/系统能力行为
+output/ios-analyze/scan/
+  project.scan.json
+  source_index.json
+  module_hints.json
+  ui_hints.json
+  capability_hints.json
 ```
 
-按顺序读取这些文件：
+然后必须读取关键源码，扫描结果只能辅助，不能代替源码阅读。
 
-1. `README.md`：产品级功能。
-2. `*App.swift`、`AppDelegate` 或 `SceneDelegate`：应用生命周期。
-3. `ContentView.swift` 等根 UI 文件：Tab 和顶层路由。
-4. `Views/`：页面、导航、弹窗、工具栏、列表、表单和状态。
-5. `Models/` 和 `Services/`：数据流和业务行为。
-6. `.entitlements`、`Info.plist`、project settings、Swift imports：Apple 能力使用情况。
+必须读取：
 
-读取要求：
+1. `README.md`：产品说明、功能入口。
+2. `Package.swift`、`Podfile`、`.xcodeproj`、`.xcworkspace`：依赖和 target。
+3. `*App.swift`、`AppDelegate`、`SceneDelegate`：启动入口、依赖注入、生命周期。
+4. 根 View / 根 Controller：Tab、导航、路由、全局状态。
+5. `Views/`、`Screens/`、`Controllers/`：页面、组件、交互。
+6. `Models/`、`Services/`、`Stores/`、`ViewModels/`：数据模型、业务服务、状态管理。
+7. `.entitlements`、`Info.plist`、imports：iOS 系统能力。
+8. `Assets.xcassets`、图片、颜色：UI 资源。
 
-- 每个 `.swift` 文件都要进入 `output/01-ios-analyze/ios源码索引.md`。
-- 每个声明的类型、关键属性、函数、`body`、`ViewBuilder`、异步任务、回调、delegate、extension 都要进入 `output/01-ios-analyze/ios函数级清单.md`。
-- 对于只有少数 Swift 文件的工程，也不能粗略跳过单文件内的子组件；必须把同一文件内的多个 View、服务、模型拆开记录。
-- 如果某个函数只是辅助格式化，也要记录其调用方和迁移处置：直迁、合并、删除或由 Harmony 标准组件替代。
-- 任何功能必须能反查到具体文件、类型和函数，不能只写“首页”“服务层”这类宽泛来源。
+输出 `specs/project.json`。
 
-### 2. 生成 `output/01-ios-analyze/ios源码索引.md`
+### Step 2. 按 iOS 项目结构抽模块
 
-源码索引用于证明 agent 已经完整读取工程，不允许只输出总结。
+先保留 iOS 原工程结构，不要按 Harmony 主观拆分。
 
-格式：
+输出 `specs/modules.json`，每个模块至少包含：
 
-```md
-# iOS 源码索引
+- `id`：稳定模块 id，例如 `views.home`、`services.news`。
+- `name`：模块名。
+- `ios_paths`：源码目录或文件。
+- `responsibility`：职责。
+- `public_interfaces`：对外接口或主要类型。
+- `depends_on`：依赖哪些模块。
+- `used_by`：被哪些模块使用。
+- `source_refs`：源码引用。
+- `suggested_harmony_boundary`：给后续迁移参考的边界，不是最终实现方案。
 
-| 文件 | Target/模块 | 类型清单 | 函数/属性数量 | 主要职责 | 是否迁移 | 迁移去向 |
-| --- | --- | --- | --- | --- | --- | --- |
+### Step 3. 抽功能清单
+
+`specs/features.json` 是本 skill 最重要的产物。
+
+功能清单不是说明文档，而是迁移任务索引。每个功能必须能回答：
+
+1. 用户能做什么？
+2. 入口在哪里？
+3. 涉及哪些页面、模块、函数、数据、资源、系统能力？
+4. iOS 源码在哪里？
+5. Harmony 侧做到什么才算完成？
+
+功能按三级结构组织：
+
+```text
+一级功能 -> 二级功能 -> 三级功能
 ```
 
-每个 Swift 文件后追加细节：
+例如：
 
-```md
-## 文件：NewsMobile/NewsMobile/ContentView.swift
-
-- Target：
-- 所属模块：
-- imports：
-- 类型：
-- 关键状态：
-- 关键函数：
-- UI 子树：
-- 数据依赖：
-- 系统能力：
-- Harmony 迁移去向：
+```text
+新闻浏览 -> 首页信息流 -> 新闻列表加载与展示
 ```
 
-### 3. 生成 `output/01-ios-analyze/ios模块结构.md`
+每个 feature 必须包含：
 
-模块结构必须参照 iOS 项目真实结构，而不是按鸿蒙主观重组。多 target、多 package、多目录模块时，先记录 iOS 原始模块，再给 HarmonyOS NEXT 建议拆分。
-
-每个模块至少写清楚：
-
-```md
-## 模块名称
-
-- iOS 目录 / Target：
-- 模块职责：
-- 对外接口：
-- 输入数据：
-- 输出数据：
-- 依赖模块：
-- 被依赖模块：
-- 使用的 Apple 能力：
-- HarmonyOS NEXT 参考拆分：
-- 验收点：
+```json
+{
+  "id": "feature.news.home_feed",
+  "level1": "新闻浏览",
+  "level2": "首页信息流",
+  "level3": "新闻列表加载与展示",
+  "name": "首页新闻流",
+  "description": "用户打开 App 后看到新闻列表，支持分类切换、刷新、进入详情页。",
+  "user_value": "快速浏览最新新闻",
+  "entry_points": ["ContentView", "HomeView"],
+  "screens": ["screen.home.feed"],
+  "modules": ["views.home", "services.news", "models.article"],
+  "functions": ["services.news.fetchArticles"],
+  "capabilities": ["network.urlsession"],
+  "resources": ["tab.home", "color.accent"],
+  "source_refs": [
+    "MyApp/Views/HomeView.swift",
+    "MyApp/Services/NewsService.swift"
+  ],
+  "data_sources": [
+    {
+      "type": "network",
+      "name": "NewsService.fetchTopStories",
+      "fallback": "固定样例数据"
+    }
+  ],
+  "states": ["loading", "populated", "empty", "error"],
+  "user_actions": ["切换分类", "下拉刷新", "点击新闻卡片进入详情"],
+  "acceptance": [
+    "首页启动后不能空白",
+    "有数据态展示标题、来源、时间和摘要或图片",
+    "点击列表项能进入详情页",
+    "网络失败时展示固定样例数据或错误态"
+  ],
+  "migration_priority": "high"
+}
 ```
 
-依赖关系要补一张表：
+规则：
 
-```md
-| 上游模块 | 下游模块 | 依赖内容 | 依赖原因 | Harmony 迁移校验 |
-| --- | --- | --- | --- | --- |
+- `id` 必须稳定，后续模型按它领取任务。
+- 不允许只写“首页”“搜索”这种页面名，必须写成用户可感知功能。
+- 每个 feature 至少关联一个 `modules` 或 `screens`。
+- 核心 feature 必须有关联源码 `source_refs` 和验收标准 `acceptance`。
+
+### Step 4. 抽轻量函数索引
+
+`specs/functions.json` 是为了帮助后续模型定位实现，不是完整函数级文档。
+
+粒度控制为：
+
+```text
+模块 -> 类型 -> 函数/属性 -> 输入/输出/副作用/关联功能
 ```
 
-### 4. 生成 `output/01-ios-analyze/ios函数级清单.md`
+不要逐行解释实现，不要复制源码。
 
-函数级清单是后续鸿蒙模块生成的硬输入。必须包含所有 Swift 类型和函数。
+每项格式：
 
-格式：
-
-```md
-# iOS 函数级清单
-
-## 文件：<path>
-
-### 类型：<TypeName>
-
-- 类型种类：View / Model / Service / Store / App / Widget / Extension
-- 职责：
-- 状态/属性：
-- 依赖：
-- 被调用方：
-
-| 函数/属性 | 级别 | 输入 | 输出 | 副作用 | UI/业务行为 | 调用关系 | Harmony 迁移动作 |
-| --- | --- | --- | --- | --- | --- | --- | --- |
+```json
+{
+  "id": "services.news.fetchArticles",
+  "module_id": "services.news",
+  "file": "MyApp/Services/NewsService.swift",
+  "type": "NewsService",
+  "kind": "service",
+  "member": "fetchArticles(category:)",
+  "inputs": ["category"],
+  "outputs": ["Article[]"],
+  "side_effects": ["network", "state_update"],
+  "used_by_features": ["feature.news.home_feed"],
+  "called_by": ["HomeView.refresh"],
+  "migration_action": "service"
+}
 ```
 
-`Harmony 迁移动作` 只能使用：
+`migration_action` 只能使用：
 
-- `保留为独立 ArkTS 函数`
-- `迁移为 ArkUI 组件`
-- `迁移为 service/store/model`
-- `合并到上层组件`
-- `由 Harmony Kit 替代`
-- `删除，原因：...`
+- `model`
+- `service`
+- `store`
+- `arkui_component`
+- `platform_adapter`
+- `merge`
+- `delete_with_reason`
 
-### 5. 生成 `output/01-ios-analyze/ios功能清单.md`
+### Step 5. 抽页面清单
 
-每个功能必须能追溯到源文件。使用以下格式：
+输出 `specs/screens.json`。
 
-```md
-## 功能名称
+页面清单服务于功能清单，必须通过 `feature_ids` 关联功能。
 
-- iOS 入口：file -> view/service/type
-- 用户价值：
-- UI 表现：
-- 数据来源：
-- 用户交互：
-- 状态：loading / populated / empty / error / permission denied
-- 使用的 Apple 能力：
-- 证据文件：
-- 证据类型：
-- 证据函数：
-- 关联截图：
-- Harmony 模块建议：
-- 验收用例：
+每个 screen 至少包含：
+
+```json
+{
+  "id": "screen.home.feed",
+  "name": "首页信息流",
+  "ios_view": "HomeView",
+  "feature_ids": ["feature.news.home_feed"],
+  "route": "root tab home",
+  "states": ["loading", "populated", "empty", "error"],
+  "key_controls": ["分类 Tab", "新闻卡片", "刷新入口"],
+  "layout_notes": ["顶部分类横滑", "列表卡片纵向滚动"],
+  "resource_refs": ["tab.home"],
+  "screenshot": "output/ios-analyze/screenshots/png/home-feed.png",
+  "source_refs": ["MyApp/Views/HomeView.swift"]
+}
 ```
 
-对 NewsMobile，至少覆盖这些功能组：
+截图字段可以先为空。截图是辅助证据，不是功能清单成立的前提。
 
-- 首页新闻流
-- 分类切换
-- For You 推荐流
-- 搜索
-- Saved / Watch Later 收藏
-- 设置
-- 文章详情
-- 文章 WebView
-- 语音播报 / TTS
-- 通知和关键词提醒
-- 天气 / 定位
-- 自定义订阅源
-- 本地新闻
-- 新闻聚类和趋势话题
+### Step 6. 抽 iOS 系统能力
 
-### 6. 生成 `output/01-ios-analyze/ios特性清单.md`
+输出 `specs/capabilities.json`。
 
-只记录 Apple 侧能力事实，不在这里选择鸿蒙等价能力。
+只记录 Apple/iOS 侧事实，不映射 Harmony Kit。
 
-使用以下格式：
+每项至少包含：
 
-```md
-| iOS 能力 | 源码证据 | 使用位置 | 运行时行为 | 备注 |
-| --- | --- | --- | --- | --- |
-```
+- `id`：例如 `network.urlsession`、`webview.safari`、`notification.local`。
+- `capability`：iOS API / framework 名称。
+- `source_refs`：源码引用。
+- `runtime_behavior`：运行时行为。
+- `permission_or_entitlement`：权限或 entitlement。
+- `feature_ids`：关联功能。
 
-对 NewsMobile，至少检查：
+### Step 7. 归档资源
 
-- SwiftUI 导航和布局
-- URLSession
-- XMLParser
-- UserDefaults
-- UserNotifications
-- CoreLocation
-- WebKit / WKWebView
-- AVSpeechSynthesizer
-- NaturalLanguage
-- WidgetKit
-- BackgroundTasks
-- iCloud key-value 同步
-- Network / NWListener
+输出 `specs/resources.json`，并尽量归档到 `assets/`。
 
-### 7. 添加确定性的 iOS 截图模式
+资源必须通过 `used_by_features` 或 `screen_id` 关联到功能或页面。
 
-如果应用还没有稳定数据和 UI 标识，需要在截图前修改 iOS 应用：
+必须检查：
 
-- 增加 `-uiSnapshotMode true` 启动参数支持。
-- 截图模式下加载 fixture 数据，不只依赖实时网络数据。
-- 启动时重置设置、收藏项和搜索状态。
-- 尽量禁用或自动处理权限弹窗。
-- 给 Tab、卡片、按钮、设置行和主要容器增加 `accessibilityIdentifier`。
+- `Assets.xcassets`、图片、颜色、AppIcon、AccentColor。
+- SwiftUI `Image(systemName:)`、`Label(systemImage:)`、Tab item 图标。
+- 工具栏图标、空态图标、badge/icon、关键颜色。
 
-使用 `references/xcuitest-snapshot-template.swift` 作为测试结构参考。
+Tab 栏图标必须单独建资源项。后续 Harmony 侧不能只做文字 Tab。
 
-### 8. 自动化截图
+### Step 8. 动态截图计划和辅助截图
 
-优先使用 XCUITest。如果维护 UI Test target 的成本过高，也可以使用测试专用启动参数直达页面，再用 `simctl io screenshot` 截图。两种方式都不能依赖人工点击。
+截图是辅助校验项，不是主链路。
 
-自动截图必须满足：
+只有在以下情况必须截图：
 
-- 使用 `-uiSnapshotMode true` 启动应用。
-- 使用 XCUITest 或 `-snapshotScreen <screen>` 到达目标页面。
-- 覆盖每个必需页面状态。
-- 可以通过命令行重复运行。
+- 代码无法确认视觉结构、控件密度、图标、空态或页面状态。
+- 关键页面需要 UI 还原依据。
+- 涉及 WebView、地图、定位、相机、相册、登录、分享、TTS、Widget/Card 等系统能力的可见界面。
 
-XCUITest 推荐命令形式：
+截图计划写入 `specs/screens.json` 的 `screenshot_plan` 或 screen 条目中，不固定张数。
 
-```bash
-xcodebuild test \
-  -project NewsMobile/NewsMobile.xcodeproj \
-  -scheme NewsMobile \
-  -destination 'platform=iOS Simulator,name=iPhone 17 Pro Max' \
-  -resultBundlePath output/01-ios-analyze/screenshots/NewsMobileScreenshots.xcresult
-```
+截图不能依赖人工点击模拟器；必须通过 XCUITest、启动参数或可重复命令完成。
 
-启动参数直达页面推荐命令形式：
+推荐命令：
 
 ```bash
 python3 skills/ios-analyze/scripts/capture_ios_snapshots.py \
   --device booted \
-  --bundle-id com.jordankoch.NewsMobile \
-  --output-dir output/01-ios-analyze/screenshots/png
+  --bundle-id <bundle-id> \
+  --screens-spec output/ios-analyze/specs/screens.json \
+  --output-dir output/ios-analyze/screenshots/png
 ```
 
-从 result bundle 导出截图到：
+如果为了稳定截图需要修改 iOS 工程，只能加测试/截图模式，不得破坏正常启动路径：
+
+- 支持 `-uiSnapshotMode true`。
+- 支持 `-snapshotScreen <screen-id>`。
+- 截图模式加载固定样例数据。
+- 给主要控件增加 `accessibilityIdentifier`。
+
+### Step 9. 写人工摘要
+
+Markdown 只用于人审阅，必须从 JSON specs 派生，不要写成唯一事实源。
+
+输出：
+
+- `reports/ios工程分析.md`
+- `reports/ios功能摘要.md`
+- `reports/ios界面摘要.md`
+
+`ios功能摘要.md` 用表格展示三级功能：
+
+```markdown
+| 一级功能 | 二级功能 | 三级功能 | 页面 | 数据来源 | iOS 源码 | 迁移优先级 |
+|---|---|---|---|---|---|---|
+| 新闻浏览 | 首页信息流 | 新闻列表加载与展示 | 首页 | 网络/固定样例数据 | HomeView.swift, NewsService.swift | high |
+```
+
+表格只是审阅视图。后续模型仍然读取 `specs/features.json`。
+
+## 后续模型消费方式
+
+后续模型不应该整仓库重新猜功能，而是按 feature id 消费：
 
 ```text
-output/01-ios-analyze/screenshots/png/
+实现 feature.news.home_feed
+读取：
+- specs/features.json 中该 feature
+- specs/modules.json 中关联模块
+- specs/functions.json 中 used_by_features 包含该 feature 的函数
+- specs/screens.json 中关联页面
+- specs/capabilities.json 中关联系统能力
+- specs/resources.json 中关联图标、颜色、图片
 ```
 
-必需截图名称：
+因此所有 JSON 之间必须用稳定 id 相互引用。
 
-```text
-01-home.png
-02-home-category.png
-03-article-detail.png
-04-article-webview.png
-05-for-you.png
-06-search-empty.png
-07-search-results.png
-08-saved-empty.png
-09-saved-with-article.png
-10-settings.png
-11-keyword-alerts.png
-12-custom-feeds.png
-13-local-news.png
-14-audio-briefing.png
-```
+## 质量门槛
 
-### 9. 生成 `output/01-ios-analyze/ios界面清单.md`
-
-每张截图都要描述：
-
-- 截图路径
-- iOS 源码 View
-- 页面入口路径
-- 布局结构
-- 关键控件
-- 交互行为
-- empty/loading/error 状态
-- 视觉复刻备注
-
-UI 目标是记录产品行为和信息层级，供 HarmonyOS 实现使用。
+- `features.json` 缺少三级结构：失败。
+- 核心功能没有 `source_refs`：失败。
+- 核心功能没有 `acceptance`：失败。
+- `functions.json` 过细到逐行解释或复制源码：失败。
+- Markdown 有功能而 JSON 没有：失败。
+- JSON 之间无法通过稳定 id 关联：失败。
+- 只看 README 或扫描脚本、不读 Swift 源码：失败。
+- 截图缺失可以标记待补，但不能因此跳过功能清单。
 
 ## 失败处理
 
-- 如果实时数据为空或不稳定，为截图模式增加 fixture 数据。
-- 如果 UI Test 无法到达某个页面，增加 accessibilityIdentifier 或测试专用导航入口。
-- 如果权限弹窗阻塞自动化，通过测试状态启动或在测试命令中使用 `simctl privacy` 预处理。
+- 实时数据为空或不稳定：记录真实数据入口，并为截图或验收补固定样例数据。
+- UI Test 到不了页面：加 `accessibilityIdentifier` 或测试专用导航入口。
+- 资源无法导出：记录 SF Symbols 名称、使用位置、截图裁剪和等价要求。
+- 功能归属不清：回到源码调用链，优先按用户入口和状态流归类。

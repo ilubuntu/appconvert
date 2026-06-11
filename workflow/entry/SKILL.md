@@ -32,14 +32,14 @@ description: 当用户希望把某个 iOS Swift/SwiftUI/UIKit 工程转换为 Ha
 
 必须输出或更新：
 
-- `output/00-workflow/迁移状态.md`
-- `output/01-ios-analyze/ios模块结构.md`
-- `output/01-ios-analyze/ios功能清单.md`
-- `output/01-ios-analyze/ios界面清单.md`
-- `output/01-ios-analyze/ios特性清单.md`
-- `output/02-ios-map/ios-harmony-kit映射.md`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
-- `output/04-harmony-visual-verify/界面对齐.md`
+- `output/workflow/迁移状态.md`
+- `output/ios-analyze/ios模块结构.md`
+- `output/ios-analyze/ios功能清单.md`
+- `output/ios-analyze/ios界面清单.md`
+- `output/ios-analyze/ios特性清单.md`
+- `output/ios-map/ios-harmony-kit映射.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
+- `output/harmony-visual-verify/界面对齐.md`
 - HarmonyOS NEXT 工程目录
 - 构建验证结果
 
@@ -47,7 +47,7 @@ description: 当用户希望把某个 iOS Swift/SwiftUI/UIKit 工程转换为 Ha
 
 ### 1. 状态检查
 
-读取或创建 `output/00-workflow/迁移状态.md`。
+读取或创建 `output/workflow/迁移状态.md`。
 
 检查已有产物：
 
@@ -63,12 +63,12 @@ description: 当用户希望把某个 iOS Swift/SwiftUI/UIKit 工程转换为 Ha
 
 产物：
 
-- `output/01-ios-analyze/ios模块结构.md`
-- `output/01-ios-analyze/ios功能清单.md`
-- `output/01-ios-analyze/ios界面清单.md`
-- `output/01-ios-analyze/ios特性清单.md`
-- `output/01-ios-analyze/`
-- `output/01-ios-analyze/screenshots/png/`
+- `output/ios-analyze/ios模块结构.md`
+- `output/ios-analyze/ios功能清单.md`
+- `output/ios-analyze/ios界面清单.md`
+- `output/ios-analyze/ios特性清单.md`
+- `output/ios-analyze/`
+- `output/ios-analyze/screenshots/png/`
 
 ### 3. iOS 能力映射
 
@@ -76,7 +76,7 @@ description: 当用户希望把某个 iOS Swift/SwiftUI/UIKit 工程转换为 Ha
 
 产物：
 
-- `output/02-ios-map/ios-harmony-kit映射.md`
+- `output/ios-map/ios-harmony-kit映射.md`
 
 要求：
 
@@ -90,14 +90,14 @@ description: 当用户希望把某个 iOS Swift/SwiftUI/UIKit 工程转换为 Ha
 产物：
 
 - HarmonyOS NEXT 工程目录
-- `output/03-harmony-generate/harmony全量实现追踪.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
 
 要求：
 
-- 每个 Harmony 模块追溯到 `output/01-ios-analyze/ios模块结构.md`。
-- 每个页面追溯到 `output/01-ios-analyze/ios功能清单.md` 和 `output/01-ios-analyze/ios界面清单.md`。
-- 每个系统能力追溯到 `output/02-ios-map/ios-harmony-kit映射.md`。
-- 真实数据接入在本阶段完成，新闻流真实数据优先，fixture 只做兜底。
+- 每个 Harmony 模块追溯到 `output/ios-analyze/ios模块结构.md`。
+- 每个页面追溯到 `output/ios-analyze/ios功能清单.md` 和 `output/ios-analyze/ios界面清单.md`。
+- 每个系统能力追溯到 `output/ios-map/ios-harmony-kit映射.md`。
+- 真实数据接入在本阶段完成，新闻流真实数据优先，固定样例数据 只做兜底。
 - UI 以 iOS 截图为视觉基准，顶栏、Tab、卡片、字号、颜色、间距、状态都要争取高度还原。
 
 ### 5. 视觉验收和构建
@@ -109,11 +109,11 @@ description: 当用户希望把某个 iOS Swift/SwiftUI/UIKit 工程转换为 Ha
 要求：
 
 - 读取 iOS 截图和 Harmony 截图逐页对比。
-- 输出 `output/04-harmony-visual-verify/界面对齐.md`。
+- 输出 `output/harmony-visual-verify/界面对齐.md`。
 - 差异明显时修复 ArkUI 实现。
 - 构建 HAP。
-- 更新 `output/00-workflow/迁移状态.md`。
-- 更新 `output/03-harmony-generate/harmony全量实现追踪.md`。
+- 更新 `output/workflow/迁移状态.md`。
+- 更新 `output/harmony-generate/harmony全量实现追踪.md`。
 - 如果失败，记录具体错误和下一步。
 
 ## 内部执行策略

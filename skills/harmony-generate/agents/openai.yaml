@@ -1,3 +1,0 @@
-display_name: Harmony NEXT Project Assistant
-short_description: 生成鸿蒙迁移工程
-default_prompt: 根据 iOS 工程分析产出的模块结构、功能规格、UI 截图和能力映射生成 HarmonyOS NEXT ArkTS 工程。

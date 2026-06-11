@@ -92,7 +92,7 @@ workflow runner
 
 ### 全局状态文件
 
-`output/00-workflow/迁移状态.md`
+`output/workflow/迁移状态.md`
 
 用途：
 
@@ -127,7 +127,7 @@ workflow runner
 - 无
 
 下一步：
-- 调用 Harmony工程生成 agent，读取 output/01-ios-analyze/ios模块结构.md 和 output/02-ios-map/ios-harmony-kit映射.md 拆分工程结构。
+- 调用 Harmony工程生成 agent，读取 output/ios-analyze/ios模块结构.md 和 output/ios-map/ios-harmony-kit映射.md 拆分工程结构。
 ```
 
 ### iOS 工程分析阶段输出
@@ -139,21 +139,21 @@ workflow runner
 
 输出：
 
-- `output/01-ios-analyze/ios源码索引.md`
-- `output/01-ios-analyze/ios模块结构.md`
-- `output/01-ios-analyze/ios函数级清单.md`
-- `output/01-ios-analyze/ios功能清单.md`
-- `output/01-ios-analyze/ios界面清单.md`
-- `output/01-ios-analyze/ios特性清单.md`
-- `output/01-ios-analyze/ios模块结构.draft.md`
-- `output/01-ios-analyze/screenshots/png/*.png`
-- `output/01-ios-analyze/screenshots/png/screenshots-manifest.json`
+- `output/ios-analyze/ios源码索引.md`
+- `output/ios-analyze/ios模块结构.md`
+- `output/ios-analyze/ios函数级清单.md`
+- `output/ios-analyze/ios功能清单.md`
+- `output/ios-analyze/ios界面清单.md`
+- `output/ios-analyze/ios特性清单.md`
+- `output/ios-analyze/ios模块结构.draft.md`
+- `output/ios-analyze/screenshots/png/*.png`
+- `output/ios-analyze/screenshots/png/screenshots-manifest.json`
 
 门禁：
 
 - iOS 工程可以构建或至少能解释构建阻塞。
-- 每个 Swift 文件都进入 `output/01-ios-analyze/ios源码索引.md`。
-- 每个类型、关键属性、函数、`body`、异步任务、回调、delegate、extension 都进入 `output/01-ios-analyze/ios函数级清单.md`。
+- 每个 Swift 文件都进入 `output/ios-analyze/ios源码索引.md`。
+- 每个类型、关键属性、函数、`body`、异步任务、回调、delegate、extension 都进入 `output/ios-analyze/ios函数级清单.md`。
 - 每个功能都能追溯到具体文件、类型、函数和截图。
 - 截图不能依赖人工点击。
 - 主要页面截图齐全。
@@ -163,13 +163,13 @@ workflow runner
 
 输入：
 
-- `output/01-ios-analyze/ios模块结构.md`
-- `output/01-ios-analyze/ios功能清单.md`
-- `output/01-ios-analyze/ios特性清单.md`
+- `output/ios-analyze/ios模块结构.md`
+- `output/ios-analyze/ios功能清单.md`
+- `output/ios-analyze/ios特性清单.md`
 
 输出：
 
-- `output/02-ios-map/ios-harmony-kit映射.md`
+- `output/ios-map/ios-harmony-kit映射.md`
 
 门禁：
 
@@ -181,18 +181,18 @@ workflow runner
 
 输入：
 
-- `output/01-ios-analyze/ios源码索引.md`
-- `output/01-ios-analyze/ios模块结构.md`
-- `output/01-ios-analyze/ios函数级清单.md`
-- `output/01-ios-analyze/ios功能清单.md`
-- `output/01-ios-analyze/ios界面清单.md`
-- `output/02-ios-map/ios-harmony-kit映射.md`
-- `output/01-ios-analyze/screenshots/png/`
+- `output/ios-analyze/ios源码索引.md`
+- `output/ios-analyze/ios模块结构.md`
+- `output/ios-analyze/ios函数级清单.md`
+- `output/ios-analyze/ios功能清单.md`
+- `output/ios-analyze/ios界面清单.md`
+- `output/ios-map/ios-harmony-kit映射.md`
+- `output/ios-analyze/screenshots/png/`
 
 输出：
 
-- `output/03-harmony-generate/harmony模块实现计划.md`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
+- `output/harmony-generate/harmony模块实现计划.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
 
 门禁：
 
@@ -204,43 +204,43 @@ workflow runner
 
 输入：
 
-- `output/03-harmony-generate/harmony模块实现计划.md`
-- `output/01-ios-analyze/ios源码索引.md`
-- `output/01-ios-analyze/ios模块结构.md`
-- `output/01-ios-analyze/ios函数级清单.md`
-- `output/01-ios-analyze/ios功能清单.md`
-- `output/02-ios-map/ios-harmony-kit映射.md`
+- `output/harmony-generate/harmony模块实现计划.md`
+- `output/ios-analyze/ios源码索引.md`
+- `output/ios-analyze/ios模块结构.md`
+- `output/ios-analyze/ios函数级清单.md`
+- `output/ios-analyze/ios功能清单.md`
+- `output/ios-map/ios-harmony-kit映射.md`
 
 输出：
 
 - `NewsMobileHarmony/entry/src/main/ets/models/`
 - `NewsMobileHarmony/entry/src/main/ets/services/`
 - `NewsMobileHarmony/entry/src/main/ets/stores/`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
 - 构建产物或构建失败日志
 
 门禁：
 
 - 新闻、搜索、收藏、设置、订阅源、趋势、聚类、TTS/Web/通知/定位/后台/卡片/本地 API 相关数据接口都有模型或服务。
 - 每个 Harmony 文件能追溯到 iOS 文件、类型和函数。
-- 真实数据优先，fixture 只做兜底。
+- 真实数据优先，固定样例数据 只做兜底。
 - Harmony 工程能构建，或失败原因明确。
 
 ### Harmony 页面 UI 阶段输出
 
 输入：
 
-- `output/03-harmony-generate/harmony模块实现计划.md`
-- `output/01-ios-analyze/ios界面清单.md`
-- `output/01-ios-analyze/ios功能清单.md`
-- `output/01-ios-analyze/screenshots/png/`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
+- `output/harmony-generate/harmony模块实现计划.md`
+- `output/ios-analyze/ios界面清单.md`
+- `output/ios-analyze/ios功能清单.md`
+- `output/ios-analyze/screenshots/png/`
+- `output/harmony-generate/harmony全量实现追踪.md`
 
 输出：
 
 - `NewsMobileHarmony/entry/src/main/ets/pages/`
 - `NewsMobileHarmony/entry/src/main/ets/components/`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
 - 构建产物或构建失败日志
 
 门禁：
@@ -254,16 +254,16 @@ workflow runner
 
 输入：
 
-- `output/03-harmony-generate/harmony模块实现计划.md`
-- `output/01-ios-analyze/ios特性清单.md`
-- `output/02-ios-map/ios-harmony-kit映射.md`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
+- `output/harmony-generate/harmony模块实现计划.md`
+- `output/ios-analyze/ios特性清单.md`
+- `output/ios-map/ios-harmony-kit映射.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
 
 输出：
 
 - `NewsMobileHarmony/entry/src/main/ets/platform/`
 - `NewsMobileHarmony/entry/src/main/module.json5`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
 - 构建产物或构建失败日志
 
 门禁：
@@ -276,38 +276,38 @@ workflow runner
 
 输入：
 
-- `output/03-harmony-generate/harmony模块实现计划.md`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
-- `output/01-ios-analyze/ios源码索引.md`
-- `output/01-ios-analyze/ios函数级清单.md`
-- `output/01-ios-analyze/ios功能清单.md`
-- `output/01-ios-analyze/ios界面清单.md`
-- `output/02-ios-map/ios-harmony-kit映射.md`
+- `output/harmony-generate/harmony模块实现计划.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
+- `output/ios-analyze/ios源码索引.md`
+- `output/ios-analyze/ios函数级清单.md`
+- `output/ios-analyze/ios功能清单.md`
+- `output/ios-analyze/ios界面清单.md`
+- `output/ios-map/ios-harmony-kit映射.md`
 
 输出：
 
 - `NewsMobileHarmony/`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
-- `output/00-workflow/迁移状态.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
+- `output/workflow/迁移状态.md`
 - 构建产物或构建失败日志
 
 门禁：
 
 - Harmony 工程能构建，或失败原因明确。
 - 每个 iOS 类型/函数都有 Harmony 去向。
-- 每个 Harmony 模块能追溯到 `output/01-ios-analyze/ios模块结构.md`。
-- 每个页面能追溯到 `output/01-ios-analyze/ios功能清单.md` 和 `output/01-ios-analyze/ios界面清单.md`。
-- 每个系统能力能追溯到 `output/02-ios-map/ios-harmony-kit映射.md`。
-- 首屏不能空白，必须有 fixture 兜底数据。
+- 每个 Harmony 模块能追溯到 `output/ios-analyze/ios模块结构.md`。
+- 每个页面能追溯到 `output/ios-analyze/ios功能清单.md` 和 `output/ios-analyze/ios界面清单.md`。
+- 每个系统能力能追溯到 `output/ios-map/ios-harmony-kit映射.md`。
+- 首屏不能空白，必须有 固定样例数据兜底数据。
 
 ### Harmony 视觉验收阶段输出
 
 输入：
 
 - `NewsMobileHarmony/`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
-- `output/01-ios-analyze/ios界面清单.md`
-- `output/01-ios-analyze/screenshots/png/`
+- `output/harmony-generate/harmony全量实现追踪.md`
+- `output/ios-analyze/ios界面清单.md`
+- `output/ios-analyze/screenshots/png/`
 
 输出：
 
@@ -315,7 +315,7 @@ workflow runner
 - Harmony 截图。
 - iOS/Harmony 页面差异记录。
 - 修复后的工程。
-- 更新后的 `output/03-harmony-generate/harmony全量实现追踪.md` 和 `output/00-workflow/迁移状态.md`。
+- 更新后的 `output/harmony-generate/harmony全量实现追踪.md` 和 `output/workflow/迁移状态.md`。
 
 门禁：
 
@@ -328,12 +328,12 @@ workflow runner
 
 workflow runner 只做以下事情：
 
-1. 检查当前阶段和 `output/00-workflow/迁移状态.md`。
+1. 检查当前阶段和 `output/workflow/迁移状态.md`。
 2. 检查本阶段输入文件是否存在。
 3. 渲染阶段 prompt。
 4. 调用 `codex exec`。
 5. 检查输出是否满足门禁。
-6. 更新 `output/00-workflow/迁移状态.md`。
+6. 更新 `output/workflow/迁移状态.md`。
 7. 推进下一阶段或报告阻塞。
 
 workflow runner 不应该：
@@ -357,13 +357,13 @@ workflow runner 不应该：
 - NewsMobile/
 
 必须输出：
-- output/01-ios-analyze/ios源码索引.md
-- output/01-ios-analyze/ios模块结构.md
-- output/01-ios-analyze/ios函数级清单.md
-- output/01-ios-analyze/ios功能清单.md
-- output/01-ios-analyze/ios界面清单.md
-- output/01-ios-analyze/ios特性清单.md
-- output/01-ios-analyze/screenshots/png/screenshots-manifest.json
+- output/ios-analyze/ios源码索引.md
+- output/ios-analyze/ios模块结构.md
+- output/ios-analyze/ios函数级清单.md
+- output/ios-analyze/ios功能清单.md
+- output/ios-analyze/ios界面清单.md
+- output/ios-analyze/ios特性清单.md
+- output/ios-analyze/screenshots/png/screenshots-manifest.json
 
 约束：
 - 不生成 Harmony 工程。
@@ -381,12 +381,12 @@ workflow runner 不应该：
 使用 ios-map skill 生成 iOS 到 HarmonyOS NEXT 能力映射。
 
 必须读取：
-- output/01-ios-analyze/ios模块结构.md
-- output/01-ios-analyze/ios功能清单.md
-- output/01-ios-analyze/ios特性清单.md
+- output/ios-analyze/ios模块结构.md
+- output/ios-analyze/ios功能清单.md
+- output/ios-analyze/ios特性清单.md
 
 必须输出：
-- output/02-ios-map/ios-harmony-kit映射.md
+- output/ios-map/ios-harmony-kit映射.md
 
 约束：
 - 不读取完整 iOS 源码，除非文档证据不足。
@@ -403,17 +403,17 @@ workflow runner 不应该：
 使用 harmony-generate skill 为 NewsMobileHarmony 生成模块实现计划。
 
 必须读取：
-- output/01-ios-analyze/ios源码索引.md
-- output/01-ios-analyze/ios模块结构.md
-- output/01-ios-analyze/ios函数级清单.md
-- output/01-ios-analyze/ios功能清单.md
-- output/01-ios-analyze/ios界面清单.md
-- output/02-ios-map/ios-harmony-kit映射.md
-- output/01-ios-analyze/screenshots/png/
+- output/ios-analyze/ios源码索引.md
+- output/ios-analyze/ios模块结构.md
+- output/ios-analyze/ios函数级清单.md
+- output/ios-analyze/ios功能清单.md
+- output/ios-analyze/ios界面清单.md
+- output/ios-map/ios-harmony-kit映射.md
+- output/ios-analyze/screenshots/png/
 
 必须输出：
-- output/03-harmony-generate/harmony模块实现计划.md
-- output/03-harmony-generate/harmony全量实现追踪.md
+- output/harmony-generate/harmony模块实现计划.md
+- output/harmony-generate/harmony全量实现追踪.md
 
 约束：
 - 本阶段只做计划和追踪表初始化，不大规模改 Harmony 代码。
@@ -426,20 +426,20 @@ workflow runner 不应该：
 工作目录：/Users/bb/work/appConvert
 
 任务：
-按 output/03-harmony-generate/harmony模块实现计划.md 分别执行核心服务、页面 UI、平台能力、集成汇总阶段。
+按 output/harmony-generate/harmony模块实现计划.md 分别执行核心服务、页面 UI、平台能力、集成汇总阶段。
 
 必须读取：
-- output/03-harmony-generate/harmony模块实现计划.md
-- output/01-ios-analyze/ios源码索引.md
-- output/01-ios-analyze/ios函数级清单.md
-- output/01-ios-analyze/ios功能清单.md
-- output/01-ios-analyze/ios界面清单.md
-- output/02-ios-map/ios-harmony-kit映射.md
+- output/harmony-generate/harmony模块实现计划.md
+- output/ios-analyze/ios源码索引.md
+- output/ios-analyze/ios函数级清单.md
+- output/ios-analyze/ios功能清单.md
+- output/ios-analyze/ios界面清单.md
+- output/ios-map/ios-harmony-kit映射.md
 
 必须输出：
 - NewsMobileHarmony/
-- output/03-harmony-generate/harmony全量实现追踪.md
-- output/00-workflow/迁移状态.md
+- output/harmony-generate/harmony全量实现追踪.md
+- output/workflow/迁移状态.md
 
 约束：
 - 每个 Harmony 文件必须追溯到 iOS 文件、类型和函数。
@@ -457,15 +457,15 @@ workflow runner 不应该：
 
 必须读取：
 - NewsMobileHarmony/
-- output/03-harmony-generate/harmony全量实现追踪.md
-- output/01-ios-analyze/ios界面清单.md
-- output/01-ios-analyze/screenshots/png/
+- output/harmony-generate/harmony全量实现追踪.md
+- output/ios-analyze/ios界面清单.md
+- output/ios-analyze/screenshots/png/
 
 必须输出：
 - 构建结果
 - 修复说明
-- 更新后的 output/03-harmony-generate/harmony全量实现追踪.md
-- 更新后的 output/00-workflow/迁移状态.md
+- 更新后的 output/harmony-generate/harmony全量实现追踪.md
+- 更新后的 output/workflow/迁移状态.md
 
 约束：
 - 不扩大迁移范围。
@@ -475,7 +475,7 @@ workflow runner 不应该：
 
 ## 推荐执行顺序
 
-1. 创建或更新 `output/00-workflow/迁移状态.md`。
+1. 创建或更新 `output/workflow/迁移状态.md`。
 2. runner 检查是否已有 iOS 分析产物。
 3. 缺 iOS 分析产物时，执行 iOS 工程分析阶段。
 4. iOS 分析通过门禁后，执行 iOS 能力映射阶段。
@@ -483,22 +483,22 @@ workflow runner 不应该：
 6. 计划通过门禁后，依次执行核心服务、页面 UI、平台能力阶段。
 7. 模块阶段完成后，执行 Harmony 集成汇总阶段。
 8. Harmony 构建通过后，执行 Harmony 视觉验收阶段。
-9. 每阶段完成后更新 `output/00-workflow/迁移状态.md`。
+9. 每阶段完成后更新 `output/workflow/迁移状态.md`。
 
 ## 当前 NewsMobile 状态
 
 已完成：
 
-- `output/01-ios-analyze/ios模块结构.md`
-- `output/01-ios-analyze/ios功能清单.md`
-- `output/01-ios-analyze/ios界面清单.md`
-- `output/01-ios-analyze/ios特性清单.md`
-- `output/02-ios-map/ios-harmony-kit映射.md`
-- `output/01-ios-analyze/screenshots/png/*.png`
+- `output/ios-analyze/ios模块结构.md`
+- `output/ios-analyze/ios功能清单.md`
+- `output/ios-analyze/ios界面清单.md`
+- `output/ios-analyze/ios特性清单.md`
+- `output/ios-map/ios-harmony-kit映射.md`
+- `output/ios-analyze/screenshots/png/*.png`
 - `NewsMobileHarmony/`
-- `output/03-harmony-generate/harmony全量实现追踪.md`
+- `output/harmony-generate/harmony全量实现追踪.md`
 
 当前建议阶段：
 
-- 回到 iOS 工程分析阶段，补齐 `output/01-ios-analyze/ios源码索引.md` 和 `output/01-ios-analyze/ios函数级清单.md`。
+- 回到 iOS 工程分析阶段，补齐 `output/ios-analyze/ios源码索引.md` 和 `output/ios-analyze/ios函数级清单.md`。
 - 再执行 Harmony 模块实现计划阶段，把当前集中在 `Index.ets` 的实现拆为正式模块：`models/`、`services/`、`stores/`、`platform/`、`components/`、`pages/`、`cards/`。

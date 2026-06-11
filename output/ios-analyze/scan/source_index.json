@@ -1,0 +1,5947 @@
+{
+  "files": [
+    {
+      "path": "NewsMobile/ContentView.swift",
+      "module_hint": "newsmobile",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "ContentView"
+        },
+        {
+          "kind": "enum",
+          "name": "SnapshotScreen"
+        },
+        {
+          "kind": "struct",
+          "name": "SnapshotSupport"
+        },
+        {
+          "kind": "struct",
+          "name": "SnapshotRootView"
+        }
+      ],
+      "views": [
+        "ContentView",
+        "SnapshotRootView"
+      ],
+      "functions": [
+        {
+          "name": "prepare",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "article",
+          "inputs": "_ title: String,\n        _ description: String,\n        source: NewsSource,\n        category: NewsCategory,\n        age: TimeInterval,\n        sentiment: SentimentResult.SentimentLabel,\n        entities: [(String, ExtractedEntity.EntityType",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "newsAggregator"
+        },
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "var",
+          "name": "selectedTab"
+        },
+        {
+          "kind": "var",
+          "name": "showBreakingNews"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "var",
+          "name": "liveContent"
+        },
+        {
+          "kind": "let",
+          "name": "arguments"
+        },
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "let",
+          "name": "articles"
+        },
+        {
+          "kind": "var",
+          "name": "byCategory"
+        },
+        {
+          "kind": "let",
+          "name": "techSource"
+        },
+        {
+          "kind": "let",
+          "name": "topSource"
+        },
+        {
+          "kind": "let",
+          "name": "scienceSource"
+        },
+        {
+          "kind": "let",
+          "name": "businessSource"
+        },
+        {
+          "kind": "let",
+          "name": "worldSource"
+        },
+        {
+          "kind": "let",
+          "name": "usSource"
+        },
+        {
+          "kind": "var",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "screen"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        }
+      ],
+      "ui_patterns": [
+        "TabView",
+        "NavigationStack",
+        "WebView"
+      ],
+      "capability_hints": [],
+      "line_count": 347
+    },
+    {
+      "path": "NewsMobile/ML/EntityExtractor.swift",
+      "module_hint": "newsmobile.ml",
+      "imports": [
+        "Foundation",
+        "NaturalLanguage"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "EntityExtractor"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "extract",
+          "inputs": "from text: String",
+          "output": "[ExtractedEntity]"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "tagger"
+        },
+        {
+          "kind": "var",
+          "name": "entities"
+        },
+        {
+          "kind": "let",
+          "name": "options"
+        },
+        {
+          "kind": "let",
+          "name": "entityText"
+        },
+        {
+          "kind": "let",
+          "name": "entityType"
+        },
+        {
+          "kind": "let",
+          "name": "entity"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 52
+    },
+    {
+      "path": "NewsMobile/ML/SentimentAnalyzer.swift",
+      "module_hint": "newsmobile.ml",
+      "imports": [
+        "Foundation",
+        "NaturalLanguage"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "SentimentAnalyzer"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "analyze",
+          "inputs": "_ text: String",
+          "output": "SentimentResult"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "tagger"
+        },
+        {
+          "kind": "var",
+          "name": "totalScore"
+        },
+        {
+          "kind": "var",
+          "name": "count"
+        },
+        {
+          "kind": "let",
+          "name": "averageScore"
+        },
+        {
+          "kind": "let",
+          "name": "label"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 44
+    },
+    {
+      "path": "NewsMobile/Models/AIBackendManager+Enhanced.swift",
+      "module_hint": "newsmobile.models",
+      "imports": [
+        "AppKit",
+        "Combine",
+        "Foundation",
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "ConnectionTestResult"
+        },
+        {
+          "kind": "struct",
+          "name": "UsageStats"
+        },
+        {
+          "kind": "struct",
+          "name": "PerformanceMetrics"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "generateWithFallback",
+          "inputs": "prompt: String,\n        systemPrompt: String? = nil,\n        temperature: Float = 0.7,\n        maxTokens: Int = 2048",
+          "output": "String"
+        },
+        {
+          "name": "getAvailableBackendsInOrder",
+          "inputs": "",
+          "output": "[AIBackend]"
+        },
+        {
+          "name": "isBackendAvailable",
+          "inputs": "_ backend: AIBackend",
+          "output": "Bool"
+        },
+        {
+          "name": "testConnection",
+          "inputs": "for backend: AIBackend",
+          "output": "ConnectionTestResult"
+        },
+        {
+          "name": "recordUsage",
+          "inputs": "tokens: Int, cost: Double, responseTime: TimeInterval",
+          "output": ""
+        },
+        {
+          "name": "recordUsage",
+          "inputs": "backend: AIBackend, tokens: Int, responseTime: TimeInterval",
+          "output": ""
+        },
+        {
+          "name": "estimateCost",
+          "inputs": "backend: AIBackend, tokens: Int",
+          "output": "Double"
+        },
+        {
+          "name": "saveUsageStats",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "loadUsageStats",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "recordSuccess",
+          "inputs": "responseTime: TimeInterval",
+          "output": ""
+        },
+        {
+          "name": "recordFailure",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "recordPerformance",
+          "inputs": "backend: AIBackend, success: Bool, responseTime: TimeInterval?",
+          "output": ""
+        },
+        {
+          "name": "sendNotification",
+          "inputs": "title: String, message: String",
+          "output": ""
+        },
+        {
+          "name": "startBackgroundMonitoring",
+          "inputs": "interval: TimeInterval = 60.0",
+          "output": ""
+        },
+        {
+          "name": "stopBackgroundMonitoring",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "collectAvailabilitySnapshot",
+          "inputs": "",
+          "output": "[AIBackend: Bool]"
+        },
+        {
+          "name": "notifyAvailabilityChanges",
+          "inputs": "from previous: [AIBackend: Bool], to current: [AIBackend: Bool]",
+          "output": ""
+        },
+        {
+          "name": "registerKeyboardShortcuts",
+          "inputs": "",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "preferredBackends"
+        },
+        {
+          "kind": "var",
+          "name": "lastError"
+        },
+        {
+          "kind": "let",
+          "name": "previousBackend"
+        },
+        {
+          "kind": "let",
+          "name": "result"
+        },
+        {
+          "kind": "var",
+          "name": "backends"
+        },
+        {
+          "kind": "let",
+          "name": "priorityOrder"
+        },
+        {
+          "kind": "var",
+          "name": "connectionTestResults"
+        },
+        {
+          "kind": "let",
+          "name": "success"
+        },
+        {
+          "kind": "let",
+          "name": "responseTime"
+        },
+        {
+          "kind": "let",
+          "name": "error"
+        },
+        {
+          "kind": "let",
+          "name": "timestamp"
+        },
+        {
+          "kind": "let",
+          "name": "startTime"
+        },
+        {
+          "kind": "let",
+          "name": "previousBackend"
+        },
+        {
+          "kind": "let",
+          "name": "responseTime"
+        },
+        {
+          "kind": "let",
+          "name": "result"
+        },
+        {
+          "kind": "let",
+          "name": "result"
+        },
+        {
+          "kind": "var",
+          "name": "usageStats"
+        },
+        {
+          "kind": "var",
+          "name": "totalTokens"
+        },
+        {
+          "kind": "var",
+          "name": "totalRequests"
+        },
+        {
+          "kind": "var",
+          "name": "totalCost"
+        },
+        {
+          "kind": "var",
+          "name": "averageResponseTime"
+        },
+        {
+          "kind": "var",
+          "name": "lastUsed"
+        },
+        {
+          "kind": "let",
+          "name": "totalTime"
+        },
+        {
+          "kind": "let",
+          "name": "cost"
+        },
+        {
+          "kind": "var",
+          "name": "stats"
+        },
+        {
+          "kind": "let",
+          "name": "costPerMillion"
+        },
+        {
+          "kind": "let",
+          "name": "stats"
+        },
+        {
+          "kind": "var",
+          "name": "performanceMetrics"
+        },
+        {
+          "kind": "var",
+          "name": "averageLatency"
+        },
+        {
+          "kind": "var",
+          "name": "successRate"
+        },
+        {
+          "kind": "var",
+          "name": "totalAttempts"
+        },
+        {
+          "kind": "var",
+          "name": "successfulAttempts"
+        },
+        {
+          "kind": "var",
+          "name": "failedAttempts"
+        },
+        {
+          "kind": "var",
+          "name": "lastResponseTime"
+        },
+        {
+          "kind": "var",
+          "name": "lastSuccess"
+        },
+        {
+          "kind": "var",
+          "name": "lastFailure"
+        },
+        {
+          "kind": "let",
+          "name": "totalTime"
+        },
+        {
+          "kind": "var",
+          "name": "metrics"
+        },
+        {
+          "kind": "let",
+          "name": "notification"
+        },
+        {
+          "kind": "var",
+          "name": "monitoringTimer"
+        },
+        {
+          "kind": "let",
+          "name": "previousAvailability"
+        },
+        {
+          "kind": "let",
+          "name": "currentAvailability"
+        },
+        {
+          "kind": "var",
+          "name": "snapshot"
+        },
+        {
+          "kind": "let",
+          "name": "wasAvailable"
+        },
+        {
+          "kind": "let",
+          "name": "isNowAvailable"
+        },
+        {
+          "kind": "let",
+          "name": "status"
+        },
+        {
+          "kind": "let",
+          "name": "shortcuts"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 375
+    },
+    {
+      "path": "NewsMobile/Models/AIBackendManager+Generation.swift",
+      "module_hint": "newsmobile.models",
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "OllamaResponse"
+        },
+        {
+          "kind": "struct",
+          "name": "OpenAIResponse"
+        },
+        {
+          "kind": "struct",
+          "name": "Choice"
+        },
+        {
+          "kind": "struct",
+          "name": "Message"
+        },
+        {
+          "kind": "enum",
+          "name": "AIError"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "generate",
+          "inputs": "prompt: String,\n        systemPrompt: String? = nil,\n        temperature: Double = 0.7,\n        maxTokens: Int = 1000",
+          "output": "String"
+        },
+        {
+          "name": "generateWithOllama",
+          "inputs": "prompt: String,\n        systemPrompt: String?,\n        temperature: Double,\n        maxTokens: Int",
+          "output": "String"
+        },
+        {
+          "name": "generateWithTinyLLM",
+          "inputs": "prompt: String,\n        systemPrompt: String?,\n        temperature: Double,\n        maxTokens: Int",
+          "output": "String"
+        },
+        {
+          "name": "generateWithTinyChat",
+          "inputs": "prompt: String,\n        temperature: Double",
+          "output": "String"
+        },
+        {
+          "name": "generateWithOpenWebUI",
+          "inputs": "prompt: String,\n        systemPrompt: String?,\n        temperature: Double",
+          "output": "String"
+        },
+        {
+          "name": "generateWithMLX",
+          "inputs": "prompt: String,\n        systemPrompt: String?,\n        maxTokens: Int",
+          "output": "String"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "messages"
+        },
+        {
+          "kind": "let",
+          "name": "requestBody"
+        },
+        {
+          "kind": "var",
+          "name": "request"
+        },
+        {
+          "kind": "let",
+          "name": "response"
+        },
+        {
+          "kind": "let",
+          "name": "ollamaResponse"
+        },
+        {
+          "kind": "var",
+          "name": "messages"
+        },
+        {
+          "kind": "let",
+          "name": "requestBody"
+        },
+        {
+          "kind": "var",
+          "name": "request"
+        },
+        {
+          "kind": "let",
+          "name": "content"
+        },
+        {
+          "kind": "let",
+          "name": "message"
+        },
+        {
+          "kind": "let",
+          "name": "choices"
+        },
+        {
+          "kind": "let",
+          "name": "apiResponse"
+        },
+        {
+          "kind": "let",
+          "name": "requestBody"
+        },
+        {
+          "kind": "var",
+          "name": "request"
+        },
+        {
+          "kind": "let",
+          "name": "lines"
+        },
+        {
+          "kind": "let",
+          "name": "json"
+        },
+        {
+          "kind": "let",
+          "name": "content"
+        },
+        {
+          "kind": "var",
+          "name": "messages"
+        },
+        {
+          "kind": "let",
+          "name": "requestBody"
+        },
+        {
+          "kind": "var",
+          "name": "request"
+        },
+        {
+          "kind": "let",
+          "name": "message"
+        },
+        {
+          "kind": "let",
+          "name": "content"
+        },
+        {
+          "kind": "let",
+          "name": "mlxPath"
+        },
+        {
+          "kind": "var",
+          "name": "fullPrompt"
+        },
+        {
+          "kind": "let",
+          "name": "process"
+        },
+        {
+          "kind": "let",
+          "name": "outputPipe"
+        },
+        {
+          "kind": "let",
+          "name": "outputData"
+        },
+        {
+          "kind": "var",
+          "name": "errorDescription"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 372
+    },
+    {
+      "path": "NewsMobile/Models/AIBackendManager.swift",
+      "module_hint": "newsmobile.models",
+      "imports": [
+        "Foundation",
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "AIBackendManager"
+        },
+        {
+          "kind": "enum",
+          "name": "AIBackend"
+        },
+        {
+          "kind": "struct",
+          "name": "OllamaResponse"
+        },
+        {
+          "kind": "struct",
+          "name": "Model"
+        },
+        {
+          "kind": "struct",
+          "name": "AIBackendSelectionView"
+        },
+        {
+          "kind": "struct",
+          "name": "BackendStatusRow"
+        }
+      ],
+      "views": [
+        "AIBackendSelectionView",
+        "BackendStatusRow"
+      ],
+      "functions": [
+        {
+          "name": "refreshAllBackends",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "checkOllamaAvailability",
+          "inputs": "",
+          "output": "Bool"
+        },
+        {
+          "name": "checkMLXAvailability",
+          "inputs": "",
+          "output": "Bool"
+        },
+        {
+          "name": "checkTinyLLMAvailability",
+          "inputs": "",
+          "output": "Bool"
+        },
+        {
+          "name": "checkTinyChatAvailability",
+          "inputs": "",
+          "output": "Bool"
+        },
+        {
+          "name": "checkOpenWebUIAvailability",
+          "inputs": "",
+          "output": "Bool"
+        },
+        {
+          "name": "checkComfyUIAvailability",
+          "inputs": "",
+          "output": "Bool"
+        },
+        {
+          "name": "checkAutomatic1111Availability",
+          "inputs": "",
+          "output": "Bool"
+        },
+        {
+          "name": "checkSwarmUIAvailability",
+          "inputs": "",
+          "output": "Bool"
+        },
+        {
+          "name": "loadOllamaModels",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "loadConfiguration",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "saveConfiguration",
+          "inputs": "",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "isOllamaAvailable"
+        },
+        {
+          "kind": "var",
+          "name": "isMLXAvailable"
+        },
+        {
+          "kind": "var",
+          "name": "isTinyLLMAvailable"
+        },
+        {
+          "kind": "var",
+          "name": "isTinyChatAvailable"
+        },
+        {
+          "kind": "var",
+          "name": "isOpenWebUIAvailable"
+        },
+        {
+          "kind": "var",
+          "name": "isComfyUIAvailable"
+        },
+        {
+          "kind": "var",
+          "name": "isAutomatic1111Available"
+        },
+        {
+          "kind": "var",
+          "name": "isSwarmUIAvailable"
+        },
+        {
+          "kind": "var",
+          "name": "ollamaModels"
+        },
+        {
+          "kind": "var",
+          "name": "selectedOllamaModel"
+        },
+        {
+          "kind": "var",
+          "name": "ollamaServerURL"
+        },
+        {
+          "kind": "var",
+          "name": "tinyLLMServerURL"
+        },
+        {
+          "kind": "var",
+          "name": "tinyChatServerURL"
+        },
+        {
+          "kind": "var",
+          "name": "openWebUIServerURL"
+        },
+        {
+          "kind": "var",
+          "name": "comfyUIServerURL"
+        },
+        {
+          "kind": "var",
+          "name": "automatic1111ServerURL"
+        },
+        {
+          "kind": "var",
+          "name": "swarmUIServerURL"
+        },
+        {
+          "kind": "var",
+          "name": "activeBackend"
+        },
+        {
+          "kind": "var",
+          "name": "lastRefreshDate"
+        },
+        {
+          "kind": "var",
+          "name": "openAIAPIKey"
+        },
+        {
+          "kind": "var",
+          "name": "googleCloudAPIKey"
+        },
+        {
+          "kind": "var",
+          "name": "azureAPIKey"
+        },
+        {
+          "kind": "var",
+          "name": "azureEndpoint"
+        },
+        {
+          "kind": "var",
+          "name": "awsAccessKey"
+        },
+        {
+          "kind": "var",
+          "name": "awsSecretKey"
+        },
+        {
+          "kind": "var",
+          "name": "awsRegion"
+        },
+        {
+          "kind": "var",
+          "name": "ibmWatsonAPIKey"
+        },
+        {
+          "kind": "var",
+          "name": "ibmWatsonURL"
+        },
+        {
+          "kind": "var",
+          "name": "isOpenAIAvailable"
+        },
+        {
+          "kind": "var",
+          "name": "isGoogleCloudAvailable"
+        },
+        {
+          "kind": "var",
+          "name": "isAzureAvailable"
+        },
+        {
+          "kind": "var",
+          "name": "isAWSAvailable"
+        },
+        {
+          "kind": "var",
+          "name": "isIBMWatsonAvailable"
+        },
+        {
+          "kind": "var",
+          "name": "description"
+        },
+        {
+          "kind": "var",
+          "name": "setupInstructions"
+        },
+        {
+          "kind": "let",
+          "name": "fileManager"
+        },
+        {
+          "kind": "let",
+          "name": "pythonPaths"
+        },
+        {
+          "kind": "let",
+          "name": "urls"
+        },
+        {
+          "kind": "let",
+          "name": "name"
+        },
+        {
+          "kind": "let",
+          "name": "models"
+        },
+        {
+          "kind": "let",
+          "name": "response"
+        },
+        {
+          "kind": "let",
+          "name": "modelNames"
+        },
+        {
+          "kind": "let",
+          "name": "defaults"
+        },
+        {
+          "kind": "let",
+          "name": "backend"
+        },
+        {
+          "kind": "let",
+          "name": "defaults"
+        },
+        {
+          "kind": "var",
+          "name": "manager"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "icon"
+        },
+        {
+          "kind": "let",
+          "name": "name"
+        },
+        {
+          "kind": "let",
+          "name": "isAvailable"
+        },
+        {
+          "kind": "let",
+          "name": "url"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        }
+      ],
+      "ui_patterns": [
+        "List",
+        "ScrollView",
+        "ForEach"
+      ],
+      "capability_hints": [],
+      "line_count": 623
+    },
+    {
+      "path": "NewsMobile/Models/AIBackendStatusMenu.swift",
+      "module_hint": "newsmobile.models",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "AIBackendStatusMenu"
+        },
+        {
+          "kind": "struct",
+          "name": "AIBackendStatusMenuCompact"
+        },
+        {
+          "kind": "struct",
+          "name": "AIBackendStatusMenu_Previews"
+        }
+      ],
+      "views": [
+        "AIBackendStatusMenu",
+        "AIBackendStatusMenuCompact"
+      ],
+      "functions": [
+        {
+          "name": "backendIcon",
+          "inputs": "_ backend: AIBackendManager.AIBackend",
+          "output": "String"
+        },
+        {
+          "name": "isBackendAvailable",
+          "inputs": "_ backend: AIBackendManager.AIBackend",
+          "output": "Bool"
+        },
+        {
+          "name": "isBackendConfigured",
+          "inputs": "_ backend: AIBackendManager.AIBackend",
+          "output": "Bool"
+        },
+        {
+          "name": "truncateModelName",
+          "inputs": "_ name: String",
+          "output": "String"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "manager"
+        },
+        {
+          "kind": "var",
+          "name": "showSettings"
+        },
+        {
+          "kind": "var",
+          "name": "isRefreshing"
+        },
+        {
+          "kind": "var",
+          "name": "accentColor"
+        },
+        {
+          "kind": "var",
+          "name": "compact"
+        },
+        {
+          "kind": "var",
+          "name": "showModelPicker"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "var",
+          "name": "backendStatusIndicator"
+        },
+        {
+          "kind": "var",
+          "name": "statusColor"
+        },
+        {
+          "kind": "var",
+          "name": "statusText"
+        },
+        {
+          "kind": "var",
+          "name": "hasAnyConfigured"
+        },
+        {
+          "kind": "var",
+          "name": "backendSelector"
+        },
+        {
+          "kind": "var",
+          "name": "modelSelector"
+        },
+        {
+          "kind": "var",
+          "name": "actionButtons"
+        },
+        {
+          "kind": "let",
+          "name": "parts"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        }
+      ],
+      "ui_patterns": [
+        ".sheet",
+        "ForEach"
+      ],
+      "capability_hints": [],
+      "line_count": 310
+    },
+    {
+      "path": "NewsMobile/Models/NewsModels.swift",
+      "module_hint": "newsmobile.models",
+      "imports": [
+        "Foundation",
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "enum",
+          "name": "NewsCategory"
+        },
+        {
+          "kind": "enum",
+          "name": "SourceBias"
+        },
+        {
+          "kind": "struct",
+          "name": "NewsSource"
+        },
+        {
+          "kind": "struct",
+          "name": "NewsArticle"
+        },
+        {
+          "kind": "struct",
+          "name": "SentimentResult"
+        },
+        {
+          "kind": "enum",
+          "name": "SentimentLabel"
+        },
+        {
+          "kind": "struct",
+          "name": "ExtractedEntity"
+        },
+        {
+          "kind": "enum",
+          "name": "EntityType"
+        },
+        {
+          "kind": "struct",
+          "name": "StoryCluster"
+        },
+        {
+          "kind": "struct",
+          "name": "PerspectiveBreakdown"
+        },
+        {
+          "kind": "struct",
+          "name": "WatchLaterItem"
+        },
+        {
+          "kind": "struct",
+          "name": "KeywordAlert"
+        },
+        {
+          "kind": "struct",
+          "name": "CustomRSSFeed"
+        },
+        {
+          "kind": "struct",
+          "name": "TrendingTopic"
+        },
+        {
+          "kind": "struct",
+          "name": "WeatherData"
+        },
+        {
+          "kind": "struct",
+          "name": "NewsMobileSettings"
+        },
+        {
+          "kind": "enum",
+          "name": "SpeechRate"
+        },
+        {
+          "kind": "enum",
+          "name": "FontSize"
+        },
+        {
+          "kind": "struct",
+          "name": "UserPreferenceProfile"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "hash",
+          "inputs": "into hasher: inout Hasher",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "id"
+        },
+        {
+          "kind": "var",
+          "name": "icon"
+        },
+        {
+          "kind": "var",
+          "name": "color"
+        },
+        {
+          "kind": "var",
+          "name": "color"
+        },
+        {
+          "kind": "let",
+          "name": "id"
+        },
+        {
+          "kind": "let",
+          "name": "name"
+        },
+        {
+          "kind": "let",
+          "name": "feedURL"
+        },
+        {
+          "kind": "let",
+          "name": "category"
+        },
+        {
+          "kind": "let",
+          "name": "bias"
+        },
+        {
+          "kind": "let",
+          "name": "reliability"
+        },
+        {
+          "kind": "let",
+          "name": "id"
+        },
+        {
+          "kind": "let",
+          "name": "title"
+        },
+        {
+          "kind": "let",
+          "name": "rssDescription"
+        },
+        {
+          "kind": "let",
+          "name": "link"
+        },
+        {
+          "kind": "let",
+          "name": "pubDate"
+        },
+        {
+          "kind": "let",
+          "name": "source"
+        },
+        {
+          "kind": "let",
+          "name": "category"
+        },
+        {
+          "kind": "let",
+          "name": "imageURL"
+        },
+        {
+          "kind": "var",
+          "name": "sentiment"
+        },
+        {
+          "kind": "var",
+          "name": "entities"
+        },
+        {
+          "kind": "var",
+          "name": "isBreaking"
+        },
+        {
+          "kind": "var",
+          "name": "timeAgoString"
+        },
+        {
+          "kind": "let",
+          "name": "formatter"
+        },
+        {
+          "kind": "let",
+          "name": "score"
+        },
+        {
+          "kind": "let",
+          "name": "label"
+        },
+        {
+          "kind": "var",
+          "name": "color"
+        },
+        {
+          "kind": "var",
+          "name": "icon"
+        },
+        {
+          "kind": "let",
+          "name": "id"
+        },
+        {
+          "kind": "let",
+          "name": "text"
+        },
+        {
+          "kind": "let",
+          "name": "type"
+        },
+        {
+          "kind": "var",
+          "name": "icon"
+        },
+        {
+          "kind": "var",
+          "name": "color"
+        },
+        {
+          "kind": "let",
+          "name": "id"
+        },
+        {
+          "kind": "let",
+          "name": "topic"
+        },
+        {
+          "kind": "var",
+          "name": "articles"
+        },
+        {
+          "kind": "var",
+          "name": "perspectives"
+        },
+        {
+          "kind": "var",
+          "name": "sourceCount"
+        },
+        {
+          "kind": "var",
+          "name": "articleCount"
+        },
+        {
+          "kind": "let",
+          "name": "leftPerspective"
+        },
+        {
+          "kind": "let",
+          "name": "centerPerspective"
+        },
+        {
+          "kind": "let",
+          "name": "rightPerspective"
+        },
+        {
+          "kind": "let",
+          "name": "sharedFacts"
+        },
+        {
+          "kind": "let",
+          "name": "contentions"
+        },
+        {
+          "kind": "let",
+          "name": "id"
+        },
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "addedDate"
+        },
+        {
+          "kind": "var",
+          "name": "isRead"
+        },
+        {
+          "kind": "let",
+          "name": "id"
+        },
+        {
+          "kind": "var",
+          "name": "keyword"
+        },
+        {
+          "kind": "var",
+          "name": "isEnabled"
+        },
+        {
+          "kind": "var",
+          "name": "notifyOnMatch"
+        },
+        {
+          "kind": "var",
+          "name": "matchCount"
+        },
+        {
+          "kind": "var",
+          "name": "lastMatchDate"
+        },
+        {
+          "kind": "let",
+          "name": "id"
+        },
+        {
+          "kind": "var",
+          "name": "name"
+        },
+        {
+          "kind": "var",
+          "name": "url"
+        },
+        {
+          "kind": "var",
+          "name": "category"
+        },
+        {
+          "kind": "var",
+          "name": "isEnabled"
+        },
+        {
+          "kind": "var",
+          "name": "lastFetchDate"
+        },
+        {
+          "kind": "var",
+          "name": "articleCount"
+        },
+        {
+          "kind": "let",
+          "name": "id"
+        },
+        {
+          "kind": "let",
+          "name": "name"
+        },
+        {
+          "kind": "let",
+          "name": "articleCount"
+        },
+        {
+          "kind": "let",
+          "name": "category"
+        },
+        {
+          "kind": "let",
+          "name": "temperature"
+        },
+        {
+          "kind": "let",
+          "name": "condition"
+        },
+        {
+          "kind": "let",
+          "name": "icon"
+        },
+        {
+          "kind": "let",
+          "name": "location"
+        },
+        {
+          "kind": "let",
+          "name": "humidity"
+        },
+        {
+          "kind": "let",
+          "name": "feelsLike"
+        },
+        {
+          "kind": "var",
+          "name": "darkModeEnabled"
+        },
+        {
+          "kind": "var",
+          "name": "showSentimentColors"
+        },
+        {
+          "kind": "var",
+          "name": "showBiasIndicators"
+        },
+        {
+          "kind": "var",
+          "name": "showBreakingNewsAlerts"
+        },
+        {
+          "kind": "var",
+          "name": "enableAudioBriefings"
+        },
+        {
+          "kind": "var",
+          "name": "speechRate"
+        },
+        {
+          "kind": "var",
+          "name": "fontSize"
+        },
+        {
+          "kind": "var",
+          "name": "enablePersonalization"
+        },
+        {
+          "kind": "var",
+          "name": "enableBackgroundRefresh"
+        },
+        {
+          "kind": "var",
+          "name": "refreshInterval"
+        },
+        {
+          "kind": "var",
+          "name": "enableNotifications"
+        },
+        {
+          "kind": "var",
+          "name": "enableWeatherWidget"
+        },
+        {
+          "kind": "var",
+          "name": "localNewsLocation"
+        },
+        {
+          "kind": "var",
+          "name": "localNewsZipCode"
+        },
+        {
+          "kind": "var",
+          "name": "enableICloudSync"
+        },
+        {
+          "kind": "var",
+          "name": "filterAds"
+        },
+        {
+          "kind": "var",
+          "name": "filterClickbait"
+        },
+        {
+          "kind": "var",
+          "name": "keywordAlerts"
+        },
+        {
+          "kind": "var",
+          "name": "customFeeds"
+        },
+        {
+          "kind": "var",
+          "name": "excludedSources"
+        },
+        {
+          "kind": "var",
+          "name": "rate"
+        },
+        {
+          "kind": "var",
+          "name": "scaleFactor"
+        },
+        {
+          "kind": "var",
+          "name": "categoryPreferences"
+        },
+        {
+          "kind": "var",
+          "name": "sourcePreferences"
+        },
+        {
+          "kind": "var",
+          "name": "topicInterests"
+        },
+        {
+          "kind": "var",
+          "name": "viewedArticleIds"
+        },
+        {
+          "kind": "var",
+          "name": "readDuration"
+        },
+        {
+          "kind": "let",
+          "name": "hex"
+        },
+        {
+          "kind": "var",
+          "name": "int"
+        },
+        {
+          "kind": "let",
+          "name": "a"
+        }
+      ],
+      "ui_patterns": [
+        "Form"
+      ],
+      "capability_hints": [],
+      "line_count": 459
+    },
+    {
+      "path": "NewsMobile/NewsMobileApp.swift",
+      "module_hint": "newsmobile",
+      "imports": [
+        "BackgroundTasks",
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "NewsMobileApp"
+        }
+      ],
+      "views": [],
+      "functions": [],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "newsAggregator"
+        },
+        {
+          "kind": "var",
+          "name": "settingsManager"
+        },
+        {
+          "kind": "var",
+          "name": "watchLaterManager"
+        },
+        {
+          "kind": "var",
+          "name": "notificationManager"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 48
+    },
+    {
+      "path": "NewsMobile/NovaAPIServer.swift",
+      "module_hint": "newsmobile",
+      "imports": [
+        "Foundation",
+        "Network"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "NovaAPIServer"
+        },
+        {
+          "kind": "struct",
+          "name": "NovaRequest"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "start",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "stop",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "handle",
+          "inputs": "_ c: NWConnection",
+          "output": ""
+        },
+        {
+          "name": "receive",
+          "inputs": "_ c: NWConnection, _ buf: Data",
+          "output": ""
+        },
+        {
+          "name": "route",
+          "inputs": "_ req: NovaRequest",
+          "output": "String"
+        },
+        {
+          "name": "bodyJSON",
+          "inputs": "",
+          "output": "[String: Any]?"
+        },
+        {
+          "name": "json",
+          "inputs": "_ s: Int, _ d: [String: Any]",
+          "output": "String"
+        },
+        {
+          "name": "jsonArray",
+          "inputs": "_ s: Int, _ a: [[String: Any]]",
+          "output": "String"
+        },
+        {
+          "name": "http",
+          "inputs": "_ s: Int, _ body: String, _ ct: String = \"text/plain\"",
+          "output": "String"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "port"
+        },
+        {
+          "kind": "var",
+          "name": "listener"
+        },
+        {
+          "kind": "let",
+          "name": "startTime"
+        },
+        {
+          "kind": "let",
+          "name": "params"
+        },
+        {
+          "kind": "var",
+          "name": "b"
+        },
+        {
+          "kind": "let",
+          "name": "resp"
+        },
+        {
+          "kind": "let",
+          "name": "method"
+        },
+        {
+          "kind": "let",
+          "name": "parts"
+        },
+        {
+          "kind": "var",
+          "name": "hdrs"
+        },
+        {
+          "kind": "let",
+          "name": "rawBody"
+        }
+      ],
+      "ui_patterns": [
+        "List"
+      ],
+      "capability_hints": [],
+      "line_count": 74
+    },
+    {
+      "path": "NewsMobile/Services/BackgroundRefreshManager.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "BackgroundTasks",
+        "Foundation"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "BackgroundRefreshManager"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "registerBackgroundTasks",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "scheduleAppRefresh",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "handleAppRefresh",
+          "inputs": "task: BGAppRefreshTask",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "refreshTaskIdentifier"
+        },
+        {
+          "kind": "let",
+          "name": "request"
+        },
+        {
+          "kind": "let",
+          "name": "refreshTask"
+        },
+        {
+          "kind": "var",
+          "name": "success"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 65
+    },
+    {
+      "path": "NewsMobile/Services/CloudSyncManager.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "CloudSyncManager"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "syncToCloud",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "syncFromCloud",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "handleCloudUpdate",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "clearCloudData",
+          "inputs": "",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "isSyncing"
+        },
+        {
+          "kind": "var",
+          "name": "lastSyncDate"
+        },
+        {
+          "kind": "let",
+          "name": "settingsKey"
+        },
+        {
+          "kind": "let",
+          "name": "watchLaterKey"
+        },
+        {
+          "kind": "let",
+          "name": "settings"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 77
+    },
+    {
+      "path": "NewsMobile/Services/ContentFilter.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "ContentFilter"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "filter",
+          "inputs": "_ articles: [NewsArticle]",
+          "output": "[NewsArticle]"
+        },
+        {
+          "name": "isAdvertisement",
+          "inputs": "_ article: NewsArticle",
+          "output": "Bool"
+        },
+        {
+          "name": "isClickbait",
+          "inputs": "_ article: NewsArticle",
+          "output": "Bool"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "adKeywords"
+        },
+        {
+          "kind": "let",
+          "name": "clickbaitPatterns"
+        },
+        {
+          "kind": "let",
+          "name": "suspiciousSources"
+        },
+        {
+          "kind": "let",
+          "name": "settings"
+        },
+        {
+          "kind": "let",
+          "name": "title"
+        },
+        {
+          "kind": "let",
+          "name": "description"
+        },
+        {
+          "kind": "let",
+          "name": "source"
+        },
+        {
+          "kind": "let",
+          "name": "range"
+        },
+        {
+          "kind": "let",
+          "name": "title"
+        },
+        {
+          "kind": "let",
+          "name": "description"
+        },
+        {
+          "kind": "let",
+          "name": "title"
+        },
+        {
+          "kind": "let",
+          "name": "range"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 112
+    },
+    {
+      "path": "NewsMobile/Services/CustomFeedManager.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "CustomFeedManager"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "addFeed",
+          "inputs": "name: String, url: URL, category: NewsCategory",
+          "output": ""
+        },
+        {
+          "name": "removeFeed",
+          "inputs": "id: UUID",
+          "output": ""
+        },
+        {
+          "name": "toggleFeed",
+          "inputs": "id: UUID, enabled: Bool",
+          "output": ""
+        },
+        {
+          "name": "fetchAllCustomFeeds",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "fetchFeed",
+          "inputs": "_ feed: CustomRSSFeed",
+          "output": "[NewsArticle]"
+        },
+        {
+          "name": "validateFeedURL",
+          "inputs": "_ url: URL",
+          "output": "Bool"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "customArticles"
+        },
+        {
+          "kind": "var",
+          "name": "isLoading"
+        },
+        {
+          "kind": "let",
+          "name": "parser"
+        },
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "let",
+          "name": "feeds"
+        },
+        {
+          "kind": "var",
+          "name": "allArticles"
+        },
+        {
+          "kind": "let",
+          "name": "articles"
+        },
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "let",
+          "name": "source"
+        },
+        {
+          "kind": "let",
+          "name": "testSource"
+        },
+        {
+          "kind": "let",
+          "name": "articles"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 119
+    },
+    {
+      "path": "NewsMobile/Services/KeywordAlertManager.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "Foundation",
+        "UserNotifications"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "KeywordAlertManager"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "addAlert",
+          "inputs": "keyword: String",
+          "output": ""
+        },
+        {
+          "name": "removeAlert",
+          "inputs": "id: UUID",
+          "output": ""
+        },
+        {
+          "name": "toggleAlert",
+          "inputs": "id: UUID, enabled: Bool",
+          "output": ""
+        },
+        {
+          "name": "checkAlerts",
+          "inputs": "against articles: [NewsArticle]",
+          "output": ""
+        },
+        {
+          "name": "sendNotification",
+          "inputs": "for keyword: String, articleCount: Int, firstTitle: String?",
+          "output": ""
+        },
+        {
+          "name": "articles",
+          "inputs": "for keyword: String",
+          "output": "[NewsArticle]"
+        },
+        {
+          "name": "clearMatches",
+          "inputs": "for keyword: String",
+          "output": ""
+        },
+        {
+          "name": "clearNewMatchesFlag",
+          "inputs": "",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "matchedArticles"
+        },
+        {
+          "kind": "var",
+          "name": "hasNewMatches"
+        },
+        {
+          "kind": "var",
+          "name": "lastCheckedArticleIds"
+        },
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "let",
+          "name": "settings"
+        },
+        {
+          "kind": "let",
+          "name": "enabledAlerts"
+        },
+        {
+          "kind": "let",
+          "name": "newArticles"
+        },
+        {
+          "kind": "var",
+          "name": "updatedSettings"
+        },
+        {
+          "kind": "var",
+          "name": "newMatchesFound"
+        },
+        {
+          "kind": "let",
+          "name": "keyword"
+        },
+        {
+          "kind": "let",
+          "name": "matches"
+        },
+        {
+          "kind": "var",
+          "name": "existing"
+        },
+        {
+          "kind": "let",
+          "name": "content"
+        },
+        {
+          "kind": "let",
+          "name": "request"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [
+        "notification.usernotifications"
+      ],
+      "line_count": 128
+    },
+    {
+      "path": "NewsMobile/Services/LocalNewsService.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "LocalNewsService"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "setLocation",
+          "inputs": "zipCode: String",
+          "output": ""
+        },
+        {
+          "name": "setLocation",
+          "inputs": "city: String",
+          "output": ""
+        },
+        {
+          "name": "clearLocation",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "loadLocation",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "fetchLocalNews",
+          "inputs": "",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "localArticles"
+        },
+        {
+          "kind": "var",
+          "name": "isLoading"
+        },
+        {
+          "kind": "var",
+          "name": "currentLocation"
+        },
+        {
+          "kind": "let",
+          "name": "parser"
+        },
+        {
+          "kind": "let",
+          "name": "query"
+        },
+        {
+          "kind": "let",
+          "name": "feedURLString"
+        },
+        {
+          "kind": "let",
+          "name": "source"
+        },
+        {
+          "kind": "let",
+          "name": "articles"
+        },
+        {
+          "kind": "var",
+          "name": "processedArticles"
+        },
+        {
+          "kind": "let",
+          "name": "sentimentAnalyzer"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 100
+    },
+    {
+      "path": "NewsMobile/Services/NewsAggregator.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "Foundation",
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "NewsAggregator"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "fetchAllNews",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "fetchFeed",
+          "inputs": "from source: NewsSource",
+          "output": "[NewsArticle]"
+        },
+        {
+          "name": "isBreakingNews",
+          "inputs": "_ article: NewsArticle",
+          "output": "Bool"
+        },
+        {
+          "name": "articles",
+          "inputs": "for category: NewsCategory",
+          "output": "[NewsArticle]"
+        },
+        {
+          "name": "refresh",
+          "inputs": "",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "articles"
+        },
+        {
+          "kind": "var",
+          "name": "articlesByCategory"
+        },
+        {
+          "kind": "var",
+          "name": "isLoading"
+        },
+        {
+          "kind": "var",
+          "name": "breakingNews"
+        },
+        {
+          "kind": "var",
+          "name": "lastRefresh"
+        },
+        {
+          "kind": "let",
+          "name": "parser"
+        },
+        {
+          "kind": "let",
+          "name": "sentimentAnalyzer"
+        },
+        {
+          "kind": "let",
+          "name": "entityExtractor"
+        },
+        {
+          "kind": "let",
+          "name": "contentFilter"
+        },
+        {
+          "kind": "let",
+          "name": "sources"
+        },
+        {
+          "kind": "var",
+          "name": "allArticles"
+        },
+        {
+          "kind": "let",
+          "name": "maxConcurrency"
+        },
+        {
+          "kind": "var",
+          "name": "enqueued"
+        },
+        {
+          "kind": "let",
+          "name": "settings"
+        },
+        {
+          "kind": "var",
+          "name": "byCategory"
+        },
+        {
+          "kind": "let",
+          "name": "title"
+        },
+        {
+          "kind": "let",
+          "name": "breakingKeywords"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 166
+    },
+    {
+      "path": "NewsMobile/Services/NotificationManager.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "Foundation",
+        "UserNotifications"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "NotificationManager"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "requestPermission",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "checkAuthorizationStatus",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "sendBreakingNewsNotification",
+          "inputs": "_ article: NewsArticle",
+          "output": ""
+        },
+        {
+          "name": "clearBadge",
+          "inputs": "",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "isAuthorized"
+        },
+        {
+          "kind": "let",
+          "name": "content"
+        },
+        {
+          "kind": "let",
+          "name": "request"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [
+        "notification.usernotifications"
+      ],
+      "line_count": 64
+    },
+    {
+      "path": "NewsMobile/Services/PersonalizationEngine.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "PersonalizationEngine"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "recordView",
+          "inputs": "article: NewsArticle, duration: TimeInterval",
+          "output": ""
+        },
+        {
+          "name": "updateFromFetch",
+          "inputs": "articles: [NewsArticle]",
+          "output": ""
+        },
+        {
+          "name": "normalizePreferences",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "saveProfile",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "loadProfile",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "resetProfile",
+          "inputs": "",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "personalizedArticles"
+        },
+        {
+          "kind": "var",
+          "name": "profile"
+        },
+        {
+          "kind": "let",
+          "name": "profileKey"
+        },
+        {
+          "kind": "let",
+          "name": "categoryWeight"
+        },
+        {
+          "kind": "let",
+          "name": "sourceWeight"
+        },
+        {
+          "kind": "let",
+          "name": "topicWeight"
+        },
+        {
+          "kind": "let",
+          "name": "scored"
+        },
+        {
+          "kind": "var",
+          "name": "score"
+        },
+        {
+          "kind": "let",
+          "name": "topicScore"
+        },
+        {
+          "kind": "let",
+          "name": "hoursOld"
+        },
+        {
+          "kind": "let",
+          "name": "recencyScore"
+        },
+        {
+          "kind": "let",
+          "name": "maxCategory"
+        },
+        {
+          "kind": "let",
+          "name": "maxSource"
+        },
+        {
+          "kind": "let",
+          "name": "maxTopic"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 131
+    },
+    {
+      "path": "NewsMobile/Services/RSSParser.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "XMLParserBuffer"
+        },
+        {
+          "kind": "struct",
+          "name": "RawItem"
+        },
+        {
+          "kind": "actor",
+          "name": "RSSParser"
+        },
+        {
+          "kind": "actor",
+          "name": "hops"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "parser",
+          "inputs": "_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String: String] = [:]",
+          "output": ""
+        },
+        {
+          "name": "parser",
+          "inputs": "_ parser: XMLParser, foundCharacters string: String",
+          "output": ""
+        },
+        {
+          "name": "parser",
+          "inputs": "_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?",
+          "output": ""
+        },
+        {
+          "name": "parse",
+          "inputs": "data: Data, source: NewsSource",
+          "output": "[NewsArticle]"
+        },
+        {
+          "name": "processRawItems",
+          "inputs": "_ rawItems: [XMLParserBuffer.RawItem], source: NewsSource",
+          "output": "[NewsArticle]"
+        },
+        {
+          "name": "parseDate",
+          "inputs": "_ string: String",
+          "output": "Date?"
+        },
+        {
+          "name": "cleanHTML",
+          "inputs": "_ html: String",
+          "output": "String"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "title"
+        },
+        {
+          "kind": "var",
+          "name": "description"
+        },
+        {
+          "kind": "var",
+          "name": "link"
+        },
+        {
+          "kind": "var",
+          "name": "pubDate"
+        },
+        {
+          "kind": "var",
+          "name": "imageURL"
+        },
+        {
+          "kind": "var",
+          "name": "currentElement"
+        },
+        {
+          "kind": "var",
+          "name": "currentItem"
+        },
+        {
+          "kind": "var",
+          "name": "isInItem"
+        },
+        {
+          "kind": "let",
+          "name": "trimmed"
+        },
+        {
+          "kind": "let",
+          "name": "buffer"
+        },
+        {
+          "kind": "let",
+          "name": "rawItems"
+        },
+        {
+          "kind": "let",
+          "name": "parser"
+        },
+        {
+          "kind": "var",
+          "name": "articles"
+        },
+        {
+          "kind": "let",
+          "name": "url"
+        },
+        {
+          "kind": "let",
+          "name": "pubDate"
+        },
+        {
+          "kind": "let",
+          "name": "imageURL"
+        },
+        {
+          "kind": "let",
+          "name": "cleanDescription"
+        },
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "formatters"
+        },
+        {
+          "kind": "let",
+          "name": "f"
+        },
+        {
+          "kind": "let",
+          "name": "f"
+        },
+        {
+          "kind": "let",
+          "name": "f"
+        },
+        {
+          "kind": "let",
+          "name": "f"
+        },
+        {
+          "kind": "var",
+          "name": "result"
+        }
+      ],
+      "ui_patterns": [
+        "Form"
+      ],
+      "capability_hints": [],
+      "line_count": 180
+    },
+    {
+      "path": "NewsMobile/Services/SettingsManager.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "Foundation",
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "SettingsManager"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "saveSettings",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "resetToDefaults",
+          "inputs": "",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "let",
+          "name": "settingsKey"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 44
+    },
+    {
+      "path": "NewsMobile/Services/StoryClusterEngine.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "Foundation",
+        "NaturalLanguage"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "StoryClusterEngine"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "clusterArticles",
+          "inputs": "_ articles: [NewsArticle]",
+          "output": "[StoryCluster]"
+        },
+        {
+          "name": "findRelatedArticles",
+          "inputs": "to article: NewsArticle, in articles: [NewsArticle], excluding: Set<UUID>",
+          "output": "[NewsArticle]"
+        },
+        {
+          "name": "extractKeywords",
+          "inputs": "from text: String",
+          "output": "Set<String>"
+        },
+        {
+          "name": "extractMainTopic",
+          "inputs": "from articles: [NewsArticle]",
+          "output": "String"
+        },
+        {
+          "name": "analyzePerspectives",
+          "inputs": "_ articles: [NewsArticle]",
+          "output": "PerspectiveBreakdown"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "clusters"
+        },
+        {
+          "kind": "var",
+          "name": "clusters"
+        },
+        {
+          "kind": "var",
+          "name": "processedIds"
+        },
+        {
+          "kind": "let",
+          "name": "relatedArticles"
+        },
+        {
+          "kind": "var",
+          "name": "clusterArticles"
+        },
+        {
+          "kind": "let",
+          "name": "topic"
+        },
+        {
+          "kind": "var",
+          "name": "cluster"
+        },
+        {
+          "kind": "let",
+          "name": "articleKeywords"
+        },
+        {
+          "kind": "let",
+          "name": "otherKeywords"
+        },
+        {
+          "kind": "let",
+          "name": "commonKeywords"
+        },
+        {
+          "kind": "let",
+          "name": "tagger"
+        },
+        {
+          "kind": "var",
+          "name": "keywords"
+        },
+        {
+          "kind": "let",
+          "name": "options"
+        },
+        {
+          "kind": "let",
+          "name": "word"
+        },
+        {
+          "kind": "var",
+          "name": "wordCounts"
+        },
+        {
+          "kind": "let",
+          "name": "keywords"
+        },
+        {
+          "kind": "let",
+          "name": "topWords"
+        },
+        {
+          "kind": "let",
+          "name": "leftArticles"
+        },
+        {
+          "kind": "let",
+          "name": "centerArticles"
+        },
+        {
+          "kind": "let",
+          "name": "rightArticles"
+        },
+        {
+          "kind": "let",
+          "name": "leftPerspective"
+        },
+        {
+          "kind": "let",
+          "name": "centerPerspective"
+        },
+        {
+          "kind": "let",
+          "name": "rightPerspective"
+        },
+        {
+          "kind": "let",
+          "name": "allKeywords"
+        },
+        {
+          "kind": "let",
+          "name": "keywordCounts"
+        },
+        {
+          "kind": "let",
+          "name": "sharedFacts"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 127
+    },
+    {
+      "path": "NewsMobile/Services/TTSManager.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "AVFoundation",
+        "Foundation"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "TTSManager"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "configureAudioSession",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "startBriefing",
+          "inputs": "articles: [NewsArticle], startIndex: Int = 0",
+          "output": ""
+        },
+        {
+          "name": "stop",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "pause",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "resume",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "next",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "previous",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "speakCurrentArticle",
+          "inputs": "",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "isPlaying"
+        },
+        {
+          "kind": "var",
+          "name": "currentArticleIndex"
+        },
+        {
+          "kind": "var",
+          "name": "currentArticle"
+        },
+        {
+          "kind": "let",
+          "name": "synthesizer"
+        },
+        {
+          "kind": "var",
+          "name": "articles"
+        },
+        {
+          "kind": "var",
+          "name": "onComplete"
+        },
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "settings"
+        },
+        {
+          "kind": "let",
+          "name": "rate"
+        },
+        {
+          "kind": "var",
+          "name": "textToSpeak"
+        },
+        {
+          "kind": "let",
+          "name": "utterance"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [
+        "media.avfoundation"
+      ],
+      "line_count": 127
+    },
+    {
+      "path": "NewsMobile/Services/TrendingTopicsEngine.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "Foundation",
+        "NaturalLanguage"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "TrendingTopicsEngine"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "analyze",
+          "inputs": "articles: [NewsArticle]",
+          "output": ""
+        },
+        {
+          "name": "extractTopics",
+          "inputs": "from text: String",
+          "output": "[String]"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "trendingTopics"
+        },
+        {
+          "kind": "var",
+          "name": "topicCounts"
+        },
+        {
+          "kind": "let",
+          "name": "topics"
+        },
+        {
+          "kind": "let",
+          "name": "current"
+        },
+        {
+          "kind": "let",
+          "name": "trending"
+        },
+        {
+          "kind": "let",
+          "name": "tagger"
+        },
+        {
+          "kind": "var",
+          "name": "topics"
+        },
+        {
+          "kind": "let",
+          "name": "options"
+        },
+        {
+          "kind": "let",
+          "name": "word"
+        },
+        {
+          "kind": "let",
+          "name": "word"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 78
+    },
+    {
+      "path": "NewsMobile/Services/WatchLaterManager.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "Foundation",
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "WatchLaterManager"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "add",
+          "inputs": "_ article: NewsArticle",
+          "output": ""
+        },
+        {
+          "name": "remove",
+          "inputs": "_ article: NewsArticle",
+          "output": ""
+        },
+        {
+          "name": "remove",
+          "inputs": "at offsets: IndexSet",
+          "output": ""
+        },
+        {
+          "name": "markAsRead",
+          "inputs": "_ item: WatchLaterItem",
+          "output": ""
+        },
+        {
+          "name": "isInWatchLater",
+          "inputs": "_ article: NewsArticle",
+          "output": "Bool"
+        },
+        {
+          "name": "toggle",
+          "inputs": "_ article: NewsArticle",
+          "output": ""
+        },
+        {
+          "name": "saveItems",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "loadItems",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "syncToCloud",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "syncFromCloud",
+          "inputs": "",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "items"
+        },
+        {
+          "kind": "let",
+          "name": "storageKey"
+        },
+        {
+          "kind": "let",
+          "name": "iCloudKey"
+        },
+        {
+          "kind": "let",
+          "name": "item"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        },
+        {
+          "kind": "let",
+          "name": "cloudItems"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 103
+    },
+    {
+      "path": "NewsMobile/Services/WeatherService.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "CoreLocation",
+        "Foundation"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "WeatherService"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "requestLocation",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "fetchWeather",
+          "inputs": "for location: CLLocation",
+          "output": ""
+        },
+        {
+          "name": "weatherDescription",
+          "inputs": "for code: Int",
+          "output": "(String, String)"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "currentWeather"
+        },
+        {
+          "kind": "var",
+          "name": "isLoading"
+        },
+        {
+          "kind": "let",
+          "name": "locationManager"
+        },
+        {
+          "kind": "var",
+          "name": "currentLocation"
+        },
+        {
+          "kind": "let",
+          "name": "lat"
+        },
+        {
+          "kind": "let",
+          "name": "lon"
+        },
+        {
+          "kind": "let",
+          "name": "urlString"
+        },
+        {
+          "kind": "let",
+          "name": "current"
+        },
+        {
+          "kind": "let",
+          "name": "temp"
+        },
+        {
+          "kind": "let",
+          "name": "humidity"
+        },
+        {
+          "kind": "let",
+          "name": "feelsLike"
+        },
+        {
+          "kind": "let",
+          "name": "weatherCode"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [
+        "location.corelocation"
+      ],
+      "line_count": 106
+    },
+    {
+      "path": "NewsMobile/Services/WidgetDataManager.swift",
+      "module_hint": "newsmobile.services",
+      "imports": [
+        "Foundation",
+        "WidgetKit"
+      ],
+      "types": [
+        {
+          "kind": "class",
+          "name": "WidgetDataManager"
+        },
+        {
+          "kind": "enum",
+          "name": "Keys"
+        },
+        {
+          "kind": "struct",
+          "name": "NewsArticle"
+        },
+        {
+          "kind": "enum",
+          "name": "NewsCategory"
+        },
+        {
+          "kind": "enum",
+          "name": "Sentiment"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "updateHeadlines",
+          "inputs": "_ headlines: [[String: String]]",
+          "output": ""
+        },
+        {
+          "name": "updateWeather",
+          "inputs": "temperature: Int, condition: String",
+          "output": ""
+        },
+        {
+          "name": "updateTrendingTopic",
+          "inputs": "_ topic: String",
+          "output": ""
+        },
+        {
+          "name": "refreshWidget",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "clearWidgetData",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "updateFromArticles",
+          "inputs": "_ articles: [NewsArticle]",
+          "output": ""
+        },
+        {
+          "name": "onNewsRefreshed",
+          "inputs": "articles: [NewsArticle], weather: (temp: Int, condition: String",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "appGroupIdentifier"
+        },
+        {
+          "kind": "var",
+          "name": "sharedDefaults"
+        },
+        {
+          "kind": "let",
+          "name": "headlines"
+        },
+        {
+          "kind": "let",
+          "name": "title"
+        },
+        {
+          "kind": "let",
+          "name": "source"
+        },
+        {
+          "kind": "let",
+          "name": "category"
+        },
+        {
+          "kind": "let",
+          "name": "sentiment"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [
+        "widget.widgetkit"
+      ],
+      "line_count": 132
+    },
+    {
+      "path": "NewsMobile/Views/ArticleDetailView.swift",
+      "module_hint": "newsmobile.views",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "ArticleDetailView"
+        },
+        {
+          "kind": "struct",
+          "name": "SentimentBadge"
+        },
+        {
+          "kind": "struct",
+          "name": "BiasIndicatorBadge"
+        },
+        {
+          "kind": "struct",
+          "name": "EntityBadge"
+        },
+        {
+          "kind": "struct",
+          "name": "FlowLayout"
+        }
+      ],
+      "views": [
+        "ArticleDetailView",
+        "SentimentBadge",
+        "BiasIndicatorBadge",
+        "EntityBadge"
+      ],
+      "functions": [
+        {
+          "name": "sizeThatFits",
+          "inputs": "proposal: ProposedViewSize, subviews: Subviews, cache: inout (",
+          "output": ""
+        },
+        {
+          "name": "placeSubviews",
+          "inputs": "in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout (",
+          "output": ""
+        },
+        {
+          "name": "layout",
+          "inputs": "sizes: [CGSize], proposal: ProposedViewSize",
+          "output": "(size: CGSize, offsets: [CGPoint])"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "var",
+          "name": "watchLater"
+        },
+        {
+          "kind": "var",
+          "name": "tts"
+        },
+        {
+          "kind": "var",
+          "name": "personalization"
+        },
+        {
+          "kind": "var",
+          "name": "dismiss"
+        },
+        {
+          "kind": "var",
+          "name": "showWebView"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "duration"
+        },
+        {
+          "kind": "let",
+          "name": "sentiment"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "bias"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "entity"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "var",
+          "name": "spacing"
+        },
+        {
+          "kind": "let",
+          "name": "sizes"
+        },
+        {
+          "kind": "let",
+          "name": "sizes"
+        },
+        {
+          "kind": "let",
+          "name": "offsets"
+        },
+        {
+          "kind": "var",
+          "name": "offsets"
+        },
+        {
+          "kind": "var",
+          "name": "currentX"
+        },
+        {
+          "kind": "var",
+          "name": "currentY"
+        },
+        {
+          "kind": "var",
+          "name": "lineHeight"
+        },
+        {
+          "kind": "let",
+          "name": "maxWidth"
+        }
+      ],
+      "ui_patterns": [
+        "NavigationStack",
+        ".sheet",
+        ".toolbar",
+        "List",
+        "ScrollView",
+        "ForEach",
+        "WebView"
+      ],
+      "capability_hints": [],
+      "line_count": 249
+    },
+    {
+      "path": "NewsMobile/Views/ArticleWebView.swift",
+      "module_hint": "newsmobile.views",
+      "imports": [
+        "SwiftUI",
+        "WebKit"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "ArticleWebView"
+        },
+        {
+          "kind": "struct",
+          "name": "WebView"
+        },
+        {
+          "kind": "class",
+          "name": "Coordinator"
+        }
+      ],
+      "views": [
+        "ArticleWebView"
+      ],
+      "functions": [
+        {
+          "name": "makeUIView",
+          "inputs": "context: Context",
+          "output": "WKWebView"
+        },
+        {
+          "name": "updateUIView",
+          "inputs": "_ webView: WKWebView, context: Context",
+          "output": ""
+        },
+        {
+          "name": "makeCoordinator",
+          "inputs": "",
+          "output": "Coordinator"
+        },
+        {
+          "name": "webView",
+          "inputs": "_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!",
+          "output": ""
+        },
+        {
+          "name": "webView",
+          "inputs": "_ webView: WKWebView, didFinish navigation: WKNavigation!",
+          "output": ""
+        },
+        {
+          "name": "webView",
+          "inputs": "_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "url"
+        },
+        {
+          "kind": "var",
+          "name": "dismiss"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "url"
+        },
+        {
+          "kind": "var",
+          "name": "isLoading"
+        },
+        {
+          "kind": "let",
+          "name": "webView"
+        },
+        {
+          "kind": "let",
+          "name": "request"
+        },
+        {
+          "kind": "var",
+          "name": "parent"
+        }
+      ],
+      "ui_patterns": [
+        "NavigationStack",
+        ".toolbar",
+        "WebView",
+        "WKWebView"
+      ],
+      "capability_hints": [
+        "webview.webkit"
+      ],
+      "line_count": 90
+    },
+    {
+      "path": "NewsMobile/Views/AudioBriefingView.swift",
+      "module_hint": "newsmobile.views",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "AudioBriefingView"
+        }
+      ],
+      "views": [
+        "AudioBriefingView"
+      ],
+      "functions": [],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "articles"
+        },
+        {
+          "kind": "var",
+          "name": "tts"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        }
+      ],
+      "ui_patterns": [
+        "NavigationStack",
+        ".toolbar"
+      ],
+      "capability_hints": [],
+      "line_count": 129
+    },
+    {
+      "path": "NewsMobile/Views/CategoryView.swift",
+      "module_hint": "newsmobile.views",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "CategoryView"
+        }
+      ],
+      "views": [
+        "CategoryView"
+      ],
+      "functions": [],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "category"
+        },
+        {
+          "kind": "var",
+          "name": "newsAggregator"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        }
+      ],
+      "ui_patterns": [
+        "NavigationStack",
+        ".sheet",
+        "ScrollView",
+        "LazyVStack",
+        "ForEach"
+      ],
+      "capability_hints": [],
+      "line_count": 42
+    },
+    {
+      "path": "NewsMobile/Views/Components/ArticleCard.swift",
+      "module_hint": "views.components",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "ArticleCard"
+        }
+      ],
+      "views": [
+        "ArticleCard"
+      ],
+      "functions": [],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "var",
+          "name": "watchLater"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "var",
+          "name": "sentimentColor"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 114
+    },
+    {
+      "path": "NewsMobile/Views/Components/BreakingNewsBanner.swift",
+      "module_hint": "views.components",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "BreakingNewsBanner"
+        }
+      ],
+      "views": [
+        "BreakingNewsBanner"
+      ],
+      "functions": [],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "onDismiss"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        }
+      ],
+      "ui_patterns": [
+        ".sheet"
+      ],
+      "capability_hints": [],
+      "line_count": 93
+    },
+    {
+      "path": "NewsMobile/Views/Components/TrendingBar.swift",
+      "module_hint": "views.components",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "TrendingBar"
+        },
+        {
+          "kind": "struct",
+          "name": "TrendingChip"
+        }
+      ],
+      "views": [
+        "TrendingBar",
+        "TrendingChip"
+      ],
+      "functions": [],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "topics"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "topic"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        }
+      ],
+      "ui_patterns": [
+        "ScrollView",
+        "ForEach"
+      ],
+      "capability_hints": [],
+      "line_count": 74
+    },
+    {
+      "path": "NewsMobile/Views/Components/WeatherWidget.swift",
+      "module_hint": "views.components",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "WeatherWidget"
+        }
+      ],
+      "views": [
+        "WeatherWidget"
+      ],
+      "functions": [],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "body"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 83
+    },
+    {
+      "path": "NewsMobile/Views/CustomFeedsView.swift",
+      "module_hint": "newsmobile.views",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "CustomFeedsView"
+        },
+        {
+          "kind": "struct",
+          "name": "CustomFeedRow"
+        },
+        {
+          "kind": "struct",
+          "name": "AddFeedView"
+        }
+      ],
+      "views": [
+        "CustomFeedsView",
+        "CustomFeedRow",
+        "AddFeedView"
+      ],
+      "functions": [
+        {
+          "name": "addFeed",
+          "inputs": "",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "customFeeds"
+        },
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "var",
+          "name": "showAddFeed"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "feed"
+        },
+        {
+          "kind": "let",
+          "name": "feed"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "var",
+          "name": "customFeeds"
+        },
+        {
+          "kind": "var",
+          "name": "feedName"
+        },
+        {
+          "kind": "var",
+          "name": "feedURL"
+        },
+        {
+          "kind": "var",
+          "name": "selectedCategory"
+        },
+        {
+          "kind": "var",
+          "name": "isValidating"
+        },
+        {
+          "kind": "var",
+          "name": "errorMessage"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "isValid"
+        }
+      ],
+      "ui_patterns": [
+        "NavigationStack",
+        ".sheet",
+        ".toolbar",
+        ".refreshable",
+        "Form",
+        "List",
+        "ForEach"
+      ],
+      "capability_hints": [],
+      "line_count": 231
+    },
+    {
+      "path": "NewsMobile/Views/ForYouView.swift",
+      "module_hint": "newsmobile.views",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "ForYouView"
+        }
+      ],
+      "views": [
+        "ForYouView"
+      ],
+      "functions": [],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "personalization"
+        },
+        {
+          "kind": "var",
+          "name": "newsAggregator"
+        },
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "var",
+          "name": "disabledView"
+        },
+        {
+          "kind": "var",
+          "name": "emptyView"
+        },
+        {
+          "kind": "var",
+          "name": "articlesList"
+        }
+      ],
+      "ui_patterns": [
+        "NavigationStack",
+        ".sheet",
+        ".toolbar",
+        ".refreshable",
+        "List",
+        "ScrollView",
+        "LazyVStack",
+        "ForEach"
+      ],
+      "capability_hints": [],
+      "line_count": 115
+    },
+    {
+      "path": "NewsMobile/Views/HomeView.swift",
+      "module_hint": "newsmobile.views",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "HomeView"
+        },
+        {
+          "kind": "struct",
+          "name": "CategoryButton"
+        }
+      ],
+      "views": [
+        "HomeView",
+        "CategoryButton"
+      ],
+      "functions": [],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "newsAggregator"
+        },
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "var",
+          "name": "weatherService"
+        },
+        {
+          "kind": "var",
+          "name": "trendingEngine"
+        },
+        {
+          "kind": "var",
+          "name": "selectedCategory"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "var",
+          "name": "categoryPicker"
+        },
+        {
+          "kind": "let",
+          "name": "category"
+        },
+        {
+          "kind": "let",
+          "name": "isSelected"
+        },
+        {
+          "kind": "let",
+          "name": "action"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        }
+      ],
+      "ui_patterns": [
+        "NavigationStack",
+        ".sheet",
+        ".toolbar",
+        ".refreshable",
+        "ScrollView",
+        "LazyVStack",
+        "ForEach"
+      ],
+      "capability_hints": [],
+      "line_count": 124
+    },
+    {
+      "path": "NewsMobile/Views/KeywordAlertsView.swift",
+      "module_hint": "newsmobile.views",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "KeywordAlertsView"
+        },
+        {
+          "kind": "struct",
+          "name": "KeywordRow"
+        },
+        {
+          "kind": "struct",
+          "name": "KeywordMatchesView"
+        },
+        {
+          "kind": "struct",
+          "name": "ArticleRow"
+        }
+      ],
+      "views": [
+        "KeywordAlertsView",
+        "KeywordRow",
+        "KeywordMatchesView",
+        "ArticleRow"
+      ],
+      "functions": [],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "alertManager"
+        },
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "var",
+          "name": "newKeyword"
+        },
+        {
+          "kind": "var",
+          "name": "selectedKeyword"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "alert"
+        },
+        {
+          "kind": "var",
+          "name": "id"
+        },
+        {
+          "kind": "let",
+          "name": "alert"
+        },
+        {
+          "kind": "let",
+          "name": "matchCount"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "keyword"
+        },
+        {
+          "kind": "var",
+          "name": "alertManager"
+        },
+        {
+          "kind": "var",
+          "name": "selectedArticle"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "articles"
+        },
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "highlightKeyword"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "var",
+          "name": "highlightedTitle"
+        },
+        {
+          "kind": "var",
+          "name": "title"
+        }
+      ],
+      "ui_patterns": [
+        "NavigationStack",
+        ".sheet",
+        ".toolbar",
+        "List",
+        "ForEach"
+      ],
+      "capability_hints": [],
+      "line_count": 217
+    },
+    {
+      "path": "NewsMobile/Views/LocalNewsView.swift",
+      "module_hint": "newsmobile.views",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "LocalNewsView"
+        },
+        {
+          "kind": "struct",
+          "name": "LocationPickerView"
+        }
+      ],
+      "views": [
+        "LocalNewsView",
+        "LocationPickerView"
+      ],
+      "functions": [],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "localNews"
+        },
+        {
+          "kind": "var",
+          "name": "selectedArticle"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "var",
+          "name": "setupView"
+        },
+        {
+          "kind": "var",
+          "name": "loadingView"
+        },
+        {
+          "kind": "var",
+          "name": "emptyView"
+        },
+        {
+          "kind": "var",
+          "name": "articlesList"
+        },
+        {
+          "kind": "var",
+          "name": "localNews"
+        },
+        {
+          "kind": "var",
+          "name": "zipCode"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        }
+      ],
+      "ui_patterns": [
+        "NavigationStack",
+        ".sheet",
+        ".toolbar",
+        ".refreshable",
+        "Form",
+        "List",
+        "ScrollView",
+        "LazyVStack",
+        "ForEach"
+      ],
+      "capability_hints": [],
+      "line_count": 169
+    },
+    {
+      "path": "NewsMobile/Views/SearchView.swift",
+      "module_hint": "newsmobile.views",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "SearchView"
+        },
+        {
+          "kind": "struct",
+          "name": "SearchResultRow"
+        }
+      ],
+      "views": [
+        "SearchView",
+        "SearchResultRow"
+      ],
+      "functions": [],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "newsAggregator"
+        },
+        {
+          "kind": "var",
+          "name": "searchText"
+        },
+        {
+          "kind": "var",
+          "name": "selectedArticle"
+        },
+        {
+          "kind": "var",
+          "name": "filteredArticles"
+        },
+        {
+          "kind": "let",
+          "name": "query"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "var",
+          "name": "emptySearchView"
+        },
+        {
+          "kind": "var",
+          "name": "noResultsView"
+        },
+        {
+          "kind": "var",
+          "name": "resultsList"
+        },
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "searchText"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "var",
+          "name": "highlightedTitle"
+        },
+        {
+          "kind": "var",
+          "name": "title"
+        }
+      ],
+      "ui_patterns": [
+        "NavigationStack",
+        ".sheet",
+        "List",
+        "ForEach"
+      ],
+      "capability_hints": [],
+      "line_count": 142
+    },
+    {
+      "path": "NewsMobile/Views/SettingsView.swift",
+      "module_hint": "newsmobile.views",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "SettingsView"
+        }
+      ],
+      "views": [
+        "SettingsView"
+      ],
+      "functions": [],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "var",
+          "name": "cloudSync"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        }
+      ],
+      "ui_patterns": [
+        "NavigationStack",
+        "NavigationLink",
+        "Form",
+        "ForEach"
+      ],
+      "capability_hints": [],
+      "line_count": 152
+    },
+    {
+      "path": "NewsMobile/Views/StoryClusterView.swift",
+      "module_hint": "newsmobile.views",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "StoryClusterView"
+        },
+        {
+          "kind": "struct",
+          "name": "SourceChip"
+        },
+        {
+          "kind": "struct",
+          "name": "PerspectiveSection"
+        },
+        {
+          "kind": "struct",
+          "name": "PerspectiveCard"
+        }
+      ],
+      "views": [
+        "StoryClusterView",
+        "SourceChip",
+        "PerspectiveSection",
+        "PerspectiveCard"
+      ],
+      "functions": [],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "cluster"
+        },
+        {
+          "kind": "var",
+          "name": "selectedArticleIndex"
+        },
+        {
+          "kind": "var",
+          "name": "selectedArticle"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "source"
+        },
+        {
+          "kind": "let",
+          "name": "isSelected"
+        },
+        {
+          "kind": "let",
+          "name": "action"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "perspectives"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "title"
+        },
+        {
+          "kind": "let",
+          "name": "content"
+        },
+        {
+          "kind": "let",
+          "name": "color"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        }
+      ],
+      "ui_patterns": [
+        "NavigationStack",
+        ".sheet",
+        ".toolbar",
+        "ScrollView",
+        "ForEach"
+      ],
+      "capability_hints": [],
+      "line_count": 207
+    },
+    {
+      "path": "NewsMobile/Views/WatchLaterView.swift",
+      "module_hint": "newsmobile.views",
+      "imports": [
+        "SwiftUI"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "WatchLaterView"
+        },
+        {
+          "kind": "struct",
+          "name": "WatchLaterRow"
+        }
+      ],
+      "views": [
+        "WatchLaterView",
+        "WatchLaterRow"
+      ],
+      "functions": [],
+      "properties": [
+        {
+          "kind": "var",
+          "name": "watchLater"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "var",
+          "name": "emptyView"
+        },
+        {
+          "kind": "var",
+          "name": "articlesList"
+        },
+        {
+          "kind": "let",
+          "name": "item"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        }
+      ],
+      "ui_patterns": [
+        "NavigationStack",
+        ".sheet",
+        ".toolbar",
+        "List",
+        "ForEach"
+      ],
+      "capability_hints": [],
+      "line_count": 110
+    },
+    {
+      "path": "NewsMobileTests/NewsMobileTests.swift",
+      "module_hint": "newsmobiletests",
+      "imports": [
+        "SwiftUI",
+        "XCTest"
+      ],
+      "types": [
+        {
+          "kind": "enum",
+          "name": "TestData"
+        },
+        {
+          "kind": "class",
+          "name": "NewsArticleModelTests"
+        },
+        {
+          "kind": "class",
+          "name": "NewsCategoryModelTests"
+        },
+        {
+          "kind": "class",
+          "name": "SourceBiasTests"
+        },
+        {
+          "kind": "class",
+          "name": "NewsSourceModelTests"
+        },
+        {
+          "kind": "class",
+          "name": "SentimentResultTests"
+        },
+        {
+          "kind": "class",
+          "name": "ExtractedEntityTests"
+        },
+        {
+          "kind": "class",
+          "name": "StoryClusterTests"
+        },
+        {
+          "kind": "class",
+          "name": "WatchLaterItemTests"
+        },
+        {
+          "kind": "class",
+          "name": "KeywordAlertTests"
+        },
+        {
+          "kind": "class",
+          "name": "CustomRSSFeedTests"
+        },
+        {
+          "kind": "class",
+          "name": "SettingsTests"
+        },
+        {
+          "kind": "class",
+          "name": "UserPreferenceProfileTests"
+        },
+        {
+          "kind": "class",
+          "name": "ColorExtensionTests"
+        },
+        {
+          "kind": "class",
+          "name": "SecurityTests"
+        },
+        {
+          "kind": "class",
+          "name": "TrendingTopicTests"
+        },
+        {
+          "kind": "class",
+          "name": "PerspectiveBreakdownTests"
+        },
+        {
+          "kind": "class",
+          "name": "FrameTests"
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "makeSource",
+          "inputs": "name: String = \"Test Source\",\n        category: NewsCategory = .topStories,\n        bias: SourceBias = .center,\n        reliability: Double = 0.8",
+          "output": "NewsSource"
+        },
+        {
+          "name": "makeArticle",
+          "inputs": "title: String = \"Test Article Headline\",\n        description: String? = \"A test description for the article.\",\n        source: NewsSource? = nil,\n        category: NewsCategory = .topStories,\n        pubDate: Date = Date(",
+          "output": ""
+        },
+        {
+          "name": "testArticleCreation",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testArticleEquality",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testArticleHashability",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testArticleCodable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testArticleCodableWithMLFields",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testBreakingArticle",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testTimeAgoString",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testTimeAgoStringRecent",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testArticleWithNilDescription",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testArticleURLScheme",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testArticleMutability",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testAllCategories",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testCategoryIcons",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testCategoryColors",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testCategoryIdentifiable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testCategoryCodable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testAllCategoriesCodableRoundTrip",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testCategoryRawValues",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testBiasColors",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testBiasColorLength",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testBiasCodable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testAllBiasesCodable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSourceCreation",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSourceHashability",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSourceCodable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSourceURLScheme",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSourceDefaultValues",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testPositiveSentiment",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testNegativeSentiment",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testNeutralSentiment",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSentimentCodable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSentimentLabelIcons",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSentimentLabelColors",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSentimentHashable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testEntityCreation",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testEntityTypes",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testEntityCodable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testEntityHashable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testEntityTypeColors",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testClusterCreation",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testClusterWithSingleSource",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testClusterIdentifiable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testWatchLaterCreation",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testWatchLaterCodable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testWatchLaterMutability",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testKeywordAlertCreation",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testKeywordAlertCodable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testKeywordAlertMutability",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testCustomFeedCreation",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testCustomFeedCodable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testCustomFeedMutability",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testDefaultSettings",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testDefaultSettingsEnableFlags",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSpeechRates",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSpeechRateValues",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testFontSizeScaleFactors",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testFontSizeScaleValues",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSettingsCodable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSettingsWithCustomFeeds",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSettingsNilLocation",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testDefaultProfile",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testProfileCodable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testProfileReadDuration",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testProfileViewTracking",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testHexColorCreation",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testHexColorWithInvalidInput",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testHexColorWith3Chars",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testHexColorWith8Chars",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testNoHardcodedAPIKeys",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testHTMLSanitization",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testArticleLinkURLScheme",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSourceURLsAreHTTPS",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testNoSensitiveDataInCodableOutput",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testXSSPayloadsInTitles",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testFeedURLNotJavascript",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testTopicCreation",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testTopicWithCategory",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testTopicHashable",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testBreakdownCreation",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testBreakdownWithNils",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testArticleCreationPerformance",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testArticleCodablePerformance",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSourceCreationPerformance",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testSettingsCodablePerformance",
+          "inputs": "",
+          "output": ""
+        },
+        {
+          "name": "testHexColorPerformance",
+          "inputs": "",
+          "output": ""
+        }
+      ],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "a1"
+        },
+        {
+          "kind": "let",
+          "name": "a2"
+        },
+        {
+          "kind": "let",
+          "name": "a1"
+        },
+        {
+          "kind": "let",
+          "name": "a2"
+        },
+        {
+          "kind": "var",
+          "name": "set"
+        },
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "data"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        },
+        {
+          "kind": "var",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "data"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        },
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "timeAgo"
+        },
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "var",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "category"
+        },
+        {
+          "kind": "let",
+          "name": "data"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        },
+        {
+          "kind": "let",
+          "name": "data"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        },
+        {
+          "kind": "let",
+          "name": "bias"
+        },
+        {
+          "kind": "let",
+          "name": "data"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        },
+        {
+          "kind": "let",
+          "name": "data"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        },
+        {
+          "kind": "let",
+          "name": "source"
+        },
+        {
+          "kind": "let",
+          "name": "s1"
+        },
+        {
+          "kind": "let",
+          "name": "s2"
+        },
+        {
+          "kind": "var",
+          "name": "set"
+        },
+        {
+          "kind": "let",
+          "name": "source"
+        },
+        {
+          "kind": "let",
+          "name": "data"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        },
+        {
+          "kind": "let",
+          "name": "source"
+        },
+        {
+          "kind": "let",
+          "name": "source"
+        },
+        {
+          "kind": "let",
+          "name": "sentiment"
+        },
+        {
+          "kind": "let",
+          "name": "sentiment"
+        },
+        {
+          "kind": "let",
+          "name": "sentiment"
+        },
+        {
+          "kind": "let",
+          "name": "sentiment"
+        },
+        {
+          "kind": "let",
+          "name": "data"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        },
+        {
+          "kind": "let",
+          "name": "s1"
+        },
+        {
+          "kind": "let",
+          "name": "s2"
+        },
+        {
+          "kind": "let",
+          "name": "entity"
+        },
+        {
+          "kind": "let",
+          "name": "entity"
+        },
+        {
+          "kind": "let",
+          "name": "data"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        },
+        {
+          "kind": "let",
+          "name": "e1"
+        },
+        {
+          "kind": "let",
+          "name": "e2"
+        },
+        {
+          "kind": "let",
+          "name": "articles"
+        },
+        {
+          "kind": "let",
+          "name": "cluster"
+        },
+        {
+          "kind": "let",
+          "name": "source"
+        },
+        {
+          "kind": "let",
+          "name": "articles"
+        },
+        {
+          "kind": "let",
+          "name": "cluster"
+        },
+        {
+          "kind": "let",
+          "name": "c1"
+        },
+        {
+          "kind": "let",
+          "name": "c2"
+        },
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "item"
+        },
+        {
+          "kind": "let",
+          "name": "item"
+        },
+        {
+          "kind": "let",
+          "name": "data"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        },
+        {
+          "kind": "var",
+          "name": "item"
+        },
+        {
+          "kind": "let",
+          "name": "alert"
+        },
+        {
+          "kind": "let",
+          "name": "alert"
+        },
+        {
+          "kind": "let",
+          "name": "data"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        },
+        {
+          "kind": "var",
+          "name": "alert"
+        },
+        {
+          "kind": "let",
+          "name": "feed"
+        },
+        {
+          "kind": "let",
+          "name": "feed"
+        },
+        {
+          "kind": "let",
+          "name": "data"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        },
+        {
+          "kind": "var",
+          "name": "feed"
+        },
+        {
+          "kind": "let",
+          "name": "settings"
+        },
+        {
+          "kind": "let",
+          "name": "settings"
+        },
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "let",
+          "name": "data"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        },
+        {
+          "kind": "var",
+          "name": "settings"
+        },
+        {
+          "kind": "let",
+          "name": "feed"
+        },
+        {
+          "kind": "let",
+          "name": "data"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        },
+        {
+          "kind": "let",
+          "name": "settings"
+        },
+        {
+          "kind": "let",
+          "name": "profile"
+        },
+        {
+          "kind": "var",
+          "name": "profile"
+        },
+        {
+          "kind": "let",
+          "name": "data"
+        },
+        {
+          "kind": "let",
+          "name": "decoded"
+        },
+        {
+          "kind": "var",
+          "name": "profile"
+        },
+        {
+          "kind": "let",
+          "name": "articleId"
+        },
+        {
+          "kind": "var",
+          "name": "profile"
+        },
+        {
+          "kind": "let",
+          "name": "id"
+        },
+        {
+          "kind": "let",
+          "name": "_"
+        },
+        {
+          "kind": "let",
+          "name": "_"
+        },
+        {
+          "kind": "let",
+          "name": "_"
+        },
+        {
+          "kind": "let",
+          "name": "_"
+        },
+        {
+          "kind": "let",
+          "name": "_"
+        },
+        {
+          "kind": "let",
+          "name": "_"
+        },
+        {
+          "kind": "let",
+          "name": "_"
+        },
+        {
+          "kind": "let",
+          "name": "_"
+        },
+        {
+          "kind": "let",
+          "name": "_"
+        },
+        {
+          "kind": "let",
+          "name": "dangerousPatterns"
+        },
+        {
+          "kind": "let",
+          "name": "testString"
+        },
+        {
+          "kind": "let",
+          "name": "regex"
+        },
+        {
+          "kind": "let",
+          "name": "range"
+        },
+        {
+          "kind": "let",
+          "name": "matches"
+        },
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "safeArticle"
+        },
+        {
+          "kind": "let",
+          "name": "source"
+        },
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "data"
+        },
+        {
+          "kind": "let",
+          "name": "jsonString"
+        },
+        {
+          "kind": "let",
+          "name": "article"
+        },
+        {
+          "kind": "let",
+          "name": "source"
+        },
+        {
+          "kind": "let",
+          "name": "topic"
+        },
+        {
+          "kind": "let",
+          "name": "topic"
+        },
+        {
+          "kind": "let",
+          "name": "t1"
+        },
+        {
+          "kind": "let",
+          "name": "t2"
+        },
+        {
+          "kind": "var",
+          "name": "set"
+        },
+        {
+          "kind": "let",
+          "name": "breakdown"
+        },
+        {
+          "kind": "let",
+          "name": "breakdown"
+        },
+        {
+          "kind": "let",
+          "name": "_"
+        },
+        {
+          "kind": "let",
+          "name": "articles"
+        },
+        {
+          "kind": "let",
+          "name": "_"
+        },
+        {
+          "kind": "let",
+          "name": "_"
+        },
+        {
+          "kind": "let",
+          "name": "settings"
+        },
+        {
+          "kind": "let",
+          "name": "_"
+        },
+        {
+          "kind": "let",
+          "name": "_"
+        },
+        {
+          "kind": "let",
+          "name": "_"
+        },
+        {
+          "kind": "let",
+          "name": "_"
+        }
+      ],
+      "ui_patterns": [],
+      "capability_hints": [],
+      "line_count": 820
+    },
+    {
+      "path": "NewsMobileWidget/NewsMobileWidget.swift",
+      "module_hint": "newsmobilewidget",
+      "imports": [
+        "SwiftUI",
+        "WidgetKit"
+      ],
+      "types": [
+        {
+          "kind": "struct",
+          "name": "NewsEntry"
+        },
+        {
+          "kind": "struct",
+          "name": "HeadlineItem"
+        },
+        {
+          "kind": "struct",
+          "name": "WeatherData"
+        },
+        {
+          "kind": "struct",
+          "name": "NewsProvider"
+        },
+        {
+          "kind": "struct",
+          "name": "NewsWidgetEntryView"
+        },
+        {
+          "kind": "struct",
+          "name": "SmallNewsWidget"
+        },
+        {
+          "kind": "struct",
+          "name": "MediumNewsWidget"
+        },
+        {
+          "kind": "struct",
+          "name": "LargeNewsWidget"
+        },
+        {
+          "kind": "struct",
+          "name": "NewsHeadlineRow"
+        },
+        {
+          "kind": "struct",
+          "name": "NewsMobileWidget"
+        }
+      ],
+      "views": [
+        "NewsWidgetEntryView",
+        "SmallNewsWidget",
+        "MediumNewsWidget",
+        "LargeNewsWidget",
+        "NewsHeadlineRow"
+      ],
+      "functions": [
+        {
+          "name": "widgetBackground",
+          "inputs": "_ backgroundView: some View",
+          "output": "some View"
+        },
+        {
+          "name": "placeholder",
+          "inputs": "in context: Context",
+          "output": "NewsEntry"
+        },
+        {
+          "name": "getSnapshot",
+          "inputs": "in context: Context, completion: @escaping (NewsEntry",
+          "output": "Void)"
+        },
+        {
+          "name": "getTimeline",
+          "inputs": "in context: Context, completion: @escaping (Timeline<NewsEntry>",
+          "output": "Void)"
+        },
+        {
+          "name": "loadCachedHeadlines",
+          "inputs": "",
+          "output": "[HeadlineItem]"
+        },
+        {
+          "name": "loadCachedWeather",
+          "inputs": "",
+          "output": "WeatherData?"
+        },
+        {
+          "name": "loadTrendingTopic",
+          "inputs": "",
+          "output": "String?"
+        },
+        {
+          "name": "weatherIcon",
+          "inputs": "for condition: String",
+          "output": "String"
+        },
+        {
+          "name": "sentimentColor",
+          "inputs": "_ sentiment: String",
+          "output": "Color"
+        },
+        {
+          "name": "sentimentColor",
+          "inputs": "_ sentiment: String",
+          "output": "Color"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "let",
+          "name": "date"
+        },
+        {
+          "kind": "let",
+          "name": "headlines"
+        },
+        {
+          "kind": "let",
+          "name": "weather"
+        },
+        {
+          "kind": "let",
+          "name": "trendingTopic"
+        },
+        {
+          "kind": "let",
+          "name": "id"
+        },
+        {
+          "kind": "let",
+          "name": "title"
+        },
+        {
+          "kind": "let",
+          "name": "source"
+        },
+        {
+          "kind": "let",
+          "name": "category"
+        },
+        {
+          "kind": "let",
+          "name": "sentiment"
+        },
+        {
+          "kind": "let",
+          "name": "temperature"
+        },
+        {
+          "kind": "let",
+          "name": "condition"
+        },
+        {
+          "kind": "let",
+          "name": "icon"
+        },
+        {
+          "kind": "let",
+          "name": "entry"
+        },
+        {
+          "kind": "let",
+          "name": "currentDate"
+        },
+        {
+          "kind": "let",
+          "name": "entry"
+        },
+        {
+          "kind": "let",
+          "name": "nextUpdate"
+        },
+        {
+          "kind": "let",
+          "name": "timeline"
+        },
+        {
+          "kind": "let",
+          "name": "userDefaults"
+        },
+        {
+          "kind": "let",
+          "name": "headlines"
+        },
+        {
+          "kind": "let",
+          "name": "userDefaults"
+        },
+        {
+          "kind": "let",
+          "name": "condition"
+        },
+        {
+          "kind": "let",
+          "name": "userDefaults"
+        },
+        {
+          "kind": "var",
+          "name": "entry"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "entry"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "entry"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "entry"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "headline"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        },
+        {
+          "kind": "let",
+          "name": "kind"
+        },
+        {
+          "kind": "var",
+          "name": "body"
+        }
+      ],
+      "ui_patterns": [
+        "ForEach"
+      ],
+      "capability_hints": [
+        "widget.widgetkit"
+      ],
+      "line_count": 425
+    }
+  ]
+}

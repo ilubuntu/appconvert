@@ -1,0 +1,278 @@
+{
+  "capabilities": [
+    {
+      "id": "ui.swiftui.tabview",
+      "capability": "SwiftUI TabView / NavigationStack / Form / List / searchable / refreshable",
+      "source_refs": [
+        "NewsMobile/NewsMobile/ContentView.swift",
+        "NewsMobile/NewsMobile/Views/HomeView.swift",
+        "NewsMobile/NewsMobile/Views/SettingsView.swift",
+        "NewsMobile/NewsMobile/Views/SearchView.swift"
+      ],
+      "runtime_behavior": "Defines root app navigation, form settings screens, list screens, search bar and pull-to-refresh behavior.",
+      "permission_or_entitlement": "",
+      "feature_ids": [
+        "feature.app.root_navigation",
+        "feature.news.home_feed",
+        "feature.settings.preferences",
+        "feature.search.article_search"
+      ],
+      "notes": "No Harmony mapping selected in this stage."
+    },
+    {
+      "id": "network.urlsession",
+      "capability": "URLSession",
+      "source_refs": [
+        "NewsMobile/NewsMobile/Services/NewsAggregator.swift",
+        "NewsMobile/NewsMobile/Services/WeatherService.swift",
+        "NewsMobile/NewsMobile/Services/CustomFeedManager.swift",
+        "NewsMobile/NewsMobile/Services/LocalNewsService.swift"
+      ],
+      "runtime_behavior": "Fetches RSS feeds, weather data, custom RSS feeds and local-news RSS results.",
+      "permission_or_entitlement": "Network access",
+      "feature_ids": [
+        "feature.news.home_feed",
+        "feature.custom_feeds.manage_feeds",
+        "feature.local_news.location_feed",
+        "feature.weather.current_conditions"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "parser.xmlparser",
+      "capability": "XMLParser",
+      "source_refs": [
+        "NewsMobile/NewsMobile/Services/RSSParser.swift"
+      ],
+      "runtime_behavior": "Parses RSS/Atom XML into NewsArticle objects.",
+      "permission_or_entitlement": "",
+      "feature_ids": [
+        "feature.news.home_feed",
+        "feature.custom_feeds.manage_feeds"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "ml.naturallanguage",
+      "capability": "NaturalLanguage / NLTagger",
+      "source_refs": [
+        "NewsMobile/NewsMobile/ML/SentimentAnalyzer.swift",
+        "NewsMobile/NewsMobile/ML/EntityExtractor.swift",
+        "NewsMobile/README.md"
+      ],
+      "runtime_behavior": "Runs on-device sentiment scoring and named entity recognition for article titles.",
+      "permission_or_entitlement": "",
+      "feature_ids": [
+        "feature.ml.sentiment_entities"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "storage.userdefaults",
+      "capability": "UserDefaults",
+      "source_refs": [
+        "NewsMobile/NewsMobile/Services/SettingsManager.swift",
+        "NewsMobile/NewsMobile/Services/WatchLaterManager.swift",
+        "NewsMobile/NewsMobileWidget/NewsMobileWidget.swift"
+      ],
+      "runtime_behavior": "Persists settings, saved articles, and widget cached data.",
+      "permission_or_entitlement": "",
+      "feature_ids": [
+        "feature.settings.preferences",
+        "feature.watch_later.manage_saved",
+        "feature.personalization.for_you"
+      ],
+      "notes": "Widget uses App Group UserDefaults."
+    },
+    {
+      "id": "storage.app_groups",
+      "capability": "App Groups",
+      "source_refs": [
+        "NewsMobile/NewsMobile/NewsMobile.entitlements",
+        "NewsMobile/NewsMobileWidget/NewsMobileWidget.entitlements",
+        "NewsMobile/NewsMobileWidget/NewsMobileWidget.swift"
+      ],
+      "runtime_behavior": "Shares cached headlines, weather and trending data with the WidgetKit extension.",
+      "permission_or_entitlement": "com.apple.security.application-groups = group.com.jordankoch.newsmobile",
+      "feature_ids": [
+        "feature.widget.home_screen"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sync.icloud_kv",
+      "capability": "NSUbiquitousKeyValueStore / iCloud KVS",
+      "source_refs": [
+        "NewsMobile/NewsMobile/Services/CloudSyncManager.swift",
+        "NewsMobile/NewsMobile/Services/WatchLaterManager.swift",
+        "NewsMobile/NewsMobile/NewsMobile.entitlements"
+      ],
+      "runtime_behavior": "Synchronizes settings and watch-later data when enabled.",
+      "permission_or_entitlement": "iCloud container and ubiquity key-value store entitlement",
+      "feature_ids": [
+        "feature.sync.icloud",
+        "feature.watch_later.manage_saved"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "notification.usernotifications",
+      "capability": "UserNotifications",
+      "source_refs": [
+        "NewsMobile/NewsMobile/Services/NotificationManager.swift",
+        "NewsMobile/NewsMobile/Views/SettingsView.swift",
+        "NewsMobile/NewsMobile/NewsMobile.entitlements"
+      ],
+      "runtime_behavior": "Requests alert/badge/sound authorization and sends local notification requests for breaking news or keyword alerts.",
+      "permission_or_entitlement": "aps-environment development; runtime notification permission",
+      "feature_ids": [
+        "feature.notifications.breaking_keyword",
+        "feature.settings.preferences"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "background.bgapprefresh",
+      "capability": "BackgroundTasks / BGAppRefreshTask",
+      "source_refs": [
+        "NewsMobile/NewsMobile/NewsMobileApp.swift",
+        "NewsMobile/NewsMobile/Services/BackgroundRefreshManager.swift"
+      ],
+      "runtime_behavior": "Registers and schedules background refresh task to fetch latest news.",
+      "permission_or_entitlement": "Background refresh capability and task identifier com.jordankoch.NewsMobile.refresh",
+      "feature_ids": [
+        "feature.background.refresh"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "audio.avspeech",
+      "capability": "AVFoundation / AVSpeechSynthesizer / AVAudioSession",
+      "source_refs": [
+        "NewsMobile/NewsMobile/Services/TTSManager.swift",
+        "NewsMobile/NewsMobile/Views/AudioBriefingView.swift",
+        "NewsMobile/NewsMobile/Views/ArticleDetailView.swift"
+      ],
+      "runtime_behavior": "Configures playback audio session and reads article source/title/description aloud.",
+      "permission_or_entitlement": "Audio playback",
+      "feature_ids": [
+        "feature.audio.briefing",
+        "feature.news.article_detail"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "location.corelocation",
+      "capability": "CoreLocation",
+      "source_refs": [
+        "NewsMobile/NewsMobile/Services/WeatherService.swift",
+        "NewsMobile/NewsMobile/Views/LocalNewsView.swift"
+      ],
+      "runtime_behavior": "Requests when-in-use location authorization for current weather; local news can also use manual ZIP/city.",
+      "permission_or_entitlement": "Location runtime permission",
+      "feature_ids": [
+        "feature.weather.current_conditions",
+        "feature.local_news.location_feed"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "webview.webkit",
+      "capability": "WebKit / WKWebView / UIViewRepresentable",
+      "source_refs": [
+        "NewsMobile/NewsMobile/Views/ArticleWebView.swift"
+      ],
+      "runtime_behavior": "Loads original article URL inside app and exposes loading state through navigation delegate.",
+      "permission_or_entitlement": "Network access",
+      "feature_ids": [
+        "feature.news.web_reader"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sharelink.system_share",
+      "capability": "SwiftUI ShareLink",
+      "source_refs": [
+        "NewsMobile/NewsMobile/Views/ArticleDetailView.swift",
+        "NewsMobile/NewsMobile/Views/ArticleWebView.swift"
+      ],
+      "runtime_behavior": "Shares article URL from detail or WebView.",
+      "permission_or_entitlement": "",
+      "feature_ids": [
+        "feature.news.article_detail",
+        "feature.news.web_reader"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "widget.widgetkit",
+      "capability": "WidgetKit",
+      "source_refs": [
+        "NewsMobile/NewsMobileWidget/NewsMobileWidget.swift"
+      ],
+      "runtime_behavior": "Provides timeline entries and small/medium/large widget views.",
+      "permission_or_entitlement": "Widget extension target and App Group shared storage",
+      "feature_ids": [
+        "feature.widget.home_screen"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "network.nwlistener",
+      "capability": "Network / NWListener",
+      "source_refs": [
+        "NewsMobile/NewsMobile/NovaAPIServer.swift",
+        "NewsMobile/README.md"
+      ],
+      "runtime_behavior": "Starts local loopback API on 127.0.0.1:37436 outside snapshot mode.",
+      "permission_or_entitlement": "Local network/socket behavior",
+      "feature_ids": [
+        "feature.local_api.status"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "ml.local_algorithm",
+      "capability": "Local Swift algorithm",
+      "source_refs": [
+        "NewsMobile/NewsMobile/Services/StoryClusterEngine.swift",
+        "NewsMobile/NewsMobile/Services/TrendingTopicsEngine.swift"
+      ],
+      "runtime_behavior": "Computes topic clusters and trending topic frequency locally.",
+      "permission_or_entitlement": "",
+      "feature_ids": [
+        "feature.ml.story_clusters",
+        "feature.ml.trending_topics"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "ui.swiftui.scrollview",
+      "capability": "SwiftUI ScrollView / LazyVStack",
+      "source_refs": [
+        "NewsMobile/NewsMobile/Views/HomeView.swift",
+        "NewsMobile/NewsMobile/Views/ForYouView.swift"
+      ],
+      "runtime_behavior": "Horizontal category scrolling and vertical article lists.",
+      "permission_or_entitlement": "",
+      "feature_ids": [
+        "feature.news.category_feed",
+        "feature.news.home_feed"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "ui.swiftui.searchable",
+      "capability": "SwiftUI searchable",
+      "source_refs": [
+        "NewsMobile/NewsMobile/Views/SearchView.swift"
+      ],
+      "runtime_behavior": "Attaches native search UI to SearchView and binds query text.",
+      "permission_or_entitlement": "",
+      "feature_ids": [
+        "feature.search.article_search"
+      ],
+      "notes": ""
+    }
+  ]
+}
