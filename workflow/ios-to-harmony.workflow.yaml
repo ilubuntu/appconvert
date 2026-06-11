@@ -1,0 +1,148 @@
+{
+  "name": "ios-to-harmony",
+  "description": "Convert an iOS Swift/SwiftUI project into a HarmonyOS NEXT project through explicit Codex exec stages.",
+  "workdir": "/Users/bb/work/appConvert",
+  "ios_project": "NewsMobile",
+  "harmony_project": "NewsMobileHarmony",
+  "state_file": "output/00-workflow/迁移状态.md",
+  "stages": [
+    {
+      "id": "01-ios-analyze",
+      "name": "iOS工程分析",
+      "profile": "ios-analyze",
+      "prompt": "workflow/prompts/01-ios-analyze.md",
+      "required_inputs": ["NewsMobile"],
+      "expected_outputs": [
+        "output/01-ios-analyze/ios源码索引.md",
+        "output/01-ios-analyze/ios模块结构.md",
+        "output/01-ios-analyze/ios函数级清单.md",
+        "output/01-ios-analyze/ios功能清单.md",
+        "output/01-ios-analyze/ios界面清单.md",
+        "output/01-ios-analyze/ios特性清单.md"
+      ]
+    },
+    {
+      "id": "02-ios-capability-map",
+      "name": "iOS能力映射",
+      "profile": "ios-map",
+      "prompt": "workflow/prompts/02-ios-map.md",
+      "required_inputs": [
+        "output/01-ios-analyze/ios模块结构.md",
+        "output/01-ios-analyze/ios功能清单.md",
+        "output/01-ios-analyze/ios特性清单.md"
+      ],
+      "expected_outputs": ["output/02-ios-map/ios-harmony-kit映射.md"]
+    },
+    {
+      "id": "03a-harmony-module-plan",
+      "name": "Harmony模块实现计划",
+      "profile": "harmony-generate",
+      "prompt": "workflow/prompts/03a-harmony-module-plan.md",
+      "required_inputs": [
+        "output/01-ios-analyze/ios源码索引.md",
+        "output/01-ios-analyze/ios模块结构.md",
+        "output/01-ios-analyze/ios函数级清单.md",
+        "output/01-ios-analyze/ios功能清单.md",
+        "output/01-ios-analyze/ios界面清单.md",
+        "output/02-ios-map/ios-harmony-kit映射.md",
+        "output/01-ios-analyze/screenshots/png"
+      ],
+      "expected_outputs": [
+        "output/03-harmony-generate/harmony模块实现计划.md",
+        "output/03-harmony-generate/harmony全量实现追踪.md"
+      ]
+    },
+    {
+      "id": "03b-harmony-core-services",
+      "name": "Harmony核心服务实现",
+      "profile": "harmony-generate",
+      "prompt": "workflow/prompts/03b-harmony-core-services.md",
+      "required_inputs": [
+        "output/03-harmony-generate/harmony模块实现计划.md",
+        "output/01-ios-analyze/ios源码索引.md",
+        "output/01-ios-analyze/ios模块结构.md",
+        "output/01-ios-analyze/ios函数级清单.md",
+        "output/01-ios-analyze/ios功能清单.md",
+        "output/02-ios-map/ios-harmony-kit映射.md"
+      ],
+      "expected_outputs": [
+        "NewsMobileHarmony/entry/src/main/ets/models",
+        "NewsMobileHarmony/entry/src/main/ets/services",
+        "NewsMobileHarmony/entry/src/main/ets/stores",
+        "output/03-harmony-generate/harmony全量实现追踪.md"
+      ]
+    },
+    {
+      "id": "03c-harmony-pages-ui",
+      "name": "Harmony页面UI实现",
+      "profile": "harmony-generate",
+      "prompt": "workflow/prompts/03c-harmony-pages-ui.md",
+      "required_inputs": [
+        "output/03-harmony-generate/harmony模块实现计划.md",
+        "output/01-ios-analyze/ios界面清单.md",
+        "output/01-ios-analyze/ios功能清单.md",
+        "output/01-ios-analyze/screenshots/png",
+        "output/03-harmony-generate/harmony全量实现追踪.md"
+      ],
+      "expected_outputs": [
+        "NewsMobileHarmony/entry/src/main/ets/pages",
+        "NewsMobileHarmony/entry/src/main/ets/components",
+        "output/03-harmony-generate/harmony全量实现追踪.md"
+      ]
+    },
+    {
+      "id": "03d-harmony-platform-capabilities",
+      "name": "Harmony平台能力实现",
+      "profile": "harmony-generate",
+      "prompt": "workflow/prompts/03d-harmony-platform-capabilities.md",
+      "required_inputs": [
+        "output/03-harmony-generate/harmony模块实现计划.md",
+        "output/01-ios-analyze/ios特性清单.md",
+        "output/02-ios-map/ios-harmony-kit映射.md",
+        "output/03-harmony-generate/harmony全量实现追踪.md"
+      ],
+      "expected_outputs": [
+        "NewsMobileHarmony/entry/src/main/ets/platform",
+        "NewsMobileHarmony/entry/src/main/module.json5",
+        "output/03-harmony-generate/harmony全量实现追踪.md"
+      ]
+    },
+    {
+      "id": "03e-harmony-integration-summary",
+      "name": "Harmony集成汇总",
+      "profile": "harmony-generate",
+      "prompt": "workflow/prompts/03e-harmony-integration-summary.md",
+      "required_inputs": [
+        "output/03-harmony-generate/harmony模块实现计划.md",
+        "output/03-harmony-generate/harmony全量实现追踪.md",
+        "output/01-ios-analyze/ios源码索引.md",
+        "output/01-ios-analyze/ios函数级清单.md",
+        "output/01-ios-analyze/ios功能清单.md",
+        "output/01-ios-analyze/ios界面清单.md",
+        "output/02-ios-map/ios-harmony-kit映射.md"
+      ],
+      "expected_outputs": [
+        "NewsMobileHarmony",
+        "output/03-harmony-generate/harmony全量实现追踪.md"
+      ]
+    },
+    {
+      "id": "04-harmony-visual-verify",
+      "name": "Harmony视觉验收",
+      "profile": "harmony-visual-verify",
+      "prompt": "workflow/prompts/04-harmony-visual-verify.md",
+      "required_inputs": [
+        "NewsMobileHarmony",
+        "output/03-harmony-generate/harmony全量实现追踪.md",
+        "output/01-ios-analyze/ios界面清单.md",
+        "output/01-ios-analyze/screenshots/png"
+      ],
+      "expected_outputs": [
+        "NewsMobileHarmony/entry/build/default/outputs/default/entry-default-unsigned.hap",
+        "output/04-harmony-visual-verify/界面对齐.md",
+        "output/03-harmony-generate/harmony全量实现追踪.md",
+        "output/00-workflow/迁移状态.md"
+      ]
+    }
+  ]
+}

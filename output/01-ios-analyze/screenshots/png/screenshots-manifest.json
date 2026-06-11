@@ -1,0 +1,282 @@
+[
+  {
+    "file": "01-home.png",
+    "screen": "home",
+    "title": "首页新闻流",
+    "path": "output/01-ios-analyze/screenshots/png/01-home.png",
+    "source": {
+      "file": "NewsMobile/NewsMobile/Views/HomeView.swift",
+      "type": "HomeView",
+      "functions": "body, categoryPicker"
+    },
+    "launch_args": [
+      "-uiSnapshotMode",
+      "true",
+      "-snapshotScreen",
+      "home"
+    ],
+    "capture_policy": "automated_snapshot_mode_no_manual_click",
+    "size": "1320x2868",
+    "sha256": "14012e029e90c1f07641ded504f4f8a455491491fe6fe4398ee1fc68d6606f66"
+  },
+  {
+    "file": "02-home-category.png",
+    "screen": "homeCategory",
+    "title": "分类新闻页",
+    "path": "output/01-ios-analyze/screenshots/png/02-home-category.png",
+    "source": {
+      "file": "NewsMobile/NewsMobile/Views/CategoryView.swift",
+      "type": "CategoryView",
+      "functions": "body"
+    },
+    "launch_args": [
+      "-uiSnapshotMode",
+      "true",
+      "-snapshotScreen",
+      "homeCategory"
+    ],
+    "capture_policy": "automated_snapshot_mode_no_manual_click",
+    "size": "1320x2868",
+    "sha256": "3bbf036cdfd1c533d121cc3e453c86258ac25cb8b1f986a70879b5b0040b9cd7"
+  },
+  {
+    "file": "03-article-detail.png",
+    "screen": "articleDetail",
+    "title": "文章详情",
+    "path": "output/01-ios-analyze/screenshots/png/03-article-detail.png",
+    "source": {
+      "file": "NewsMobile/NewsMobile/Views/ArticleDetailView.swift",
+      "type": "ArticleDetailView",
+      "functions": "body, SentimentBadge, BiasIndicatorBadge, EntityBadge"
+    },
+    "launch_args": [
+      "-uiSnapshotMode",
+      "true",
+      "-snapshotScreen",
+      "articleDetail"
+    ],
+    "capture_policy": "automated_snapshot_mode_no_manual_click",
+    "size": "1320x2868",
+    "sha256": "2499265b81263fc0243b8619df26e057b6ceccfb12e833de31ba22e75e8402d5"
+  },
+  {
+    "file": "04-article-webview.png",
+    "screen": "articleWebView",
+    "title": "文章原文 WebView",
+    "path": "output/01-ios-analyze/screenshots/png/04-article-webview.png",
+    "source": {
+      "file": "NewsMobile/NewsMobile/Views/ArticleWebView.swift",
+      "type": "ArticleWebView/WebView",
+      "functions": "body, makeUIView, updateUIView, Coordinator"
+    },
+    "launch_args": [
+      "-uiSnapshotMode",
+      "true",
+      "-snapshotScreen",
+      "articleWebView"
+    ],
+    "capture_policy": "automated_snapshot_mode_no_manual_click",
+    "size": "1320x2868",
+    "sha256": "8910c9e4b90afe43a6b471b6fadcba1fac736414ff094908e075fb4628fd44e4"
+  },
+  {
+    "file": "05-for-you.png",
+    "screen": "forYou",
+    "title": "For You 推荐流",
+    "path": "output/01-ios-analyze/screenshots/png/05-for-you.png",
+    "source": {
+      "file": "NewsMobile/NewsMobile/Views/ForYouView.swift",
+      "type": "ForYouView",
+      "functions": "body, disabledView, emptyView, articlesList"
+    },
+    "launch_args": [
+      "-uiSnapshotMode",
+      "true",
+      "-snapshotScreen",
+      "forYou"
+    ],
+    "capture_policy": "automated_snapshot_mode_no_manual_click",
+    "size": "1320x2868",
+    "sha256": "5ced0f9f7253bdff55c1e1c9285554b384e1e7662b6c1d2cb0604169ea3dc8aa"
+  },
+  {
+    "file": "06-search-empty.png",
+    "screen": "searchEmpty",
+    "title": "搜索空态",
+    "path": "output/01-ios-analyze/screenshots/png/06-search-empty.png",
+    "source": {
+      "file": "NewsMobile/NewsMobile/Views/SearchView.swift",
+      "type": "SearchView",
+      "functions": "body, emptySearchView"
+    },
+    "launch_args": [
+      "-uiSnapshotMode",
+      "true",
+      "-snapshotScreen",
+      "searchEmpty"
+    ],
+    "capture_policy": "automated_snapshot_mode_no_manual_click",
+    "size": "1320x2868",
+    "sha256": "e0449de3b37e72e6beb1b2f3fb736c91bbe4029c48fc590c4f1ef5a35372ee0c"
+  },
+  {
+    "file": "07-search-results.png",
+    "screen": "searchResults",
+    "title": "搜索结果",
+    "path": "output/01-ios-analyze/screenshots/png/07-search-results.png",
+    "source": {
+      "file": "NewsMobile/NewsMobile/Views/SearchView.swift",
+      "type": "SearchView/SearchResultRow",
+      "functions": "filteredArticles, resultsList, highlightedTitle"
+    },
+    "launch_args": [
+      "-uiSnapshotMode",
+      "true",
+      "-snapshotScreen",
+      "searchResults"
+    ],
+    "capture_policy": "automated_snapshot_mode_no_manual_click",
+    "size": "1320x2868",
+    "sha256": "25ab429f34903c991edec551aa16d64341d274a00948b98fe0c15fcd8bf34cf2"
+  },
+  {
+    "file": "08-saved-empty.png",
+    "screen": "savedEmpty",
+    "title": "收藏空态",
+    "path": "output/01-ios-analyze/screenshots/png/08-saved-empty.png",
+    "source": {
+      "file": "NewsMobile/NewsMobile/Views/WatchLaterView.swift",
+      "type": "WatchLaterView",
+      "functions": "body, emptyView"
+    },
+    "launch_args": [
+      "-uiSnapshotMode",
+      "true",
+      "-snapshotScreen",
+      "savedEmpty"
+    ],
+    "capture_policy": "automated_snapshot_mode_no_manual_click",
+    "size": "1320x2868",
+    "sha256": "07695304432ae3d46c20e774fb5f881fa5cc83162dec0a391a9e770ec6281bb5"
+  },
+  {
+    "file": "09-saved-with-article.png",
+    "screen": "savedWithArticle",
+    "title": "收藏有数据",
+    "path": "output/01-ios-analyze/screenshots/png/09-saved-with-article.png",
+    "source": {
+      "file": "NewsMobile/NewsMobile/Views/WatchLaterView.swift",
+      "type": "WatchLaterView/WatchLaterRow",
+      "functions": "articlesList, WatchLaterRow.body"
+    },
+    "launch_args": [
+      "-uiSnapshotMode",
+      "true",
+      "-snapshotScreen",
+      "savedWithArticle"
+    ],
+    "capture_policy": "automated_snapshot_mode_no_manual_click",
+    "size": "1320x2868",
+    "sha256": "0c6c7783a664bc7065b2e377e5f1f7497513332e5aee47e9cdc1e6ef71ea5b58"
+  },
+  {
+    "file": "10-settings.png",
+    "screen": "settings",
+    "title": "设置页",
+    "path": "output/01-ios-analyze/screenshots/png/10-settings.png",
+    "source": {
+      "file": "NewsMobile/NewsMobile/Views/SettingsView.swift",
+      "type": "SettingsView",
+      "functions": "body"
+    },
+    "launch_args": [
+      "-uiSnapshotMode",
+      "true",
+      "-snapshotScreen",
+      "settings"
+    ],
+    "capture_policy": "automated_snapshot_mode_no_manual_click",
+    "size": "1320x2868",
+    "sha256": "cefd1896c97e6fb55af9688d484e86fd7f7abbf8e640f843f9d89dec102e9dc2"
+  },
+  {
+    "file": "11-keyword-alerts.png",
+    "screen": "keywordAlerts",
+    "title": "关键词提醒",
+    "path": "output/01-ios-analyze/screenshots/png/11-keyword-alerts.png",
+    "source": {
+      "file": "NewsMobile/NewsMobile/Views/KeywordAlertsView.swift",
+      "type": "KeywordAlertsView",
+      "functions": "body, KeywordRow.body"
+    },
+    "launch_args": [
+      "-uiSnapshotMode",
+      "true",
+      "-snapshotScreen",
+      "keywordAlerts"
+    ],
+    "capture_policy": "automated_snapshot_mode_no_manual_click",
+    "size": "1320x2868",
+    "sha256": "a6cd83a29b45ed29f19ca5074868eb85b44129112274a9d0bafb757384b290b3"
+  },
+  {
+    "file": "12-custom-feeds.png",
+    "screen": "customFeeds",
+    "title": "自定义订阅源",
+    "path": "output/01-ios-analyze/screenshots/png/12-custom-feeds.png",
+    "source": {
+      "file": "NewsMobile/NewsMobile/Views/CustomFeedsView.swift",
+      "type": "CustomFeedsView/AddFeedView",
+      "functions": "body, AddFeedView.addFeed"
+    },
+    "launch_args": [
+      "-uiSnapshotMode",
+      "true",
+      "-snapshotScreen",
+      "customFeeds"
+    ],
+    "capture_policy": "automated_snapshot_mode_no_manual_click",
+    "size": "1320x2868",
+    "sha256": "ce7a7272e3c05eaa039ab3ce0375073ed2280ecdabb8b5226f4156dd2e69181a"
+  },
+  {
+    "file": "13-local-news.png",
+    "screen": "localNews",
+    "title": "本地新闻",
+    "path": "output/01-ios-analyze/screenshots/png/13-local-news.png",
+    "source": {
+      "file": "NewsMobile/NewsMobile/Views/LocalNewsView.swift",
+      "type": "LocalNewsView/LocationPickerView",
+      "functions": "body, setupView, articlesList"
+    },
+    "launch_args": [
+      "-uiSnapshotMode",
+      "true",
+      "-snapshotScreen",
+      "localNews"
+    ],
+    "capture_policy": "automated_snapshot_mode_no_manual_click",
+    "size": "1320x2868",
+    "sha256": "7e8c7acac3bbd385b2c8830fc47585477e567da8f5e9bf78c04de00e84aedd54"
+  },
+  {
+    "file": "14-audio-briefing.png",
+    "screen": "audioBriefing",
+    "title": "语音播报",
+    "path": "output/01-ios-analyze/screenshots/png/14-audio-briefing.png",
+    "source": {
+      "file": "NewsMobile/NewsMobile/Views/AudioBriefingView.swift",
+      "type": "AudioBriefingView",
+      "functions": "body"
+    },
+    "launch_args": [
+      "-uiSnapshotMode",
+      "true",
+      "-snapshotScreen",
+      "audioBriefing"
+    ],
+    "capture_policy": "automated_snapshot_mode_no_manual_click",
+    "size": "1320x2868",
+    "sha256": "2a60a58dc427c61ed37fecaa57bdd52deb01450133e6c2be44cfa9397972a4e2"
+  }
+]

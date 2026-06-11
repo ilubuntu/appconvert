@@ -1,0 +1,3 @@
+display_name: iOS Capability Mapper
+short_description: iOS能力映射鸿蒙Kit
+default_prompt: 将 iOS 工程分析产出的模块、功能和 Apple 能力清单全量映射为 HarmonyOS NEXT Kit、等价替代、配套服务和实现备注。

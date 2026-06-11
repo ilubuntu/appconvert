@@ -1,0 +1,4 @@
+name: harmony-visual-verify
+display_name: Harmony Visual Verify
+description: 对照 iOS 截图逐页验收和修复 HarmonyOS NEXT 迁移工程的 UX 与 UI。
+default_prompt: 使用 harmony-visual-verify skill，对照 output/01-ios-analyze/screenshots/png/ 下的 iOS 截图，生成 Harmony 截图和 output/04-harmony-visual-verify/界面对齐.md，并修复 ArkUI 差异直到主要页面高度一致。

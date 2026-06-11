@@ -1,0 +1,11 @@
+NewsMobile/
+NewsMobileHarmony/
+
+.DS_Store
+.hvigor-home/
+.preview-clt/
+
+output/00-workflow/rendered-prompts/
+
+*.pyc
+__pycache__/
