@@ -71,47 +71,103 @@
       ]
     },
     {
-      "id": "harmony-core-services",
-      "name": "Harmony核心服务实现",
+      "id": "harmony-base",
+      "name": "Harmony基础层：模型与持久化",
       "profile": "harmony-generate",
-      "prompt": "workflow/prompts/harmony-core-services.md",
+      "prompt": "workflow/prompts/harmony-base.md",
       "required_inputs": [
         "output/harmony-generate/harmony模块实现计划.json",
-        "output/ios-analyze/specs/project.json",
+        "output/ios-analyze/specs/modules.json",
         "output/ios-analyze/specs/functions.json",
         "output/ios-analyze/specs/features.json",
         "output/platform-adaptation/implementation-guidance.json"
       ],
       "expected_outputs": [
         "NewsMobileHarmony/entry/src/main/ets/models",
-        "NewsMobileHarmony/entry/src/main/ets/services",
         "NewsMobileHarmony/entry/src/main/ets/stores",
         "output/harmony-generate/harmony全量实现追踪.md"
       ]
     },
     {
-      "id": "harmony-pages-ui",
-      "name": "Harmony页面UI实现",
+      "id": "harmony-news",
+      "name": "Harmony新闻核心模块",
       "profile": "harmony-generate",
-      "prompt": "workflow/prompts/harmony-pages-ui.md",
+      "prompt": "workflow/prompts/harmony-news.md",
       "required_inputs": [
         "output/harmony-generate/harmony模块实现计划.json",
-        "output/ios-analyze/specs/screens.json",
+        "output/ios-analyze/specs/functions.json",
         "output/ios-analyze/specs/features.json",
-        "output/ios-analyze/screenshots/png",
+        "output/ios-analyze/specs/screens.json",
+        "output/platform-adaptation/implementation-guidance.json",
         "output/harmony-generate/harmony全量实现追踪.md"
       ],
       "expected_outputs": [
+        "NewsMobileHarmony/entry/src/main/ets/services",
         "NewsMobileHarmony/entry/src/main/ets/pages",
         "NewsMobileHarmony/entry/src/main/ets/components",
         "output/harmony-generate/harmony全量实现追踪.md"
       ]
     },
     {
-      "id": "harmony-platform-capabilities",
-      "name": "Harmony平台能力实现",
+      "id": "harmony-search-saved",
+      "name": "Harmony搜索与收藏模块",
       "profile": "harmony-generate",
-      "prompt": "workflow/prompts/harmony-platform-capabilities.md",
+      "prompt": "workflow/prompts/harmony-search-saved.md",
+      "required_inputs": [
+        "output/harmony-generate/harmony模块实现计划.json",
+        "output/ios-analyze/specs/functions.json",
+        "output/ios-analyze/specs/features.json",
+        "output/ios-analyze/specs/screens.json",
+        "output/harmony-generate/harmony全量实现追踪.md"
+      ],
+      "expected_outputs": [
+        "NewsMobileHarmony/entry/src/main/ets/pages",
+        "output/harmony-generate/harmony全量实现追踪.md"
+      ]
+    },
+    {
+      "id": "harmony-ml-analysis",
+      "name": "Harmony ML/分析与推荐模块",
+      "profile": "harmony-generate",
+      "prompt": "workflow/prompts/harmony-ml-analysis.md",
+      "required_inputs": [
+        "output/harmony-generate/harmony模块实现计划.json",
+        "output/ios-analyze/specs/functions.json",
+        "output/ios-analyze/specs/features.json",
+        "output/ios-analyze/specs/screens.json",
+        "output/platform-adaptation/implementation-guidance.json",
+        "output/harmony-generate/harmony全量实现追踪.md"
+      ],
+      "expected_outputs": [
+        "NewsMobileHarmony/entry/src/main/ets/services",
+        "NewsMobileHarmony/entry/src/main/ets/pages",
+        "output/harmony-generate/harmony全量实现追踪.md"
+      ]
+    },
+    {
+      "id": "harmony-settings",
+      "name": "Harmony设置与配置模块",
+      "profile": "harmony-generate",
+      "prompt": "workflow/prompts/harmony-settings.md",
+      "required_inputs": [
+        "output/harmony-generate/harmony模块实现计划.json",
+        "output/ios-analyze/specs/functions.json",
+        "output/ios-analyze/specs/features.json",
+        "output/ios-analyze/specs/screens.json",
+        "output/platform-adaptation/implementation-guidance.json",
+        "output/harmony-generate/harmony全量实现追踪.md"
+      ],
+      "expected_outputs": [
+        "NewsMobileHarmony/entry/src/main/ets/pages",
+        "NewsMobileHarmony/entry/src/main/ets/services",
+        "output/harmony-generate/harmony全量实现追踪.md"
+      ]
+    },
+    {
+      "id": "harmony-platform",
+      "name": "Harmony平台能力与卡片模块",
+      "profile": "harmony-generate",
+      "prompt": "workflow/prompts/harmony-platform.md",
       "required_inputs": [
         "output/harmony-generate/harmony模块实现计划.json",
         "output/platform-adaptation/capability-coverage.json",
@@ -122,15 +178,22 @@
       ],
       "expected_outputs": [
         "NewsMobileHarmony/entry/src/main/ets/platform",
+        "NewsMobileHarmony/entry/src/main/ets/cards",
+        "NewsMobileHarmony/entry/src/main/ets/services/audio",
+        "NewsMobileHarmony/entry/src/main/ets/services/background",
+        "NewsMobileHarmony/entry/src/main/ets/services/notification",
+        "NewsMobileHarmony/entry/src/main/ets/services/sync",
+        "NewsMobileHarmony/entry/src/main/ets/services/localapi",
+        "NewsMobileHarmony/entry/src/main/ets/pages/AudioBriefingPage.ets",
         "NewsMobileHarmony/entry/src/main/module.json5",
         "output/harmony-generate/harmony全量实现追踪.md"
       ]
     },
     {
-      "id": "harmony-integration-summary",
-      "name": "Harmony集成汇总",
+      "id": "harmony-integration",
+      "name": "Harmony集成与构建",
       "profile": "harmony-generate",
-      "prompt": "workflow/prompts/harmony-integration-summary.md",
+      "prompt": "workflow/prompts/harmony-integration.md",
       "required_inputs": [
         "output/harmony-generate/harmony模块实现计划.json",
         "output/harmony-generate/harmony全量实现追踪.md",
@@ -142,8 +205,10 @@
         "output/platform-adaptation/implementation-guidance.json"
       ],
       "expected_outputs": [
-        "NewsMobileHarmony",
-        "output/harmony-generate/harmony全量实现追踪.md"
+        "NewsMobileHarmony/entry/src/main/resources/base/profile/main_pages.json",
+        "NewsMobileHarmony/entry/src/main/ets/pages/SnapshotSupport.ets",
+        "output/harmony-generate/harmony全量实现追踪.md",
+        "output/workflow/迁移状态.md"
       ]
     },
     {

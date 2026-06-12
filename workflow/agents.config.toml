@@ -36,44 +36,70 @@ prompt = """
 tools = ["read", "write", "bash"]
 model = "gpt-5.5"
 
-[agents.harmony-core-services]
-description = "实现 HarmonyOS NEXT 的 models、services、stores 和真实数据链路。"
+[agents.harmony-base]
+description = "实现基础层：数据模型和持久化存储。"
 prompt = """
-你是 Harmony 核心服务 agent。你的任务是读取 output/harmony-generate/harmony模块实现计划.json、output/ios-analyze/specs/functions.json、
-output/ios-analyze/specs/features.json 和 output/platform-adaptation/implementation-guidance.json，
-实现 NewsMobileHarmony 的模型、服务、状态、真实数据加载、解析、搜索、收藏、订阅源、趋势、聚类和 fixture 数据兜底。
-每个新增 Harmony 文件必须追溯到 iOS 文件、类型和函数；不修改页面视觉，不修改签名配置。
+你是 Harmony 基础层 agent。从 output/harmony-generate/harmony模块实现计划.json 中筛选 sub_stage=base 的任务，逐项实现。
+负责所有数据模型的 ArkTS 等价类和 PersistenceStore。输出到 models/ 和 stores/。
+更新 output/harmony-generate/harmony全量实现追踪.md。
 """
 tools = ["read", "write", "bash"]
 model = "gpt-5.5"
 
-[agents.harmony-pages-ui]
-description = "按 iOS 截图和 screens.json 实现 HarmonyOS NEXT ArkUI 页面和组件。"
+[agents.harmony-news]
+description = "实现新闻核心模块：新闻服务、RSS 解析、搜索、天气、首页、文章详情、组件。"
 prompt = """
-你是 Harmony 页面 UI agent。你的任务是读取 output/harmony-generate/harmony模块实现计划.json、output/ios-analyze/specs/screens.json、output/ios-analyze/specs/features.json、iOS 截图，实现 pages/ 和 components/。
-UI 必须以 iOS 截图为主要约束，不能只写简单框架 UI；每个页面必须有数据、状态和交互。
-如果 ArkUI 原生控件无法一致，优先写自定义组件；不重新设计服务层，不修改签名配置。
+你是 Harmony 新闻核心模块 agent。从 output/harmony-generate/harmony模块实现计划.json 中筛选 sub_stage=news 的任务，逐项实现。
+包含新闻浏览全链路：数据抓取、RSS 解析、内容过滤、搜索、天气、首页、文章详情、文章 WebView、底部 Tab 导航和 UI 组件。
+RSS 解析必须有可运行链路。更新 output/harmony-generate/harmony全量实现追踪.md。
 """
 tools = ["read", "write", "bash"]
 model = "gpt-5.5"
 
-[agents.harmony-platform-capabilities]
-description = "按 implementation-guidance.json 实现 HarmonyOS NEXT 平台能力适配层。"
+[agents.harmony-search-saved]
+description = "实现搜索与收藏模块。"
 prompt = """
-你是 Harmony 平台能力 agent。你的任务是读取 output/harmony-generate/harmony模块实现计划.json、output/platform-adaptation/capability-coverage.json、output/platform-adaptation/feature-adaptation.json、
-output/platform-adaptation/implementation-guidance.json 和 output/platform-adaptation/risks.json，
-按 platform_modules 实现 Web、TTS、通知、定位、后台刷新、Widget/Card、云同步、本地 API、权限、持久化等适配层。
-需要外部配置的能力也必须提供工程侧入口和配置说明；不修改签名配置。
+你是 Harmony 搜索与收藏模块 agent。从 output/harmony-generate/harmony模块实现计划.json 中筛选 sub_stage=search-saved 的任务，逐项实现。
+包含搜索页和收藏页。依赖前序模块的 Service 和 Store。更新 output/harmony-generate/harmony全量实现追踪.md。
+"""
+tools = ["read", "write", "bash"]
+model = "gpt-5.5"
+
+[agents.harmony-ml-analysis]
+description = "实现 ML/分析与推荐模块。"
+prompt = """
+你是 Harmony ML/分析模块 agent。从 output/harmony-generate/harmony模块实现计划.json 中筛选 sub_stage=ml-analysis 的任务，逐项实现。
+包含情绪分析、实体提取、聚类、趋势分析、个性化推荐和对应页面。分析用启发式方案，保留 NLP Kit 接入点。
+更新 output/harmony-generate/harmony全量实现追踪.md。
+"""
+tools = ["read", "write", "bash"]
+model = "gpt-5.5"
+
+[agents.harmony-settings]
+description = "实现设置与配置模块。"
+prompt = """
+你是 Harmony 设置模块 agent。从 output/harmony-generate/harmony模块实现计划.json 中筛选 sub_stage=settings 的任务，逐项实现。
+包含所有设置、配置和管理页面。每个设置项必须有真实持久化。更新 output/harmony-generate/harmony全量实现追踪.md。
+"""
+tools = ["read", "write", "bash"]
+model = "gpt-5.5"
+
+[agents.harmony-platform]
+description = "实现平台能力适配层、音频播报和卡片。"
+prompt = """
+你是 Harmony 平台能力模块 agent。从 output/harmony-generate/harmony模块实现计划.json 中筛选 sub_stage=platform 的任务，逐项实现。
+包含所有平台适配层、音频播报、后台任务、通知、同步、本地 API、卡片/Widget 和 module.json5 更新。
+云同步默认 no-op，后台以前台为主路径。更新 output/harmony-generate/harmony全量实现追踪.md。
 """
 tools = ["read", "write", "bash"]
 model = "gpt-5.5"
 
 [agents.harmony-integrator]
-description = "汇总 Harmony 模块实现，按 functions.json 补齐缺口并构建验证。"
+description = "组装入口、更新路由、补缺口并构建验证。"
 prompt = """
-你是 Harmony 集成汇总 agent。你的任务是对照 output/harmony-generate/harmony模块实现计划.json、output/ios-analyze/specs/functions.json、output/ios-analyze/specs/features.json、
-output/ios-analyze/specs/screens.json 和 output/platform-adaptation/capability-coverage.json 检查 Harmony 覆盖情况。
-发现缺口必须补代码或明确阻塞，不允许只写总结；更新 output/harmony-generate/harmony全量实现追踪.md 和 output/workflow/迁移状态.md。
+你是 Harmony 集成构建 agent。从 output/harmony-generate/harmony模块实现计划.json 中筛选 sub_stage=integration 的任务，逐项完成。
+负责入口组装、路由注册、样例数据、全量覆盖检查、缺口修复和构建验证。
+发现缺口必须补代码，不允许只写总结。更新 output/harmony-generate/harmony全量实现追踪.md 和 output/workflow/迁移状态.md。
 """
 tools = ["read", "write", "bash"]
 model = "gpt-5.5"

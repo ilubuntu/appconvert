@@ -1,0 +1,1476 @@
+{
+  "schema_version": "1.0",
+  "project_name": "NewsMobileHarmony",
+  "bundle_name": "com.example.newsmobile",
+  "target_sdk": "6.0.2(22)",
+  "harmony_modules": [
+    {
+      "id": "models.news",
+      "target_path": "entry/src/main/ets/models/news/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Models/NewsModels.swift"
+      ],
+      "ios_types": [
+        "NewsCategory",
+        "NewsSource",
+        "NewsArticle",
+        "SentimentResult",
+        "ExtractedEntity",
+        "StoryCluster",
+        "WatchLaterItem",
+        "KeywordAlert",
+        "CustomRSSFeed",
+        "WeatherData",
+        "UserPreference"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "NewsCategory.ets",
+        "NewsSource.ets",
+        "NewsArticle.ets",
+        "SentimentResult.ets",
+        "ExtractedEntity.ets",
+        "StoryCluster.ets",
+        "WatchLaterItem.ets",
+        "KeywordAlert.ets",
+        "CustomRSSFeed.ets",
+        "WeatherData.ets",
+        "UserPreference.ets",
+        "index.ets"
+      ]
+    },
+    {
+      "id": "models.settings",
+      "target_path": "entry/src/main/ets/models/settings/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Models/NewsModels.swift"
+      ],
+      "ios_types": [
+        "NewsMobileSettings"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "NewsMobileSettings.ets",
+        "index.ets"
+      ]
+    },
+    {
+      "id": "services.http_client",
+      "target_path": "entry/src/main/ets/services/news/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/NewsAggregator.swift"
+      ],
+      "ios_types": [],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "HttpClient.ets"
+      ]
+    },
+    {
+      "id": "services.rss_parser",
+      "target_path": "entry/src/main/ets/services/rss/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/RSSParser.swift"
+      ],
+      "ios_types": [
+        "RSSParser"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "RssParser.ets"
+      ]
+    },
+    {
+      "id": "services.news_aggregator",
+      "target_path": "entry/src/main/ets/services/news/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/NewsAggregator.swift",
+        "NewsMobile/NewsMobile/Services/ContentFilter.swift"
+      ],
+      "ios_types": [
+        "NewsAggregator"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "NewsAggregator.ets",
+        "ContentFilter.ets"
+      ]
+    },
+    {
+      "id": "services.custom_feed",
+      "target_path": "entry/src/main/ets/services/news/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/CustomFeedManager.swift"
+      ],
+      "ios_types": [
+        "CustomFeedManager"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "CustomFeedManager.ets"
+      ]
+    },
+    {
+      "id": "services.local_news",
+      "target_path": "entry/src/main/ets/services/news/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/LocalNewsService.swift"
+      ],
+      "ios_types": [
+        "LocalNewsService"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "LocalNewsService.ets"
+      ]
+    },
+    {
+      "id": "services.weather",
+      "target_path": "entry/src/main/ets/services/weather/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/WeatherService.swift"
+      ],
+      "ios_types": [
+        "WeatherService"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "WeatherService.ets"
+      ]
+    },
+    {
+      "id": "services.search",
+      "target_path": "entry/src/main/ets/services/search/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Views/SearchView.swift"
+      ],
+      "ios_types": [],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "SearchService.ets"
+      ]
+    },
+    {
+      "id": "services.analysis",
+      "target_path": "entry/src/main/ets/services/nlp/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/ML/SentimentAnalyzer.swift",
+        "NewsMobile/NewsMobile/ML/EntityExtractor.swift"
+      ],
+      "ios_types": [
+        "SentimentAnalyzer",
+        "EntityExtractor"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "SentimentAnalyzer.ets",
+        "EntityExtractor.ets"
+      ]
+    },
+    {
+      "id": "services.personalization",
+      "target_path": "entry/src/main/ets/services/personalization/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/PersonalizationEngine.swift"
+      ],
+      "ios_types": [
+        "PersonalizationEngine"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "PersonalizationEngine.ets"
+      ]
+    },
+    {
+      "id": "services.story_cluster",
+      "target_path": "entry/src/main/ets/services/ai/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/StoryClusterEngine.swift"
+      ],
+      "ios_types": [
+        "StoryClusterEngine"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "StoryClusterEngine.ets"
+      ]
+    },
+    {
+      "id": "services.trending",
+      "target_path": "entry/src/main/ets/services/ai/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/TrendingTopicsEngine.swift"
+      ],
+      "ios_types": [
+        "TrendingTopicsEngine"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "TrendingTopicsEngine.ets"
+      ]
+    },
+    {
+      "id": "services.tts",
+      "target_path": "entry/src/main/ets/services/audio/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/TTSManager.swift"
+      ],
+      "ios_types": [
+        "TTSManager"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "TTSManager.ets"
+      ]
+    },
+    {
+      "id": "services.keyword_alert",
+      "target_path": "entry/src/main/ets/services/notification/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/KeywordAlertManager.swift"
+      ],
+      "ios_types": [
+        "KeywordAlertManager"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "KeywordAlertManager.ets"
+      ]
+    },
+    {
+      "id": "services.background_refresh",
+      "target_path": "entry/src/main/ets/services/background/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/BackgroundRefreshManager.swift"
+      ],
+      "ios_types": [
+        "BackgroundRefreshManager"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "BackgroundRefreshManager.ets"
+      ]
+    },
+    {
+      "id": "services.cloud_sync",
+      "target_path": "entry/src/main/ets/services/sync/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/CloudSyncManager.swift"
+      ],
+      "ios_types": [
+        "CloudSyncManager"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "CloudSyncManager.ets"
+      ]
+    },
+    {
+      "id": "services.notification",
+      "target_path": "entry/src/main/ets/services/notification/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/NotificationManager.swift"
+      ],
+      "ios_types": [
+        "NotificationManager"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "NotificationManager.ets"
+      ]
+    },
+    {
+      "id": "services.settings",
+      "target_path": "entry/src/main/ets/services/system/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/SettingsManager.swift"
+      ],
+      "ios_types": [
+        "SettingsManager"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "SettingsManager.ets"
+      ]
+    },
+    {
+      "id": "services.watch_later",
+      "target_path": "entry/src/main/ets/services/news/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/WatchLaterManager.swift"
+      ],
+      "ios_types": [
+        "WatchLaterManager"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "WatchLaterManager.ets"
+      ]
+    },
+    {
+      "id": "services.widget_data",
+      "target_path": "entry/src/main/ets/services/card/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/WidgetDataManager.swift"
+      ],
+      "ios_types": [
+        "WidgetDataManager"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "WidgetDataManager.ets"
+      ]
+    },
+    {
+      "id": "services.local_api",
+      "target_path": "entry/src/main/ets/services/localapi/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/NovaAPIServer.swift"
+      ],
+      "ios_types": [
+        "NovaAPIServer"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "NovaApiServer.ets"
+      ]
+    },
+    {
+      "id": "stores.persistence",
+      "target_path": "entry/src/main/ets/stores/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/SettingsManager.swift",
+        "NewsMobile/NewsMobile/Services/WatchLaterManager.swift",
+        "NewsMobile/NewsMobile/Services/CloudSyncManager.swift",
+        "NewsMobile/NewsMobile/Services/WidgetDataManager.swift"
+      ],
+      "ios_types": [],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "PersistenceStore.ets",
+        "NewsStore.ets",
+        "SettingsStore.ets",
+        "WatchLaterStore.ets",
+        "PersonalizationStore.ets",
+        "CustomFeedStore.ets"
+      ]
+    },
+    {
+      "id": "pages.root",
+      "target_path": "entry/src/main/ets/pages/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/NewsMobileApp.swift",
+        "NewsMobile/NewsMobile/ContentView.swift"
+      ],
+      "ios_types": [
+        "NewsMobileApp",
+        "ContentView",
+        "SnapshotSupport",
+        "SnapshotScreen"
+      ],
+      "sub_stage": "pages-ui",
+      "files_to_create": [
+        "Index.ets",
+        "MainPage.ets",
+        "SnapshotSupport.ets"
+      ]
+    },
+    {
+      "id": "pages.home",
+      "target_path": "entry/src/main/ets/pages/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Views/HomeView.swift"
+      ],
+      "ios_types": [
+        "HomeView"
+      ],
+      "sub_stage": "pages-ui",
+      "files_to_create": [
+        "HomePage.ets"
+      ]
+    },
+    {
+      "id": "pages.for_you",
+      "target_path": "entry/src/main/ets/pages/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Views/ForYouView.swift"
+      ],
+      "ios_types": [
+        "ForYouView"
+      ],
+      "sub_stage": "pages-ui",
+      "files_to_create": [
+        "ForYouPage.ets"
+      ]
+    },
+    {
+      "id": "pages.search",
+      "target_path": "entry/src/main/ets/pages/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Views/SearchView.swift"
+      ],
+      "ios_types": [
+        "SearchView"
+      ],
+      "sub_stage": "pages-ui",
+      "files_to_create": [
+        "SearchPage.ets"
+      ]
+    },
+    {
+      "id": "pages.saved",
+      "target_path": "entry/src/main/ets/pages/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Views/WatchLaterView.swift"
+      ],
+      "ios_types": [
+        "WatchLaterView"
+      ],
+      "sub_stage": "pages-ui",
+      "files_to_create": [
+        "SavedPage.ets"
+      ]
+    },
+    {
+      "id": "pages.settings",
+      "target_path": "entry/src/main/ets/pages/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Views/SettingsView.swift"
+      ],
+      "ios_types": [
+        "SettingsView"
+      ],
+      "sub_stage": "pages-ui",
+      "files_to_create": [
+        "SettingsPage.ets"
+      ]
+    },
+    {
+      "id": "pages.article_detail",
+      "target_path": "entry/src/main/ets/pages/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Views/ArticleDetailView.swift"
+      ],
+      "ios_types": [
+        "ArticleDetailView"
+      ],
+      "sub_stage": "pages-ui",
+      "files_to_create": [
+        "ArticleDetailPage.ets"
+      ]
+    },
+    {
+      "id": "pages.article_webview",
+      "target_path": "entry/src/main/ets/pages/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Views/ArticleWebView.swift"
+      ],
+      "ios_types": [
+        "ArticleWebView",
+        "WebView"
+      ],
+      "sub_stage": "pages-ui",
+      "files_to_create": [
+        "ArticleWebPage.ets"
+      ]
+    },
+    {
+      "id": "pages.audio_briefing",
+      "target_path": "entry/src/main/ets/pages/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Views/AudioBriefingView.swift"
+      ],
+      "ios_types": [
+        "AudioBriefingView"
+      ],
+      "sub_stage": "pages-ui",
+      "files_to_create": [
+        "AudioBriefingPage.ets"
+      ]
+    },
+    {
+      "id": "pages.story_clusters",
+      "target_path": "entry/src/main/ets/pages/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Views/StoryClusterView.swift"
+      ],
+      "ios_types": [
+        "StoryClusterView"
+      ],
+      "sub_stage": "pages-ui",
+      "files_to_create": [
+        "StoryClusterPage.ets"
+      ]
+    },
+    {
+      "id": "pages.keyword_alerts",
+      "target_path": "entry/src/main/ets/pages/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Views/KeywordAlertsView.swift"
+      ],
+      "ios_types": [
+        "KeywordAlertsView"
+      ],
+      "sub_stage": "pages-ui",
+      "files_to_create": [
+        "KeywordAlertsPage.ets"
+      ]
+    },
+    {
+      "id": "pages.custom_feeds",
+      "target_path": "entry/src/main/ets/pages/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Views/CustomFeedsView.swift"
+      ],
+      "ios_types": [
+        "CustomFeedsView",
+        "AddFeedView"
+      ],
+      "sub_stage": "pages-ui",
+      "files_to_create": [
+        "CustomFeedsPage.ets",
+        "AddFeedPage.ets"
+      ]
+    },
+    {
+      "id": "pages.local_news",
+      "target_path": "entry/src/main/ets/pages/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Views/LocalNewsView.swift"
+      ],
+      "ios_types": [
+        "LocalNewsView",
+        "LocationPickerView"
+      ],
+      "sub_stage": "pages-ui",
+      "files_to_create": [
+        "LocalNewsPage.ets",
+        "LocationPickerPage.ets"
+      ]
+    },
+    {
+      "id": "components.shared",
+      "target_path": "entry/src/main/ets/components/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Views/Components/ArticleCard.swift",
+        "NewsMobile/NewsMobile/Views/Components/TrendingBar.swift",
+        "NewsMobile/NewsMobile/Views/Components/WeatherWidget.swift"
+      ],
+      "ios_types": [
+        "ArticleCard",
+        "TrendingBar",
+        "WeatherWidget",
+        "CategoryButton",
+        "SentimentBadge",
+        "BiasIndicatorBadge",
+        "EntityBadge",
+        "SearchResultRow",
+        "WatchLaterRow"
+      ],
+      "sub_stage": "pages-ui",
+      "files_to_create": [
+        "ArticleCard.ets",
+        "TrendingBar.ets",
+        "WeatherWidget.ets",
+        "CategoryButton.ets",
+        "SentimentBadge.ets",
+        "EntityBadge.ets",
+        "SearchResultRow.ets",
+        "WatchLaterRow.ets",
+        "EmptyStateView.ets"
+      ]
+    },
+    {
+      "id": "platform.http_client",
+      "target_path": "entry/src/main/ets/platform/",
+      "ios_sources": [],
+      "ios_types": [],
+      "sub_stage": "platform-capabilities",
+      "files_to_create": [
+        "HttpClient.ets"
+      ]
+    },
+    {
+      "id": "platform.notification_adapter",
+      "target_path": "entry/src/main/ets/platform/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/NotificationManager.swift"
+      ],
+      "ios_types": [],
+      "sub_stage": "platform-capabilities",
+      "files_to_create": [
+        "NotificationAdapter.ets"
+      ]
+    },
+    {
+      "id": "platform.background_refresh_adapter",
+      "target_path": "entry/src/main/ets/platform/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/BackgroundRefreshManager.swift"
+      ],
+      "ios_types": [],
+      "sub_stage": "platform-capabilities",
+      "files_to_create": [
+        "BackgroundRefreshAdapter.ets"
+      ]
+    },
+    {
+      "id": "platform.tts_adapter",
+      "target_path": "entry/src/main/ets/platform/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/TTSManager.swift"
+      ],
+      "ios_types": [],
+      "sub_stage": "platform-capabilities",
+      "files_to_create": [
+        "TextToSpeechAdapter.ets"
+      ]
+    },
+    {
+      "id": "platform.location_adapter",
+      "target_path": "entry/src/main/ets/platform/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/WeatherService.swift"
+      ],
+      "ios_types": [],
+      "sub_stage": "platform-capabilities",
+      "files_to_create": [
+        "LocationAdapter.ets"
+      ]
+    },
+    {
+      "id": "platform.webview_adapter",
+      "target_path": "entry/src/main/ets/platform/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Views/ArticleWebView.swift"
+      ],
+      "ios_types": [],
+      "sub_stage": "platform-capabilities",
+      "files_to_create": [
+        "WebViewAdapter.ets"
+      ]
+    },
+    {
+      "id": "platform.share_adapter",
+      "target_path": "entry/src/main/ets/platform/",
+      "ios_sources": [],
+      "ios_types": [],
+      "sub_stage": "platform-capabilities",
+      "files_to_create": [
+        "ShareAdapter.ets"
+      ]
+    },
+    {
+      "id": "platform.cloud_sync_adapter",
+      "target_path": "entry/src/main/ets/platform/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/CloudSyncManager.swift"
+      ],
+      "ios_types": [],
+      "sub_stage": "platform-capabilities",
+      "files_to_create": [
+        "CloudSyncAdapter.ets"
+      ]
+    },
+    {
+      "id": "platform.shared_storage_adapter",
+      "target_path": "entry/src/main/ets/platform/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/Services/WidgetDataManager.swift"
+      ],
+      "ios_types": [],
+      "sub_stage": "platform-capabilities",
+      "files_to_create": [
+        "SharedStorageAdapter.ets"
+      ]
+    },
+    {
+      "id": "platform.news_card",
+      "target_path": "entry/src/main/ets/cards/",
+      "ios_sources": [
+        "NewsMobile/NewsMobileWidget/NewsMobileWidget.swift"
+      ],
+      "ios_types": [
+        "NewsProvider",
+        "NewsWidgetEntryView",
+        "SmallNewsWidget",
+        "MediumNewsWidget",
+        "LargeNewsWidget"
+      ],
+      "sub_stage": "platform-capabilities",
+      "files_to_create": [
+        "NewsCard.ets",
+        "NewsCardFormProvider.ets"
+      ]
+    },
+    {
+      "id": "platform.local_api_adapter",
+      "target_path": "entry/src/main/ets/platform/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/NovaAPIServer.swift"
+      ],
+      "ios_types": [],
+      "sub_stage": "platform-capabilities",
+      "files_to_create": [
+        "LocalApiAdapter.ets"
+      ]
+    },
+    {
+      "id": "fixtures.snapshot",
+      "target_path": "entry/src/main/ets/fixtures/",
+      "ios_sources": [
+        "NewsMobile/NewsMobile/ContentView.swift"
+      ],
+      "ios_types": [
+        "SnapshotSupport"
+      ],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "SampleData.ets",
+        "SnapshotFixtures.ets"
+      ]
+    },
+    {
+      "id": "support.util",
+      "target_path": "entry/src/main/ets/support/",
+      "ios_sources": [],
+      "ios_types": [],
+      "sub_stage": "core-services",
+      "files_to_create": [
+        "DateUtils.ets",
+        "TextUtils.ets",
+        "Constants.ets"
+      ]
+    }
+  ],
+  "stage_plan": {
+    "core-services": {
+      "description": "实现所有 models、services、stores、fixtures、support 文件，建立完整的数据层和业务逻辑层",
+      "target_paths": [
+        "entry/src/main/ets/models/",
+        "entry/src/main/ets/services/",
+        "entry/src/main/ets/stores/",
+        "entry/src/main/ets/fixtures/",
+        "entry/src/main/ets/support/"
+      ],
+      "input_specs": [
+        "output/ios-analyze/specs/modules.json",
+        "output/ios-analyze/specs/functions.json",
+        "output/ios-analyze/specs/features.json",
+        "output/platform-adaptation/capability-coverage.json",
+        "output/platform-adaptation/implementation-guidance.json"
+      ],
+      "tasks": [
+        {
+          "id": "task.models.news",
+          "description": "创建新闻领域模型：NewsCategory, NewsSource, NewsArticle, SentimentResult, ExtractedEntity, StoryCluster, WatchLaterItem, KeywordAlert, CustomRSSFeed, WeatherData, UserPreference",
+          "target_file": "entry/src/main/ets/models/news/",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Models/NewsModels.swift"
+          ],
+          "depends_on": []
+        },
+        {
+          "id": "task.models.settings",
+          "description": "创建设置模型：NewsMobileSettings 包含所有用户偏好字段",
+          "target_file": "entry/src/main/ets/models/settings/NewsMobileSettings.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Models/NewsModels.swift"
+          ],
+          "depends_on": ["task.models.news"]
+        },
+        {
+          "id": "task.support.util",
+          "description": "创建工具类：DateUtils 日期格式化、TextUtils HTML清理和文本高亮、Constants 常量定义",
+          "target_file": "entry/src/main/ets/support/",
+          "ios_sources": [],
+          "depends_on": []
+        },
+        {
+          "id": "task.services.http_client",
+          "description": "创建 HttpClient 封装 @ohos.net.http，实现 GET/POST/通用请求、超时和错误处理",
+          "target_file": "entry/src/main/ets/services/news/HttpClient.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/NewsAggregator.swift"
+          ],
+          "depends_on": ["task.support.util"]
+        },
+        {
+          "id": "task.services.rss_parser",
+          "description": "创建 RssParser 解析 RSS 2.0 和 Atom 格式，处理日期解析和 HTML 清理",
+          "target_file": "entry/src/main/ets/services/rss/RssParser.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/RSSParser.swift"
+          ],
+          "depends_on": ["task.models.news", "task.services.http_client"]
+        },
+        {
+          "id": "task.services.news_aggregator",
+          "description": "创建 NewsAggregator 实现新闻聚合、分类、刷新和突发新闻检测，包含 ContentFilter 内容过滤",
+          "target_file": "entry/src/main/ets/services/news/NewsAggregator.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/NewsAggregator.swift",
+            "NewsMobile/NewsMobile/Services/ContentFilter.swift"
+          ],
+          "depends_on": ["task.models.news", "task.services.http_client", "task.services.rss_parser", "task.services.analysis"]
+        },
+        {
+          "id": "task.services.custom_feed",
+          "description": "创建 CustomFeedManager 管理自定义 RSS 源的添加、删除、启停、验证和抓取",
+          "target_file": "entry/src/main/ets/services/news/CustomFeedManager.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/CustomFeedManager.swift"
+          ],
+          "depends_on": ["task.models.news", "task.services.rss_parser"]
+        },
+        {
+          "id": "task.services.local_news",
+          "description": "创建 LocalNewsService 按位置获取本地新闻，支持 ZIP 和城市选择",
+          "target_file": "entry/src/main/ets/services/news/LocalNewsService.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/LocalNewsService.swift"
+          ],
+          "depends_on": ["task.models.news", "task.services.http_client"]
+        },
+        {
+          "id": "task.services.analysis",
+          "description": "创建 SentimentAnalyzer 和 EntityExtractor，实现情绪分析和实体提取（启发式或 NLP Kit）",
+          "target_file": "entry/src/main/ets/services/nlp/",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/ML/SentimentAnalyzer.swift",
+            "NewsMobile/NewsMobile/ML/EntityExtractor.swift"
+          ],
+          "depends_on": ["task.models.news"]
+        },
+        {
+          "id": "task.services.personalization",
+          "description": "创建 PersonalizationEngine 实现基于阅读行为的个性化推荐、偏好记录和重置",
+          "target_file": "entry/src/main/ets/services/personalization/PersonalizationEngine.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/PersonalizationEngine.swift"
+          ],
+          "depends_on": ["task.models.news"]
+        },
+        {
+          "id": "task.services.story_cluster",
+          "description": "创建 StoryClusterEngine 实现基于共享名词/动词的文章聚类算法",
+          "target_file": "entry/src/main/ets/services/ai/StoryClusterEngine.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/StoryClusterEngine.swift"
+          ],
+          "depends_on": ["task.models.news"]
+        },
+        {
+          "id": "task.services.trending",
+          "description": "创建 TrendingTopicsEngine 实现实体频次统计和趋势话题分析",
+          "target_file": "entry/src/main/ets/services/ai/TrendingTopicsEngine.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/TrendingTopicsEngine.swift"
+          ],
+          "depends_on": ["task.models.news"]
+        },
+        {
+          "id": "task.services.tts",
+          "description": "创建 TTSManager 实现 startBriefing/pause/resume/next/previous/stop 状态机",
+          "target_file": "entry/src/main/ets/services/audio/TTSManager.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/TTSManager.swift"
+          ],
+          "depends_on": ["task.models.news"]
+        },
+        {
+          "id": "task.services.notification",
+          "description": "创建 NotificationManager 封装通知权限请求和本地通知发送",
+          "target_file": "entry/src/main/ets/services/notification/NotificationManager.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/NotificationManager.swift"
+          ],
+          "depends_on": ["task.models.news"]
+        },
+        {
+          "id": "task.services.keyword_alert",
+          "description": "创建 KeywordAlertManager 管理关键词提醒的添加、检查和删除",
+          "target_file": "entry/src/main/ets/services/notification/KeywordAlertManager.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/KeywordAlertManager.swift"
+          ],
+          "depends_on": ["task.models.news", "task.services.notification"]
+        },
+        {
+          "id": "task.services.background_refresh",
+          "description": "创建 BackgroundRefreshManager 封装后台任务注册、调度和执行",
+          "target_file": "entry/src/main/ets/services/background/BackgroundRefreshManager.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/BackgroundRefreshManager.swift"
+          ],
+          "depends_on": ["task.services.news_aggregator"]
+        },
+        {
+          "id": "task.services.cloud_sync",
+          "description": "创建 CloudSyncManager 实现 syncToCloud/syncFromCloud，默认 no-op 适配器",
+          "target_file": "entry/src/main/ets/services/sync/CloudSyncManager.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/CloudSyncManager.swift"
+          ],
+          "depends_on": ["task.models.news"]
+        },
+        {
+          "id": "task.services.settings",
+          "description": "创建 SettingsManager 管理设置的加载、保存和重置",
+          "target_file": "entry/src/main/ets/services/system/SettingsManager.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/SettingsManager.swift"
+          ],
+          "depends_on": ["task.models.settings"]
+        },
+        {
+          "id": "task.services.watch_later",
+          "description": "创建 WatchLaterManager 管理收藏文章的添加、删除、切换、标记已读和云端同步",
+          "target_file": "entry/src/main/ets/services/news/WatchLaterManager.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/WatchLaterManager.swift"
+          ],
+          "depends_on": ["task.models.news"]
+        },
+        {
+          "id": "task.services.widget_data",
+          "description": "创建 WidgetDataManager 管理卡片/小组件缓存数据",
+          "target_file": "entry/src/main/ets/services/card/WidgetDataManager.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/WidgetDataManager.swift"
+          ],
+          "depends_on": ["task.models.news"]
+        },
+        {
+          "id": "task.services.local_api",
+          "description": "创建 NovaApiServer 实现本地回环 HTTP API（/api/status, /api/ping）",
+          "target_file": "entry/src/main/ets/services/localapi/NovaApiServer.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/NovaAPIServer.swift"
+          ],
+          "depends_on": []
+        },
+        {
+          "id": "task.services.weather",
+          "description": "创建 WeatherService 通过 Open-Meteo API 获取天气数据",
+          "target_file": "entry/src/main/ets/services/weather/WeatherService.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/WeatherService.swift"
+          ],
+          "depends_on": ["task.models.news", "task.services.http_client"]
+        },
+        {
+          "id": "task.services.search",
+          "description": "创建 SearchService 实现文章搜索过滤逻辑，支持标题、描述和来源匹配",
+          "target_file": "entry/src/main/ets/services/search/SearchService.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Views/SearchView.swift"
+          ],
+          "depends_on": ["task.models.news"]
+        },
+        {
+          "id": "task.stores",
+          "description": "创建所有 AppStorage/PersistenceStore：PersistenceStore 底层封装、NewsStore 新闻状态、SettingsStore 设置状态、WatchLaterStore 收藏状态、PersonalizationStore 个性化状态、CustomFeedStore 自定义源状态",
+          "target_file": "entry/src/main/ets/stores/",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/SettingsManager.swift",
+            "NewsMobile/NewsMobile/Services/WatchLaterManager.swift"
+          ],
+          "depends_on": ["task.models.news", "task.models.settings"]
+        },
+        {
+          "id": "task.fixtures",
+          "description": "创建 SampleData 和 SnapshotFixtures，提供截图模式固定样例数据（文章、趋势、关键词、自定义源、本地新闻、天气、收藏）",
+          "target_file": "entry/src/main/ets/fixtures/",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/ContentView.swift"
+          ],
+          "depends_on": ["task.models.news", "task.models.settings"]
+        }
+      ]
+    },
+    "pages-ui": {
+      "description": "实现所有 ArkUI 页面和可复用组件，对应 iOS SwiftUI views",
+      "target_paths": [
+        "entry/src/main/ets/pages/",
+        "entry/src/main/ets/components/"
+      ],
+      "input_specs": [
+        "output/ios-analyze/specs/screens.json",
+        "output/ios-analyze/specs/features.json",
+        "output/ios-analyze/specs/functions.json"
+      ],
+      "tasks": [
+        {
+          "id": "task.components.shared",
+          "description": "创建可复用组件：ArticleCard、TrendingBar、WeatherWidget、CategoryButton、SentimentBadge、EntityBadge、SearchResultRow、WatchLaterRow、EmptyStateView",
+          "target_file": "entry/src/main/ets/components/",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Views/Components/ArticleCard.swift",
+            "NewsMobile/NewsMobile/Views/Components/TrendingBar.swift",
+            "NewsMobile/NewsMobile/Views/Components/WeatherWidget.swift"
+          ],
+          "depends_on": ["task.models.news", "task.stores"]
+        },
+        {
+          "id": "task.pages.root",
+          "description": "创建 MainPage 底部 Tabs 导航（Home/ForYou/Search/Saved/Settings），创建 SnapshotSupport 截图模式支持",
+          "target_file": "entry/src/main/ets/pages/MainPage.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/NewsMobileApp.swift",
+            "NewsMobile/NewsMobile/ContentView.swift"
+          ],
+          "depends_on": ["task.components.shared"]
+        },
+        {
+          "id": "task.pages.home",
+          "description": "创建 HomePage 包含天气组件、趋势话题栏、分类选择器和新闻卡片列表",
+          "target_file": "entry/src/main/ets/pages/HomePage.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Views/HomeView.swift"
+          ],
+          "depends_on": ["task.pages.root", "task.services.news_aggregator", "task.services.weather", "task.services.trending"]
+        },
+        {
+          "id": "task.pages.for_you",
+          "description": "创建 ForYouPage 展示个性化推荐流，支持禁用态、空态和有数据态",
+          "target_file": "entry/src/main/ets/pages/ForYouPage.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Views/ForYouView.swift"
+          ],
+          "depends_on": ["task.pages.root", "task.services.personalization"]
+        },
+        {
+          "id": "task.pages.search",
+          "description": "创建 SearchPage 提供搜索栏和搜索结果列表，高亮匹配标题",
+          "target_file": "entry/src/main/ets/pages/SearchPage.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Views/SearchView.swift"
+          ],
+          "depends_on": ["task.pages.root", "task.services.search"]
+        },
+        {
+          "id": "task.pages.saved",
+          "description": "创建 SavedPage 展示已收藏文章列表，支持已读/未读标记和删除",
+          "target_file": "entry/src/main/ets/pages/SavedPage.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Views/WatchLaterView.swift"
+          ],
+          "depends_on": ["task.pages.root", "task.services.watch_later"]
+        },
+        {
+          "id": "task.pages.settings",
+          "description": "创建 SettingsPage Form 分区管理显示、通知、音频、个性化、内容过滤、同步、后台刷新、天气和关于",
+          "target_file": "entry/src/main/ets/pages/SettingsPage.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Views/SettingsView.swift"
+          ],
+          "depends_on": ["task.pages.root", "task.services.settings", "task.services.cloud_sync", "task.services.background_refresh"]
+        },
+        {
+          "id": "task.pages.article_detail",
+          "description": "创建 ArticleDetailPage 展示文章详情，含收藏、听读、分享和阅读全文入口",
+          "target_file": "entry/src/main/ets/pages/ArticleDetailPage.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Views/ArticleDetailView.swift"
+          ],
+          "depends_on": ["task.pages.root", "task.services.watch_later", "task.services.tts", "task.services.personalization"]
+        },
+        {
+          "id": "task.pages.article_webview",
+          "description": "创建 ArticleWebPage 使用 Web 组件加载文章原始 URL，显示加载状态和关闭/分享按钮",
+          "target_file": "entry/src/main/ets/pages/ArticleWebPage.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Views/ArticleWebView.swift"
+          ],
+          "depends_on": ["task.pages.root"]
+        },
+        {
+          "id": "task.pages.audio_briefing",
+          "description": "创建 AudioBriefingPage 展示播报控制面板：播放/暂停、上一条、下一条、停止和进度",
+          "target_file": "entry/src/main/ets/pages/AudioBriefingPage.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Views/AudioBriefingView.swift"
+          ],
+          "depends_on": ["task.pages.root", "task.services.tts"]
+        },
+        {
+          "id": "task.pages.story_clusters",
+          "description": "创建 StoryClusterPage 展示聚类列表、来源数量、观点拆分和详情",
+          "target_file": "entry/src/main/ets/pages/StoryClusterPage.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Views/StoryClusterView.swift"
+          ],
+          "depends_on": ["task.pages.root", "task.services.story_cluster"]
+        },
+        {
+          "id": "task.pages.keyword_alerts",
+          "description": "创建 KeywordAlertsPage 管理关键词提醒的添加、启停和删除",
+          "target_file": "entry/src/main/ets/pages/KeywordAlertsPage.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Views/KeywordAlertsView.swift"
+          ],
+          "depends_on": ["task.pages.root", "task.services.keyword_alert"]
+        },
+        {
+          "id": "task.pages.custom_feeds",
+          "description": "创建 CustomFeedsPage 和 AddFeedPage 管理自定义 RSS 源",
+          "target_file": "entry/src/main/ets/pages/CustomFeedsPage.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Views/CustomFeedsView.swift"
+          ],
+          "depends_on": ["task.pages.root", "task.services.custom_feed"]
+        },
+        {
+          "id": "task.pages.local_news",
+          "description": "创建 LocalNewsPage 和 LocationPickerPage 管理本地新闻和位置选择",
+          "target_file": "entry/src/main/ets/pages/LocalNewsPage.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Views/LocalNewsView.swift"
+          ],
+          "depends_on": ["task.pages.root", "task.services.local_news"]
+        }
+      ]
+    },
+    "platform-capabilities": {
+      "description": "实现所有平台适配层、卡片/小组件和 module.json5 配置更新",
+      "target_paths": [
+        "entry/src/main/ets/platform/",
+        "entry/src/main/ets/cards/",
+        "entry/src/main/module.json5"
+      ],
+      "input_specs": [
+        "output/platform-adaptation/capability-coverage.json",
+        "output/platform-adaptation/implementation-guidance.json",
+        "output/platform-adaptation/risks.json"
+      ],
+      "tasks": [
+        {
+          "id": "task.platform.http_client",
+          "description": "创建 HttpClient 平台适配层封装 @ohos.net.http",
+          "target_file": "entry/src/main/ets/platform/HttpClient.ets",
+          "ios_sources": [],
+          "depends_on": ["task.services.http_client"]
+        },
+        {
+          "id": "task.platform.notification",
+          "description": "创建 NotificationAdapter 封装 @ohos.notification 权限请求和本地通知发布",
+          "target_file": "entry/src/main/ets/platform/NotificationAdapter.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/NotificationManager.swift"
+          ],
+          "depends_on": ["task.services.notification"]
+        },
+        {
+          "id": "task.platform.background_refresh",
+          "description": "创建 BackgroundRefreshAdapter 封装后台任务注册和调度",
+          "target_file": "entry/src/main/ets/platform/BackgroundRefreshAdapter.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/BackgroundRefreshManager.swift"
+          ],
+          "depends_on": ["task.services.background_refresh"]
+        },
+        {
+          "id": "task.platform.tts",
+          "description": "创建 TextToSpeechAdapter 封装 @ohos.ai.tts 或 Speech Kit TTS API",
+          "target_file": "entry/src/main/ets/platform/TextToSpeechAdapter.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/TTSManager.swift"
+          ],
+          "depends_on": ["task.services.tts"]
+        },
+        {
+          "id": "task.platform.location",
+          "description": "创建 LocationAdapter 封装 @ohos.geoLocationManager 位置获取",
+          "target_file": "entry/src/main/ets/platform/LocationAdapter.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/WeatherService.swift"
+          ],
+          "depends_on": []
+        },
+        {
+          "id": "task.platform.webview",
+          "description": "创建 WebViewAdapter 封装 ArkWeb 组件生命周期",
+          "target_file": "entry/src/main/ets/platform/WebViewAdapter.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Views/ArticleWebView.swift"
+          ],
+          "depends_on": []
+        },
+        {
+          "id": "task.platform.share",
+          "description": "创建 ShareAdapter 封装 @ohos.share 系统分享和剪贴板复制",
+          "target_file": "entry/src/main/ets/platform/ShareAdapter.ets",
+          "ios_sources": [],
+          "depends_on": []
+        },
+        {
+          "id": "task.platform.cloud_sync",
+          "description": "创建 CloudSyncAdapter 实现 syncToCloud/syncFromCloud，默认 no-op",
+          "target_file": "entry/src/main/ets/platform/CloudSyncAdapter.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/CloudSyncManager.swift"
+          ],
+          "depends_on": ["task.services.cloud_sync"]
+        },
+        {
+          "id": "task.platform.shared_storage",
+          "description": "创建 SharedStorageAdapter 管理主应用和卡片/小组件的共享缓存数据",
+          "target_file": "entry/src/main/ets/platform/SharedStorageAdapter.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/Services/WidgetDataManager.swift"
+          ],
+          "depends_on": ["task.services.widget_data"]
+        },
+        {
+          "id": "task.platform.local_api",
+          "description": "创建 LocalApiAdapter 封装本地回环 HTTP 服务器，仅绑定 loopback",
+          "target_file": "entry/src/main/ets/platform/LocalApiAdapter.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/NovaAPIServer.swift"
+          ],
+          "depends_on": ["task.services.local_api"]
+        },
+        {
+          "id": "task.cards.news_card",
+          "description": "创建 NewsCard 和 NewsCardFormProvider 实现 HarmonyOS 桌面卡片，支持小/中/大布局",
+          "target_file": "entry/src/main/ets/cards/NewsCard.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobileWidget/NewsMobileWidget.swift"
+          ],
+          "depends_on": ["task.platform.shared_storage"]
+        },
+        {
+          "id": "task.module.config",
+          "description": "更新 module.json5 添加权限声明（INTERNET, LOCATION, APPROXIMATELY_LOCATION, NOTIFICATION_CONTROLLER）、后台模式声明和卡片/表单元数据",
+          "target_file": "entry/src/main/module.json5",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/NewsMobile.entitlements"
+          ],
+          "depends_on": ["task.platform.notification", "task.platform.location", "task.platform.background_refresh", "task.cards.news_card"]
+        }
+      ]
+    },
+    "integration-summary": {
+      "description": "构建验证、截图对比和缺口修复，确保 18 个 features 全部可验证",
+      "target_paths": [
+        "entry/src/main/ets/"
+      ],
+      "input_specs": [
+        "output/ios-analyze/specs/features.json",
+        "output/ios-analyze/specs/screens.json"
+      ],
+      "tasks": [
+        {
+          "id": "task.integration.wiring",
+          "description": "在 MainPage 中将所有 services/stores 通过 AppStorage/Provide 注入各页面",
+          "target_file": "entry/src/main/ets/pages/MainPage.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/NewsMobileApp.swift"
+          ],
+          "depends_on": ["task.pages.home", "task.pages.for_you", "task.pages.search", "task.pages.saved", "task.pages.settings"]
+        },
+        {
+          "id": "task.integration.build_verify",
+          "description": "执行 hvigorw 构建验证编译通过",
+          "target_file": "entry/",
+          "ios_sources": [],
+          "depends_on": ["task.integration.wiring", "task.module.config"]
+        },
+        {
+          "id": "task.integration.snapshot_verify",
+          "description": "运行截图模式验证所有 screen_states 有正确渲染",
+          "target_file": "entry/src/main/ets/fixtures/SnapshotFixtures.ets",
+          "ios_sources": [
+            "NewsMobile/NewsMobile/ContentView.swift"
+          ],
+          "depends_on": ["task.integration.build_verify"]
+        },
+        {
+          "id": "task.integration.feature_coverage",
+          "description": "逐 feature 验证 18 个 features 的验收标准全部满足",
+          "target_file": "entry/src/main/ets/",
+          "ios_sources": [],
+          "depends_on": ["task.integration.build_verify"]
+        },
+        {
+          "id": "task.integration.gap_fix",
+          "description": "修复构建和验收过程中发现的所有缺口",
+          "target_file": "entry/src/main/ets/",
+          "ios_sources": [],
+          "depends_on": ["task.integration.feature_coverage"]
+        }
+      ]
+    }
+  },
+  "feature_coverage": [
+    {
+      "feature_id": "feature.app.root_navigation",
+      "harmony_pages": ["MainPage.ets"],
+      "harmony_services": ["SnapshotSupport.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.news.home_feed",
+      "harmony_pages": ["HomePage.ets"],
+      "harmony_services": ["NewsAggregator.ets", "HttpClient.ets", "RssParser.ets"],
+      "harmony_components": ["ArticleCard.ets", "TrendingBar.ets", "WeatherWidget.ets", "CategoryButton.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.news.category_feed",
+      "harmony_pages": ["HomePage.ets"],
+      "harmony_services": ["NewsAggregator.ets"],
+      "harmony_components": ["CategoryButton.ets", "ArticleCard.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.news.article_detail",
+      "harmony_pages": ["ArticleDetailPage.ets"],
+      "harmony_services": ["WatchLaterManager.ets", "TTSManager.ets", "PersonalizationEngine.ets"],
+      "harmony_components": ["SentimentBadge.ets", "EntityBadge.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.news.web_reader",
+      "harmony_pages": ["ArticleWebPage.ets"],
+      "harmony_services": [],
+      "harmony_platform": ["WebViewAdapter.ets", "ShareAdapter.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.personalization.for_you",
+      "harmony_pages": ["ForYouPage.ets"],
+      "harmony_services": ["PersonalizationEngine.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.search.article_search",
+      "harmony_pages": ["SearchPage.ets"],
+      "harmony_services": ["SearchService.ets"],
+      "harmony_components": ["SearchResultRow.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.watch_later.manage_saved",
+      "harmony_pages": ["SavedPage.ets"],
+      "harmony_services": ["WatchLaterManager.ets", "CloudSyncManager.ets"],
+      "harmony_components": ["WatchLaterRow.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.settings.preferences",
+      "harmony_pages": ["SettingsPage.ets"],
+      "harmony_services": ["SettingsManager.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.notifications.breaking_keyword",
+      "harmony_pages": ["KeywordAlertsPage.ets", "SettingsPage.ets"],
+      "harmony_services": ["NotificationManager.ets", "KeywordAlertManager.ets"],
+      "harmony_platform": ["NotificationAdapter.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.audio.briefing",
+      "harmony_pages": ["AudioBriefingPage.ets", "ArticleDetailPage.ets"],
+      "harmony_services": ["TTSManager.ets"],
+      "harmony_platform": ["TextToSpeechAdapter.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.custom_feeds.manage_feeds",
+      "harmony_pages": ["CustomFeedsPage.ets", "AddFeedPage.ets"],
+      "harmony_services": ["CustomFeedManager.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.local_news.location_feed",
+      "harmony_pages": ["LocalNewsPage.ets", "LocationPickerPage.ets"],
+      "harmony_services": ["LocalNewsService.ets"],
+      "harmony_platform": ["LocationAdapter.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.weather.current_conditions",
+      "harmony_pages": ["HomePage.ets"],
+      "harmony_services": ["WeatherService.ets"],
+      "harmony_components": ["WeatherWidget.ets"],
+      "harmony_platform": ["LocationAdapter.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.ml.sentiment_entities",
+      "harmony_pages": ["ArticleDetailPage.ets", "HomePage.ets"],
+      "harmony_services": ["SentimentAnalyzer.ets", "EntityExtractor.ets"],
+      "harmony_components": ["SentimentBadge.ets", "EntityBadge.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.ml.story_clusters",
+      "harmony_pages": ["StoryClusterPage.ets"],
+      "harmony_services": ["StoryClusterEngine.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.ml.trending_topics",
+      "harmony_pages": ["HomePage.ets"],
+      "harmony_services": ["TrendingTopicsEngine.ets"],
+      "harmony_components": ["TrendingBar.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.sync.icloud",
+      "harmony_pages": ["SettingsPage.ets"],
+      "harmony_services": ["CloudSyncManager.ets"],
+      "harmony_platform": ["CloudSyncAdapter.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.background.refresh",
+      "harmony_pages": ["SettingsPage.ets"],
+      "harmony_services": ["BackgroundRefreshManager.ets"],
+      "harmony_platform": ["BackgroundRefreshAdapter.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.widget.home_screen",
+      "harmony_pages": [],
+      "harmony_services": ["WidgetDataManager.ets"],
+      "harmony_platform": ["SharedStorageAdapter.ets"],
+      "harmony_cards": ["NewsCard.ets", "NewsCardFormProvider.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.local_api.status",
+      "harmony_pages": [],
+      "harmony_services": ["NovaApiServer.ets"],
+      "harmony_platform": ["LocalApiAdapter.ets"],
+      "status": "已规划"
+    },
+    {
+      "feature_id": "feature.snapshot.sample_data",
+      "harmony_pages": ["SnapshotSupport.ets"],
+      "harmony_services": ["SampleData.ets", "SnapshotFixtures.ets"],
+      "status": "已规划"
+    }
+  ],
+  "manifest_requirements": [
+    {
+      "permission": "ohos.permission.INTERNET",
+      "reason": "RSS feeds, weather API, local news, WebView"
+    },
+    {
+      "permission": "ohos.permission.APPROXIMATELY_LOCATION",
+      "reason": "Approximate location for weather and local news"
+    },
+    {
+      "permission": "ohos.permission.LOCATION",
+      "reason": "Precise location for weather"
+    },
+    {
+      "permission": "ohos.permission.NOTIFICATION_CONTROLLER",
+      "reason": "Local notification publish and permission"
+    }
+  ]
+}

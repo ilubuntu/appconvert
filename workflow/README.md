@@ -45,10 +45,13 @@ Stage boundaries:
 - `ios-analyze`: deep iOS analysis. It must read Swift source file by file and produce `output/ios-analyze/specs/*.json` (7 JSON specs), reports, and iOS screenshots.
 - `platform-adaptation`: map iOS native capabilities to HarmonyOS NEXT Kit or adapter layers; output capability coverage, feature adaptation, implementation guidance, and risks.
 - `harmony-module-plan`: initialize Harmony project from template + create `output/harmony-generate/harmony模块实现计划.json` from the iOS module/function specs.
-- `harmony-core-services`: implement Harmony models, services, stores, real-data loading, parsing, persistence, and 固定样例数据 fallback.
-- `harmony-pages-ui`: implement ArkUI pages and components from iOS screenshots and UI specs.
-- `harmony-platform-capabilities`: implement platform adapters for Web, TTS, notification, location, background, card/widget, cloud sync, local API, and permissions.
-- `harmony-integration-summary`: aggregate module work, compare against the iOS function list, fill gaps, update tracking, and build.
+- `harmony-base`: implement data models (models/) and persistence store (stores/).
+- `harmony-news`: implement news services (services/news, services/rss, services/search, services/weather), main navigation, home page, article detail, article web view, and UI components.
+- `harmony-search-saved`: implement search page and saved articles page.
+- `harmony-ml-analysis`: implement NLP services, AI engines, personalization, ForYou page, and StoryCluster page.
+- `harmony-settings`: implement settings page, keyword alerts, custom feeds, local news, and location picker pages.
+- `harmony-platform`: implement all platform adapters (notification, background, TTS, location, webview, share, cloud sync, shared storage, local API), cards/widget, audio briefing page, and update module.json5.
+- `harmony-integration`: assemble entry (SnapshotSupport, main_pages.json), fill gaps, and build.
 - `harmony-visual-verify`: install/run or otherwise capture Harmony screenshots, compare page-by-page with iOS screenshots, write `output/harmony-visual-verify/界面对齐.md`, fix visible UI gaps, and build.
 
 Recommended continuation after deep analysis:

@@ -153,15 +153,34 @@ ets/
 
 ### 阶段与职责映射
 
-| 阶段 | 是否初始化工程 | 职责 |
+| 阶段 | 按模块 | 职责 |
 |---|---|---|
-| 模块计划 | **是**（如果工程不存在） | 从模板创建工程 + 生成 JSON 计划 + 初始化追踪表 |
-| 核心服务 | 否 | 实现 models/services/stores |
-| 页面 UI | 否 | 实现 pages/components |
-| 系统能力 | 否 | 实现 platform/ + 更新 module.json5 |
-| 集成汇总 | 否 | 补缺口 + 构建 |
+| 模块计划 | — | 从模板创建工程 + 生成 JSON 计划 + 初始化追踪表 |
+| 基础层 | models + stores | 所有数据模型 + PersistenceStore |
+| 新闻核心 | services/news + services/rss + services/search + services/weather + pages + components | 新闻浏览全链路 |
+| 搜索收藏 | pages/Search + pages/Saved | 搜索页 + 收藏页 |
+| ML/分析 | services/nlp + services/ai + services/personalization + pages/ForYou + pages/StoryCluster | 情绪分析 + 聚类 + 趋势 + 个性化推荐 |
+| 设置模块 | pages/Settings + pages/KeywordAlerts + pages/CustomFeeds + pages/LocalNews + pages/LocationPicker | 所有设置和配置页面 |
+| 平台能力 | platform/* + cards + services/audio/background/notification/sync/localapi + pages/AudioBriefing + module.json5 | 所有平台适配层 + 卡片 + 音频播报 |
+| 集成构建 | SnapshotSupport + main_pages.json + 缺口修复 | 入口组装 + 路由注册 + 全量检查 + 构建 |
 
 ## 实现规则
+
+### 强制：按功能清单全量实现
+
+`specs/features.json` 中的每一个 feature 都必须实现，不允许跳过、标记"后续再做"或降级为占位符。实现追踪表中每个 feature 的状态只能是 `已实现` 或 `等价替代`，不能出现 `暂不实现`、`不在范围内`、`占位` 等规避状态。
+
+实现顺序和完整性检查：
+1. 读取 `specs/features.json`，列出全部 feature（一级功能→二级功能→三级功能点）。
+2. 每个三级功能点必须有对应的 Harmony 文件和代码。
+3. 对照 `specs/functions.json`，每个 iOS 函数都有 Harmony 等价实现。
+4. 对照 `specs/screens.json`，每个页面都有 ArkUI 实现。
+5. 对照 `capability-coverage.json`，每个平台能力都有适配层入口。
+6. 缺口必须在集成汇总阶段补齐，不能以"总结"代替实现。
+
+### 追溯规则
+
+### 追溯规则
 
 - 每个页面必须能追溯到 `specs/features.json` 中的 feature。
 - 每个 Harmony 模块必须能追溯到 `specs/modules.json` 中的模块。
@@ -186,10 +205,13 @@ ets/
 | 子阶段 | 主要输出 | 禁止事项 |
 | --- | --- | --- |
 | 模块计划 | Harmony 工程初始化 + `harmony模块实现计划.json` + `harmony全量实现追踪.md` | 不写业务代码 |
-| 核心服务 | `models/`、`services/`、`stores/` | 不改页面视觉 |
-| 页面 UI | `pages/`、`components/` | 不重新设计数据模型 |
-| 系统能力 | `platform/`、权限、卡片、后台、TTS、Web、本地 API | 不删减功能 |
-| 集成汇总 | 构建、追踪表、缺口修复 | 不跳过未映射函数 |
+| 基础层 | `models/`、`stores/` | 不写页面和 UI |
+| 新闻核心 | `services/news/`、`services/rss/`、`services/search/`、`services/weather/`、`pages/HomePage`、`pages/ArticleDetailPage`、`pages/ArticleWebPage`、`pages/MainPage`、`components/` | 不写设置页、ML、平台适配 |
+| 搜索收藏 | `pages/SearchPage`、`pages/SavedPage` | 不重新实现搜索/收藏服务（依赖基础层和新闻核心） |
+| ML/分析 | `services/nlp/`、`services/ai/`、`services/personalization/`、`pages/ForYouPage`、`pages/StoryClusterPage` | 不依赖 NLP Kit（用启发式） |
+| 设置模块 | `pages/SettingsPage`、`pages/KeywordAlertsPage`、`pages/CustomFeedsPage`、`pages/LocalNewsPage`、`pages/LocationPickerPage` | 不重新设计数据模型 |
+| 平台能力 | `platform/`、`cards/`、`services/audio/`、`services/background/`、`services/notification/`、`services/sync/`、`services/localapi/`、`pages/AudioBriefingPage`、`module.json5` | 不删减功能 |
+| 集成构建 | `SnapshotSupport`、`main_pages.json`、缺口修复、构建验证 | 不跳过未映射函数 |
 
 每个子阶段都要更新 `output/harmony-generate/harmony全量实现追踪.md`，新增或修改的每一项至少包含：
 
