@@ -94,8 +94,32 @@
       "side_effects": [],
       "used_by_features": [],
       "called_by": [],
-      "migration_action": "model|service|store|arkui_component|platform_adapter|merge|delete_with_reason"
+      "migration_action": "model|service|store|arkui_component|platform_adapter|merge|delete_with_reason",
+      "concurrency": "none|async_await|task_group|async_let|callback|combine|gcd",
+      "concurrency_detail": "",
+      "type_definition": []
     }
+  ]
+}
+```
+
+`concurrency` 记录异步执行模式，`concurrency_detail` 记录具体参数（并发数、调度策略等）。
+
+`type_definition` 仅用于 `kind=model` 的 enum/struct 类型，列出完整定义：
+
+```json
+{
+  "id": "models.article.source_bias",
+  "kind": "model",
+  "type": "SourceBias",
+  "member": "enum",
+  "type_definition": [
+    {"case": "left", "color": "#2196F3", "description": "左倾"},
+    {"case": "leanLeft", "color": "#64B5F6", "description": "偏左"},
+    {"case": "center", "color": "#4CAF50", "description": "中立"},
+    {"case": "leanRight", "color": "#E57373", "description": "偏右"},
+    {"case": "right", "color": "#F44336", "description": "右倾"},
+    {"case": "unknown", "color": "#9E9E9E", "description": "未知"}
   ]
 }
 ```
@@ -118,7 +142,45 @@
       "screenshot": "",
       "screenshot_required": false,
       "screenshot_reason": "",
-      "source_refs": []
+      "source_refs": [],
+      "navigates_to": [
+        {
+          "target": "screen.article.detail",
+          "trigger": "tap article card",
+          "style": "navigation_push|sheet|full_screen_cover|popover|overlay",
+          "source_ref": ""
+        }
+      ],
+      "interactions": [
+        {
+          "type": "pull_to_refresh",
+          "modifier": ".refreshable",
+          "source_ref": ""
+        },
+        {
+          "type": "search",
+          "modifier": ".searchable",
+          "source_ref": ""
+        },
+        {
+          "type": "swipe_action",
+          "modifier": ".swipeActions",
+          "direction": "trailing|leading",
+          "source_ref": ""
+        },
+        {
+          "type": "toolbar",
+          "modifier": ".toolbar",
+          "items": ["refresh_button", "loading_indicator"],
+          "source_ref": ""
+        },
+        {
+          "type": "on_disappear",
+          "modifier": ".onDisappear",
+          "behavior": "track view duration for personalization",
+          "source_ref": ""
+        }
+      ]
     }
   ]
 }

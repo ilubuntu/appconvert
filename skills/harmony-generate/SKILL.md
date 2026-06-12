@@ -41,77 +41,11 @@ description: 当 iOS 工程分析和平台能力适配完成后使用。本 skil
 skills/harmony-generate/references/project-template/
 ```
 
-### 模板结构
+### 工程初始化
 
-基于标准 HarmonyOS NEXT 空工程（DevEco Studio 生成），结构如下：
-
-```text
-project-template/
-├── .gitignore
-├── AppScope/
-│   ├── app.json5                          # 应用包名、版本、图标、名称
-│   └── resources/base/
-│       ├── element/string.json            # app_name
-│       └── media/                         # background.png, foreground.png, layered_image.json
-├── build-profile.json5                    # 全局构建配置（SDK 版本、签名、模块注册）
-├── hvigorfile.ts                          # 根级 hvigor 入口
-├── hvigor/hvigor-config.json5             # hvigor 构建工具配置
-├── oh-package.json5                       # 根级依赖
-├── oh-package-lock.json5                  # 依赖锁定
-└── entry/
-    ├── .gitignore
-    ├── build-profile.json5                # entry 模块构建配置
-    ├── hvigorfile.ts                      # entry hvigor 入口
-    ├── obfuscation-rules.txt              # 混淆规则
-    ├── oh-package.json5                   # entry 依赖
-    └── src/main/
-        ├── module.json5                   # 模块声明（abilities、pages、权限）
-        ├── ets/
-        │   ├── common/LayoutPolicy.ets    # 响应式布局策略
-        │   ├── entryability/EntryAbility.ets      # 主 Ability 生命周期
-        │   ├── entrybackupability/EntryBackupAbility.ets  # 备份扩展
-        │   └── pages/Index.ets           # 首页
-        └── resources/
-            ├── base/
-            │   ├── element/{color,float,string}.json
-            │   ├── media/{background,foreground,startIcon}.png, layered_image.json
-            │   └── profile/{main_pages.json, backup_config.json}
-            └── dark/element/color.json
-```
-
-### 从模板创建工程的步骤
-
-1. 复制 `project-template/` 整个目录到目标 Harmony 工程目录。
-2. 替换以下占位符：
-
-| 文件 | 原始值 | 替换为 |
-|---|---|---|
-| `AppScope/app.json5` | `bundleName: "com.example.empty_hos_project"` | 目标包名，如 `com.example.newsmobile` |
-| `AppScope/app.json5` | `vendor: "example"` | 实际 vendor |
-| `AppScope/resources/base/element/string.json` | `value: "empty_hos_project"` | 应用显示名 |
-| `entry/src/main/resources/base/element/string.json` | `EntryAbility_label` / `EntryAbility_desc` | 对应实际值 |
-
-3. 在 `entry/src/main/ets/` 下创建迁移目录：
-
-```text
-ets/
-├── models/          # 数据模型（对应 iOS Models/）
-├── services/        # 业务服务（对应 iOS Services/）
-├── stores/          # 状态管理 + 持久化
-├── pages/           # 页面（对应 iOS Views/）—— 模板已有 Index.ets
-├── components/      # 可复用 UI 组件
-├── platform/        # 平台适配层（按 implementation-guidance.json 的 platform_modules）
-├── cards/           # 卡片/Widget
-├── fixtures/        # fixture 兜底数据
-├── common/          # 通用工具（模板已有 LayoutPolicy.ets）
-├── entryability/    # Ability（模板已有）
-├── entrybackupability/ # 备份（模板已有）
-└── support/         # 辅助工具
-```
-
-4. 按迁移计划逐目录生成 `.ets` 文件。
-5. 每新增一个 page，同步更新 `entry/src/main/resources/base/profile/main_pages.json`。
-6. 按平台能力需求更新 `entry/src/main/module.json5`（添加权限、extensionAbilities 等）。
+1. 复制 `references/project-template/` 到目标 Harmony 工程目录，替换占位符（bundleName、vendor、应用名称等）。
+2. 工程目录结构由模型根据 iOS 分析产物自行组织，不硬编码。
+3. 必须同步维护：每新增 page 更新 `main_pages.json`，按平台能力需求更新 `module.json5`（权限、extensionAbilities 等）。
 
 ### module.json5 扩展规则
 
