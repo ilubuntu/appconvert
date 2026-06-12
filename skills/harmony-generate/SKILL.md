@@ -166,6 +166,23 @@ ets/
 
 ## 实现规则
 
+### 强制：ArkTS 严格模式编码规范
+
+HarmonyOS NEXT 的 ArkTS 使用严格模式，以下 TypeScript/JavaScript 语法**禁止使用**，违反会导致编译失败：
+
+1. **禁止 `any`、`unknown` 类型** — 必须用具体类型。
+2. **禁止对象展开 `{...obj}`** — 必须逐字段赋值或写 helper 函数。
+3. **禁止解构声明 `const {a, b} = obj`** — 必须逐个赋值。
+4. **禁止索引访问 `obj[key]`** — 必须用具体字段名或 `Map`。
+5. **禁止对象字面量作类型声明 `Array<{...}>`** — 必须先声明 `interface`，再用 `Array<InterfaceName>`。
+6. **禁止无类型对象字面量** — 必须用 `as Type` 或声明 interface。
+7. **禁止函数隐式返回类型** — 必须显式标注 `: ReturnType`。
+8. **装饰器必须用 V2 版本** — `@ComponentV2`（不是 `@Component`）、`@ObservedV2`（不是 `@Observed`）、`@Trace`（不是 `@Prop`/`@Link`）、`@Local`（组件内部状态）、`@Param`（父传子）、`@Provider`/`@Consumer`（跨层级共享）、`@Event`（子传父回调）。
+9. **Store 必须用 `@ObservedV2 + @Trace`** — 这是 SwiftUI `ObservableObject + @Published` 的等价机制。Store 用普通 class 会导致异步数据到达后 UI 永远不刷新。
+10. **页面组件用 `@Local` 持有 Store** — Store 属性变化自动触发 build() 重新渲染。
+11. **不允许 barrel export（index.ets）** — ArkTS 不支持，必须直接 import 具体文件路径。
+12. **RegExp 是独立类型** — 不能赋值给 `string` 变量。
+
 ### 强制：按功能清单全量实现
 
 `specs/features.json` 中的每一个 feature 都必须实现，不允许跳过、标记"后续再做"或降级为占位符。实现追踪表中每个 feature 的状态只能是 `已实现` 或 `等价替代`，不能出现 `暂不实现`、`不在范围内`、`占位` 等规避状态。

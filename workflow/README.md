@@ -1,61 +1,18 @@
-# iOS to HarmonyOS NEXT Workflow Runner
+# iOS to HarmonyOS NEXT Workflow
 
-Use this runner when you want an explicit, profile-like workflow. Agent config defines identity; `codex exec` starts each stage.
+4 个阶段，每个阶段对应一个独立 skill：
 
-Directory layout:
+1. **ios-analyze** — 深度分析 iOS 工程，输出 JSON specs
+2. **platform-adaptation** — iOS 平台能力 → HarmonyOS Kit 适配策略
+3. **harmony-generate** — 从模板创建工程 + 按模块生成完整 ArkTS 代码 + 构建
+4. **harmony-visual-verify** — 构建验证 + 视觉对齐
 
-- `skills/`: reusable migration skills.
-- `output/`: generated specs, screenshots, rendered prompts, status, and migration tracking files.
-- `方案/`: plan, requirement, and agent design documents.
-- `NewsMobile/`: source iOS project.
-- `NewsMobileHarmony/`: target HarmonyOS NEXT project.
-- `workflow/`: runner, profiles, prompts, and agent identity templates.
-- `workflow/entry/`: workflow entry instructions; not counted as an execution skill.
+每个 skill 通过 `opencode run` 或其他 agent runner 直接调用，不依赖 workflow runner。
 
-Dry run:
+目录结构：
 
-```bash
-python3 workflow/run_ios_to_harmony.py --dry-run
-```
-
-Run one stage:
-
-```bash
-python3 workflow/run_ios_to_harmony.py --execute --from-stage harmony-module-plan --to-stage harmony-module-plan
-```
-
-Use installed Codex profiles:
-
-```bash
-python3 workflow/run_ios_to_harmony.py --execute --use-installed-profiles
-```
-
-Profiles in `workflow/profiles/` are templates. To use `codex exec -p <profile>`, copy them to `$CODEX_HOME/<profile>.config.toml`.
-
-Reusable agent identities:
-
-```text
-workflow/agents.config.toml
-```
-
-`[agents.*]` config is useful for naming reusable agent roles: who the agent is, its prompt, tools, and model. It does not start execution by itself. The runner starts stages with `codex exec`.
-
-Stage boundaries:
-
-- `ios-analyze`: deep iOS analysis. It must read Swift source file by file and produce `output/ios-analyze/specs/*.json` (7 JSON specs), reports, and iOS screenshots.
-- `platform-adaptation`: map iOS native capabilities to HarmonyOS NEXT Kit or adapter layers; output capability coverage, feature adaptation, implementation guidance, and risks.
-- `harmony-module-plan`: initialize Harmony project from template + create `output/harmony-generate/harmony模块实现计划.json` from the iOS module/function specs.
-- `harmony-base`: implement data models (models/) and persistence store (stores/).
-- `harmony-news`: implement news services (services/news, services/rss, services/search, services/weather), main navigation, home page, article detail, article web view, and UI components.
-- `harmony-search-saved`: implement search page and saved articles page.
-- `harmony-ml-analysis`: implement NLP services, AI engines, personalization, ForYou page, and StoryCluster page.
-- `harmony-settings`: implement settings page, keyword alerts, custom feeds, local news, and location picker pages.
-- `harmony-platform`: implement all platform adapters (notification, background, TTS, location, webview, share, cloud sync, shared storage, local API), cards/widget, audio briefing page, and update module.json5.
-- `harmony-integration`: assemble entry (SnapshotSupport, main_pages.json), fill gaps, and build.
-- `harmony-visual-verify`: install/run or otherwise capture Harmony screenshots, compare page-by-page with iOS screenshots, write `output/harmony-visual-verify/界面对齐.md`, fix visible UI gaps, and build.
-
-Recommended continuation after deep analysis:
-
-```bash
-python3 workflow/run_ios_to_harmony.py --execute --from-stage harmony-module-plan --to-stage harmony-integration-summary
-```
+- `skills/` — 可复用的迁移 skill
+- `output/` — 生成的 specs、适配产物、追踪表
+- `方案/` — 迁移方案、诉求、agent 设计文档
+- `NewsMobile/` — 源 iOS 工程
+- `NewsMobileHarmony/` — 目标 HarmonyOS NEXT 工程

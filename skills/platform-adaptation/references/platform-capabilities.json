@@ -368,6 +368,45 @@
       "fallback": "Show article without sentiment/entity badges."
     },
     {
+      "id": "ui.swiftui.observable",
+      "category": "framework",
+      "ios": {
+        "frameworks": ["SwiftUI", "Combine"],
+        "apis": ["ObservableObject", "@Published", "@StateObject", "@ObservedObject", "@EnvironmentObject", "@State", "@Binding", "@Environment"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkUI V2 装饰器",
+        "api_area": "状态管理装饰器",
+        "target_boundary": "stores/* 和 pages/* 的状态管理"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": false,
+        "notes": "纯框架层映射，不涉及系统权限。"
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "high",
+      "implementation_notes": [
+        "SwiftUI ObservableObject → ArkUI @ObservedV2 装饰 class",
+        "SwiftUI @Published → ArkUI @Trace 装饰需要追踪变化的属性",
+        "SwiftUI @StateObject → ArkUI @Local（组件内创建可观察对象）",
+        "SwiftUI @ObservedObject → ArkUI @Param（父组件向子组件传递可观察对象）",
+        "SwiftUI @EnvironmentObject → ArkUI @Provider + @Consumer（跨层级共享）",
+        "SwiftUI @State → ArkUI @Local（组件内部状态）",
+        "SwiftUI @Binding → ArkUI @Param + @Event（双向绑定拆为属性 + 回调）",
+        "SwiftUI @Environment → ArkUI @Provider/@Consumer 或 LocalStorage",
+        "所有 Store 类（NewsStore、SettingsStore 等）必须用 @ObservedV2 + @Trace，否则属性变化不会触发 UI 刷新",
+        "页面组件通过 @Local 或 @Param 持有 Store 引用，Store 属性变化自动触发 build() 重新渲染",
+        "这是架构级约束，不是可选优化。如果 Store 用普通 class，异步数据到达后 UI 永远不会更新。"
+      ],
+      "fallback": "无。这是 HarmonyOS ArkUI 的核心状态管理机制，必须使用。"
+    },
+    {
       "id": "sharelink.system_share",
       "category": "share",
       "ios": {

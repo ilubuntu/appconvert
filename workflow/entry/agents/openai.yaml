@@ -1,3 +1,0 @@
-display_name: iOS到鸿蒙迁移工作流
-short_description: 一键执行iOS到鸿蒙转换
-default_prompt: 通过 ios-to-harmony-workflow 执行指定目录下的 iOS 工程转换，输出 HarmonyOS NEXT 工程、迁移规格、能力映射和构建结果。
