@@ -465,6 +465,258 @@
         "If retained, isolate behind optional LocalApiAdapter."
       ],
       "fallback": "Disable local API and keep internal status service only."
+    },
+    {
+      "id": "interaction.pull_to_refresh",
+      "category": "interaction",
+      "ios": {
+        "frameworks": ["SwiftUI"],
+        "apis": [".refreshable"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkUI",
+        "api_area": "Refresh component",
+        "target_boundary": "pages/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": { "required": false, "notes": "" },
+      "manifest": { "required": false, "notes": "" },
+      "risk_level": "low",
+      "implementation_notes": [
+        "SwiftUI .refreshable → ArkUI Refresh 组件包裹 List 或 Scroll",
+        "Refresh 组件接收 refreshing 状态和 onRefresh 回调",
+        "必须在 screens.json interactions 中标记了 pull_to_refresh 的页面都实现"
+      ],
+      "fallback": "页面顶部放刷新按钮作为替代入口"
+    },
+    {
+      "id": "interaction.search",
+      "category": "interaction",
+      "ios": {
+        "frameworks": ["SwiftUI"],
+        "apis": [".searchable", ".searchable(text:)"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkUI",
+        "api_area": "Search component",
+        "target_boundary": "pages/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": { "required": false, "notes": "" },
+      "manifest": { "required": false, "notes": "" },
+      "risk_level": "low",
+      "implementation_notes": [
+        "SwiftUI .searchable → ArkUI Search 组件",
+        "搜索结果中的文本高亮需要手动实现：将匹配关键词拆分为 Text span 并分别设置样式",
+        "iOS 的 AttributedString 高亮在 ArkUI 中需要用 ContainerSpan 或多个 Text 拼接"
+      ],
+      "fallback": "搜索无高亮，只显示结果列表"
+    },
+    {
+      "id": "interaction.swipe_action",
+      "category": "interaction",
+      "ios": {
+        "frameworks": ["SwiftUI"],
+        "apis": [".swipeActions"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkUI",
+        "api_area": "ListItem.swipeAction",
+        "target_boundary": "pages/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": { "required": false, "notes": "" },
+      "manifest": { "required": false, "notes": "" },
+      "risk_level": "low",
+      "implementation_notes": [
+        "SwiftUI .swipeActions → ArkUI ListItem 的 swipeAction 属性",
+        "支持 leading 和 trailing 方向",
+        "常用于删除、收藏、标记已读等操作"
+      ],
+      "fallback": "长按菜单替代"
+    },
+    {
+      "id": "interaction.toolbar",
+      "category": "interaction",
+      "ios": {
+        "frameworks": ["SwiftUI"],
+        "apis": [".toolbar", "ToolbarItem"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkUI",
+        "api_area": "Navigation Toolbar builder",
+        "target_boundary": "pages/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": { "required": false, "notes": "" },
+      "manifest": { "required": false, "notes": "" },
+      "risk_level": "low",
+      "implementation_notes": [
+        "SwiftUI .toolbar + ToolbarItem → ArkUI Navigation 的 toolbarConfiguration + @Builder",
+        "toolbar items 必须从 screens.json interactions 中搬运，不可省略",
+        "常见 item：刷新按钮、加载指示器、分享按钮、编辑按钮"
+      ],
+      "fallback": "将 toolbar 按钮放在页面顶部 Row 中"
+    },
+    {
+      "id": "interaction.sheet",
+      "category": "interaction",
+      "ios": {
+        "frameworks": ["SwiftUI"],
+        "apis": [".sheet", ".fullScreenCover", ".popover"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkUI",
+        "api_area": "bindSheet / CustomDialog / Navigation.push",
+        "target_boundary": "pages/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": { "required": false, "notes": "" },
+      "manifest": { "required": false, "notes": "" },
+      "risk_level": "low",
+      "implementation_notes": [
+        ".sheet → bindSheet（半模态）",
+        ".fullScreenCover → Navigation.push 全屏页面",
+        ".popover → CustomDialog 或 bindSheet",
+        "screens.json navigates_to 中 style 字段决定用哪种"
+      ],
+      "fallback": "用 Navigation.push 替代所有弹窗"
+    },
+    {
+      "id": "interaction.on_disappear",
+      "category": "interaction",
+      "ios": {
+        "frameworks": ["SwiftUI"],
+        "apis": [".onDisappear", ".onAppear"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkUI",
+        "api_area": "aboutToDisappear / aboutToAppear",
+        "target_boundary": "pages/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": { "required": false, "notes": "" },
+      "manifest": { "required": false, "notes": "" },
+      "risk_level": "low",
+      "implementation_notes": [
+        ".onDisappear → aboutToDisappear（组件生命周期）",
+        ".onAppear → aboutToAppear",
+        "screens.json interactions 中 on_disappear 的 behavior 字段描述了具体行为，必须实现",
+        "常见 behavior：记录阅读时长、更新个性化权重、保存状态"
+      ],
+      "fallback": "在页面切换时手动触发"
+    },
+    {
+      "id": "interaction.share",
+      "category": "interaction",
+      "ios": {
+        "frameworks": ["SwiftUI"],
+        "apis": ["ShareLink"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "Share Kit",
+        "api_area": "system share sheet",
+        "target_boundary": "platform/ShareAdapter"
+      },
+      "strategy": "native_equivalent",
+      "permission": { "required": false, "notes": "" },
+      "manifest": { "required": false, "notes": "" },
+      "risk_level": "low",
+      "implementation_notes": [
+        "SwiftUI ShareLink → HarmonyOS Share Kit 的系统分享面板",
+        "不能降级为仅复制到剪贴板"
+      ],
+      "fallback": "复制到剪贴板 + 提示"
+    },
+    {
+      "id": "concurrency.task_group",
+      "category": "concurrency",
+      "ios": {
+        "frameworks": ["Swift"],
+        "apis": ["withTaskGroup", "TaskGroup", "withThrowingTaskGroup"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkTS",
+        "api_area": "Promise.all / Promise.allSettled",
+        "target_boundary": "services/*"
+      },
+      "strategy": "api_replacement",
+      "permission": { "required": false, "notes": "" },
+      "manifest": { "required": false, "notes": "" },
+      "risk_level": "medium",
+      "implementation_notes": [
+        "Swift withTaskGroup(maxConcurrency=N) → Promise.all 分批执行",
+        "将任务数组按 N 个一组切片，每组 Promise.all，然后串联执行",
+        "functions.json concurrency_detail 中的并发数上限必须保留",
+        "禁止简化为串行 for 循环"
+      ],
+      "fallback": "无。并发是性能关键路径，不允许退化。"
+    },
+    {
+      "id": "concurrency.async_let",
+      "category": "concurrency",
+      "ios": {
+        "frameworks": ["Swift"],
+        "apis": ["async let"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkTS",
+        "api_area": "Promise.all",
+        "target_boundary": "services/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": { "required": false, "notes": "" },
+      "manifest": { "required": false, "notes": "" },
+      "risk_level": "low",
+      "implementation_notes": [
+        "Swift async let a = fetchA(); async let b = fetchB(); return await (a, b)",
+        "→ ArkTS const [a, b] = await Promise.all([fetchA(), fetchB()])",
+        "多个 async let 并发发起 → 合并为一个 Promise.all"
+      ],
+      "fallback": "无。"
+    },
+    {
+      "id": "concurrency.callback",
+      "category": "concurrency",
+      "ios": {
+        "frameworks": ["Foundation"],
+        "apis": ["completion handler", "delegate pattern"],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkTS",
+        "api_area": "Promise / async-await wrapper",
+        "target_boundary": "services/*"
+      },
+      "strategy": "api_replacement",
+      "permission": { "required": false, "notes": "" },
+      "manifest": { "required": false, "notes": "" },
+      "risk_level": "low",
+      "implementation_notes": [
+        "iOS callback/completion handler → ArkTS Promise 封装",
+        "iOS delegate pattern → ArkTS 回调函数或事件回调",
+        "保持异步调用链的清晰度，不要嵌套回调"
+      ],
+      "fallback": "无。"
     }
   ]
 }

@@ -4,8 +4,7 @@ NewsMobileHarmony/
 .DS_Store
 .hvigor-home/
 .preview-clt/
-
-output/workflow/rendered-prompts/
+output/
 
 *.pyc
 __pycache__/

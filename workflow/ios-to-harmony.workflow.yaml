@@ -66,20 +66,24 @@
       ]
     },
     {
-      "id": "harmony-visual-verify",
-      "name": "Harmony视觉验收",
-      "profile": "harmony-visual-verify",
+      "id": "harmony-verify",
+      "name": "Harmony迁移验收",
+      "profile": "harmony-verify",
       "required_inputs": [
         "NewsMobileHarmony",
-        "output/harmony-generate/harmony全量实现追踪.md",
+        "output/ios-analyze/specs/features.json",
         "output/ios-analyze/specs/screens.json",
-        "output/ios-analyze/screenshots/png"
+        "output/ios-analyze/specs/functions.json",
+        "output/ios-analyze/specs/capabilities.json",
+        "output/platform-adaptation/interaction-adaptation.json",
+        "output/platform-adaptation/concurrency-adaptation.json",
+        "output/platform-adaptation/implementation-guidance.json",
+        "output/harmony-generate/harmony模块实现计划.json"
       ],
       "expected_outputs": [
-        "NewsMobileHarmony/entry/build/default/outputs/default/entry-default-unsigned.hap",
-        "output/harmony-visual-verify/界面对齐.md",
-        "output/harmony-generate/harmony全量实现追踪.md",
-        "output/workflow/迁移状态.md"
+        "output/harmony-verify/verify-report.json",
+        "output/harmony-verify/gaps.json",
+        "output/harmony-verify/reports/迁移验收摘要.md"
       ]
     }
   ]
