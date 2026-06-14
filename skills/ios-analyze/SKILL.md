@@ -32,7 +32,7 @@ iOS 工程源码
 主产物必须是机器可读 JSON。Markdown 只作为人工审阅摘要。
 
 ```text
-output/ios-analyze/
+output_{{PROJECT_NAME}}/ios-analyze/
   specs/
     project.json
     modules.json
@@ -73,13 +73,13 @@ output/ios-analyze/
 ```bash
 python3 skills/ios-analyze/scripts/inspect_ios_project.py \
   --project-root {{IOS_PROJECT}} \
-  --output-dir output/ios-analyze
+  --output-dir output_{{PROJECT_NAME}}/ios-analyze
 ```
 
 脚本只生成中间索引，不能当作最终结论：
 
 ```text
-output/ios-analyze/scan/
+output_{{PROJECT_NAME}}/ios-analyze/scan/
   project.scan.json
   source_index.json
   module_hints.json
@@ -261,7 +261,7 @@ output/ios-analyze/scan/
   },
   "component_specs": {},
   "resource_refs": ["tab.home"],
-  "screenshot": "output/ios-analyze/screenshots/png/home-feed.png",
+  "screenshot": "output_{{PROJECT_NAME}}/ios-analyze/screenshots/png/home-feed.png",
   "source_refs": ["MyApp/Views/HomeView.swift"],
   "navigates_to": [
     {
@@ -305,6 +305,31 @@ output/ios-analyze/scan/
 - 把整个页面合并为一个 section。
 
 如果页面 Swift 源码中有 Extracted View（private var / private struct），必须展开到 layout_spec 中，不能只写 `content_ref` 然后跳过内容。
+
+#### 功能效果链路规则
+
+每个 UI 控件（toggle/picker/button/input）不仅有"存值入口"，还有"效果消费侧"——即这个值在哪里被读取、产生了什么行为变化。必须分析完整链路，不能只记录控件表面。
+
+规则：
+1. 对每个 toggle/picker/button，搜索整个 iOS 工程中该绑定值或动作被读取/使用的位置（不在声明该控件的 View 里，而是在其他 View / App 入口 / Service / Manager 中）。
+2. 在 layout_spec 对应 element 中加 `effect` 字段，记录消费位置和效果描述。
+
+示例：
+```json
+{
+  "type": "toggle",
+  "label": "Dark Mode",
+  "binding": "settings.darkModeEnabled",
+  "effect": {
+    "source_ref": "NewsMobileApp.swift:34",
+    "description": "应用级 preferredColorScheme 切换深色模式"
+  }
+}
+```
+
+3. 如果一个按钮在 iOS 中执行了多步操作（如"Sync Now" → 调用 CloudSyncManager → 更新 UI），`effect.description` 必须描述完整操作链路。
+4. 如果搜索不到消费位置，`effect` 设为 `{"description": "未发现消费侧"}`，后续 harmony-generate 会标记为待确认。
+5. 不允许只记录控件表面（type + label + binding）而不记录 effect。
 
 #### navigates_to 规则
 
@@ -375,8 +400,8 @@ Tab 栏图标必须单独建资源项。后续 Harmony 侧不能只做文字 Tab
 python3 skills/ios-analyze/scripts/capture_ios_snapshots.py \
   --device booted \
   --bundle-id <bundle-id> \
-  --screens-spec output/ios-analyze/specs/screens.json \
-  --output-dir output/ios-analyze/screenshots/png
+  --screens-spec output_{{PROJECT_NAME}}/ios-analyze/specs/screens.json \
+  --output-dir output_{{PROJECT_NAME}}/ios-analyze/screenshots/png
 ```
 
 ### Step 9. 写人工摘要

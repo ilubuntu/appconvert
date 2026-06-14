@@ -5,6 +5,8 @@ NewsMobileHarmony/
 .hvigor-home/
 .preview-clt/
 output/
+Bean-Juice-main/
+
 
 *.pyc
 __pycache__/
