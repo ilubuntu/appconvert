@@ -26,6 +26,8 @@ output_{{PROJECT_NAME}}/ios-analyze/specs/capabilities.json
 output_{{PROJECT_NAME}}/ios-analyze/specs/features.json
 output_{{PROJECT_NAME}}/ios-analyze/specs/modules.json
 output_{{PROJECT_NAME}}/ios-analyze/specs/functions.json
+output_{{PROJECT_NAME}}/ios-analyze/specs/screens.json
+output_{{PROJECT_NAME}}/ios-analyze/specs/resources.json
 skills/platform-adaptation/references/platform-capabilities.json
 ```
 

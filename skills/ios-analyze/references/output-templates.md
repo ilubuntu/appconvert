@@ -65,6 +65,7 @@
         {
           "type": "network|local|database|system|fixed_sample",
           "name": "",
+          "url": "",
           "fallback": ""
         }
       ],
@@ -204,12 +205,22 @@
           "title_mode": "large",
           "trailing_items": [
             {
+              "type": "button",
+              "icon": "",
+              "label": "",
+              "action": "",
+              "navigates_to": "",
+              "triggers_sheet": "",
+              "source_ref": ""
+            },
+            {
               "type": "conditional",
               "condition": "",
               "when_true": { "type": "progress_indicator" },
               "when_false": { "type": "button", "icon": "", "action": "" }
             }
-          ]
+          ],
+          "leading_items": []
         }
       },
       "component_specs": {
@@ -345,7 +356,7 @@
 - `container`：页面容器层级，用 `>` 连接嵌套关系。
 - `background`：页面背景色或系统背景。
 - `sections`：页面从上到下的视觉分区。
-- `navigation_bar`：顶部导航栏配置（标题、按钮）。
+- `navigation_bar`：顶部导航栏配置（标题、快捷操作按钮）。**trailing_items 和 leading_items 中的每个按钮都必须完整提取**，不可省略。这些是主线用户流程的入口（如 +添加、详情介绍、编辑、分享、刷新等），丢失会导致功能不可达。
 - `tab_bar`：底部标签栏配置（仅在根页面出现）。
 
 #### section 类型
@@ -376,11 +387,53 @@
   "optional": true,
   "condition": "显示条件",
   "action": "交互动作",
+  "effect": {
+    "source_ref": "消费侧源码位置",
+    "description": "该控件值被读取后产生的效果描述"
+  },
   "layout": { "direction": "horizontal|vertical", "spacing": 8, "padding": {}, "alignment": "leading|center|trailing" },
   "background": "背景色",
   "corner_radius": 12,
   "children": [],
   "content_ref": "引用 component_specs 中的组件"
+}
+```
+
+`effect` 字段：仅用于 toggle/picker/button/input 类型。记录该控件的绑定值在 iOS 工程中被读取/消费的位置和产生的行为变化。如果搜索不到消费侧，设为 `{"description": "未发现消费侧"}`。
+
+#### tab_bar 结构
+
+```json
+{
+  "items": [
+    {
+      "label": "Tab 标题",
+      "icon": "SF Symbol 名（如 house、plus、gear）",
+      "target_screen": "对应的 screen id"
+    }
+  ],
+  "accent_color": "#RRGGBB"
+}
+```
+
+#### form_section rows 结构
+
+```json
+{
+  "rows": [
+    {
+      "type": "toggle|picker|navigation_link|button|info_row",
+      "label": "行标题",
+      "binding": "绑定值路径",
+      "effect": {
+        "source_ref": "消费侧源码位置",
+        "description": "效果描述"
+      },
+      "options": [],
+      "target": "",
+      "value": ""
+    }
+  ]
 }
 ```
 
