@@ -1,16 +1,16 @@
 {
   "name": "ios-to-harmony",
   "description": "Convert an iOS Swift/SwiftUI project into a HarmonyOS NEXT project through staged skill execution.",
-  "workdir": "/Users/bb/work/appConvert",
-  "ios_project": "NewsMobile",
-  "harmony_project": "NewsMobileHarmony",
+  "workdir": "{{WORKDIR}}",
+  "ios_project": "{{IOS_PROJECT}}",
+  "harmony_project": "{{PROJECT_NAME}}Harmony",
   "state_file": "output_{{PROJECT_NAME}}/workflow/迁移状态.md",
   "stages": [
     {
       "id": "ios-analyze",
       "name": "iOS工程分析",
       "profile": "ios-analyze",
-      "required_inputs": ["NewsMobile"],
+      "required_inputs": ["{{IOS_PROJECT}}"],
       "expected_outputs": [
         "output_{{PROJECT_NAME}}/ios-analyze/specs/project.json",
         "output_{{PROJECT_NAME}}/ios-analyze/specs/modules.json",
@@ -33,12 +33,15 @@
         "output_{{PROJECT_NAME}}/ios-analyze/specs/features.json",
         "output_{{PROJECT_NAME}}/ios-analyze/specs/modules.json",
         "output_{{PROJECT_NAME}}/ios-analyze/specs/functions.json",
+        "output_{{PROJECT_NAME}}/ios-analyze/specs/screens.json",
         "skills/platform-adaptation/references/platform-capabilities.json"
       ],
       "expected_outputs": [
         "output_{{PROJECT_NAME}}/platform-adaptation/capability-coverage.json",
         "output_{{PROJECT_NAME}}/platform-adaptation/feature-adaptation.json",
         "output_{{PROJECT_NAME}}/platform-adaptation/implementation-guidance.json",
+        "output_{{PROJECT_NAME}}/platform-adaptation/interaction-adaptation.json",
+        "output_{{PROJECT_NAME}}/platform-adaptation/concurrency-adaptation.json",
         "output_{{PROJECT_NAME}}/platform-adaptation/risks.json",
         "output_{{PROJECT_NAME}}/platform-adaptation/reports/平台能力适配摘要.md"
       ]
@@ -56,11 +59,13 @@
         "output_{{PROJECT_NAME}}/platform-adaptation/capability-coverage.json",
         "output_{{PROJECT_NAME}}/platform-adaptation/feature-adaptation.json",
         "output_{{PROJECT_NAME}}/platform-adaptation/implementation-guidance.json",
+        "output_{{PROJECT_NAME}}/platform-adaptation/interaction-adaptation.json",
+        "output_{{PROJECT_NAME}}/platform-adaptation/concurrency-adaptation.json",
         "output_{{PROJECT_NAME}}/platform-adaptation/risks.json",
         "skills/harmony-generate/references/project-template"
       ],
       "expected_outputs": [
-        "NewsMobileHarmony",
+        "{{PROJECT_NAME}}Harmony",
         "output_{{PROJECT_NAME}}/harmony-generate/harmony模块实现计划.json",
         "output_{{PROJECT_NAME}}/harmony-generate/harmony全量实现追踪.md"
       ]
@@ -70,7 +75,7 @@
       "name": "Harmony迁移验收",
       "profile": "harmony-verify",
       "required_inputs": [
-        "NewsMobileHarmony",
+        "{{PROJECT_NAME}}Harmony",
         "output_{{PROJECT_NAME}}/ios-analyze/specs/features.json",
         "output_{{PROJECT_NAME}}/ios-analyze/specs/screens.json",
         "output_{{PROJECT_NAME}}/ios-analyze/specs/functions.json",

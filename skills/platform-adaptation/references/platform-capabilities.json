@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "description": "Initial iOS platform capability to HarmonyOS NEXT adaptation reference. This is intentionally expandable; current coverage prioritizes capabilities observed in NewsMobile.",
+  "description": "Initial iOS platform capability to HarmonyOS NEXT adaptation reference. This is intentionally expandable; add capabilities as needed for the project being migrated.",
   "capabilities": [
     {
       "id": "notification.usernotifications",
@@ -31,7 +31,7 @@
         "Preserve settings switch and request-permission entry.",
         "Badge behavior may require platform-specific handling."
       ],
-      "fallback": "Keep in-app keyword match badge and foreground alert if background/local notification delivery is unavailable."
+      "fallback": "Keep in-app badge and foreground alert if background/local notification delivery is unavailable."
     },
     {
       "id": "background.bgapprefresh",
@@ -81,7 +81,7 @@
       "strategy": "native_equivalent",
       "permission": {
         "required": true,
-        "notes": "Request location permission before weather lookup."
+        "notes": "Request location permission before using location-based features."
       },
       "manifest": {
         "required": true,
@@ -90,9 +90,9 @@
       "risk_level": "medium",
       "implementation_notes": [
         "Expose one-shot current location API.",
-        "Support manual city/ZIP fallback for local news."
+        "Support manual location entry as fallback."
       ],
-      "fallback": "Use manually selected city/ZIP when location permission is denied."
+      "fallback": "Use manually entered location when location permission is denied."
     },
     {
       "id": "audio.avspeech",
@@ -120,7 +120,7 @@
       "risk_level": "medium",
       "implementation_notes": [
         "Expose start/pause/resume/next/previous/stop state machine.",
-        "Keep article index and current article in store to drive UI.",
+        "Keep current item index and item state in store to drive UI.",
         "Do not bind UI directly to platform TTS object."
       ],
       "fallback": "Show textual briefing list if TTS engine is unavailable."
@@ -137,7 +137,7 @@
       "harmony": {
         "kit": "ArkWeb",
         "api_area": "Web component",
-        "target_boundary": "platform/WebViewAdapter or pages/ArticleWebPage"
+        "target_boundary": "platform/WebViewAdapter or pages/WebPage"
       },
       "strategy": "native_equivalent",
       "permission": {
@@ -167,7 +167,7 @@
       "harmony": {
         "kit": "Form Kit / Service Widget equivalent",
         "api_area": "atomic service card or widget form",
-        "target_boundary": "cards/NewsCard"
+        "target_boundary": "cards/AppCard"
       },
       "strategy": "api_replacement",
       "permission": {
@@ -182,7 +182,7 @@
       "implementation_notes": [
         "Treat widget as separate deliverable from main app.",
         "Start with one card size if full small/medium/large parity is costly.",
-        "Define cached headline/weather/trending input contract."
+        "Define cached data input contract for the card."
       ],
       "fallback": "Defer widget/card implementation while preserving shared cache service."
     },
@@ -211,7 +211,7 @@
       },
       "risk_level": "high",
       "implementation_notes": [
-        "Do not block local settings and saved articles on cloud sync.",
+        "Do not block local settings and saved data on cloud sync.",
         "Keep CloudSyncAdapter interface but default to local no-op until backend is chosen."
       ],
       "fallback": "Local-only persistence with sync UI disabled or marked unavailable."
@@ -241,7 +241,7 @@
       },
       "risk_level": "medium",
       "implementation_notes": [
-        "Expose cached headline/weather/trending read-write API.",
+        "Expose cached data read-write API.",
         "Do not leak iOS App Group terminology into app code."
       ],
       "fallback": "Use app-local preferences until card/widget support is implemented."
@@ -271,7 +271,7 @@
       },
       "risk_level": "low",
       "implementation_notes": [
-        "Keep typed settings and saved-article serialization.",
+        "Keep typed settings and data serialization.",
         "Use explicit migration keys and default values."
       ],
       "fallback": "In-memory store for preview/testing."
@@ -301,7 +301,7 @@
       },
       "risk_level": "low",
       "implementation_notes": [
-        "Create shared HttpClient for RSS, weather and local news.",
+        "Create shared HttpClient for all network requests.",
         "Preserve timeout/error fallback behavior."
       ],
       "fallback": "Use fixed sample data when network fails."
@@ -331,7 +331,7 @@
       },
       "risk_level": "medium",
       "implementation_notes": [
-        "Implement RSS and Atom parsing as pure service utility.",
+        "Implement XML/RSS/Atom parsing as pure service utility.",
         "Normalize date parsing and HTML stripping behavior."
       ],
       "fallback": "Skip malformed feed items and continue parsing."
@@ -361,11 +361,11 @@
       },
       "risk_level": "high",
       "implementation_notes": [
-        "Keep sentiment/entity APIs stable.",
+        "Keep analysis APIs stable.",
         "Start with heuristic or disabled analysis if no equivalent Kit is available.",
         "Do not block feed display on analysis failure."
       ],
-      "fallback": "Show article without sentiment/entity badges."
+      "fallback": "Show content without analysis badges."
     },
     {
       "id": "ui.swiftui.observable",
@@ -400,7 +400,7 @@
         "SwiftUI @State → ArkUI @Local（组件内部状态）",
         "SwiftUI @Binding → ArkUI @Param + @Event（双向绑定拆为属性 + 回调）",
         "SwiftUI @Environment → ArkUI @Provider/@Consumer 或 LocalStorage",
-        "所有 Store 类（NewsStore、SettingsStore 等）必须用 @ObservedV2 + @Trace，否则属性变化不会触发 UI 刷新",
+        "所有 Store 类（如 SettingsStore 等）必须用 @ObservedV2 + @Trace，否则属性变化不会触发 UI 刷新",
         "页面组件通过 @Local 或 @Param 持有 Store 引用，Store 属性变化自动触发 build() 重新渲染",
         "这是架构级约束，不是可选优化。如果 Store 用普通 class，异步数据到达后 UI 永远不会更新。"
       ],
@@ -432,7 +432,7 @@
       "risk_level": "low",
       "implementation_notes": [
         "Expose shareUrl(url, title?) API.",
-        "Keep share button placement in article detail and WebView."
+        "Keep share button placement in detail pages and WebView."
       ],
       "fallback": "Copy URL to clipboard if share sheet is unavailable."
     },

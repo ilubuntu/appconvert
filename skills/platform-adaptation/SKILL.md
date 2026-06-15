@@ -158,7 +158,7 @@ skills/platform-adaptation/references/platform-capabilities.json
   "schema_version": "1.0",
   "features": [
     {
-      "feature_id": "feature.notifications.breaking_keyword",
+      "feature_id": "",
       "adaptation_items": [
         {
           "capability_id": "notification.usernotifications",
@@ -174,7 +174,7 @@ skills/platform-adaptation/references/platform-capabilities.json
           "ui_constraints": [
             "Settings page must preserve permission request entry"
           ],
-          "fallback": "If background notification trigger is unavailable, keep in-app keyword match badge and foreground notification."
+          "fallback": "If background notification trigger is unavailable, keep in-app badge and foreground alert."
         }
       ]
     }
@@ -196,10 +196,10 @@ skills/platform-adaptation/references/platform-capabilities.json
       "id": "platform.notification",
       "target_path": "entry/src/main/ets/platform/NotificationAdapter.ets",
       "source_capabilities": ["notification.usernotifications"],
-      "used_by_features": ["feature.notifications.breaking_keyword"],
+      "used_by_features": [],
       "public_api": [
         "requestPermission(): Promise<boolean>",
-        "publishBreakingNews(title: string, body: string): Promise<void>"
+        "publishNotification(title: string, body: string): Promise<void>"
       ],
       "implementation_tasks": [],
       "verification": []
@@ -225,7 +225,7 @@ skills/platform-adaptation/references/platform-capabilities.json
   "schema_version": "1.0",
   "interactions": [
     {
-      "screen_id": "screen.home.feed",
+      "screen_id": "",
       "type": "pull_to_refresh",
       "ios_modifier": ".refreshable",
       "harmony_component": "Refresh",
@@ -235,11 +235,11 @@ skills/platform-adaptation/references/platform-capabilities.json
   ],
   "navigation_map": [
     {
-      "from": "screen.home.feed",
-      "to": "screen.article.detail",
-      "trigger": "tap article card",
+      "from": "",
+      "to": "",
+      "trigger": "",
       "style": "navigation_push",
-      "harmony_implementation": "Navigation.pushUrl or router.pushUrl with article params"
+      "harmony_implementation": "Navigation.pushUrl or router.pushUrl with page params"
     }
   ]
 }
@@ -258,12 +258,12 @@ skills/platform-adaptation/references/platform-capabilities.json
   "schema_version": "1.0",
   "concurrency_map": [
     {
-      "function_id": "services.news.fetchAllNews",
+      "function_id": "",
       "ios_pattern": "task_group",
-      "ios_detail": "withTaskGroup(maxConcurrency=5)",
+      "ios_detail": "withTaskGroup(maxConcurrency=N)",
       "harmony_pattern": "Promise.all batched",
-      "batch_size": 5,
-      "implementation_note": "将 RSS 源按 5 个一组切片，每组 Promise.all，串联执行所有批次"
+      "batch_size": 0,
+      "implementation_note": "将任务数组按 N 个一组切片，每组 Promise.all，串联执行所有批次"
     }
   ]
 }
@@ -286,10 +286,10 @@ HarmonyOS 没有 SF Symbol 等价库，映射策略优先级：
 {
   "symbol_map": [
     {
-      "ios_symbol": "newspaper.fill",
-      "harmony_resource": "\\u{1F4F0}",
-      "mapping_type": "emoji",
-      "usage": "tab_bar.home, ArticleCard category icon"
+      "ios_symbol": "",
+      "harmony_resource": "",
+      "mapping_type": "emoji|sys_symbol|sys_media",
+      "usage": ""
     },
     {
       "ios_symbol": "magnifyingglass",
@@ -298,10 +298,10 @@ HarmonyOS 没有 SF Symbol 等价库，映射策略优先级：
       "usage": "tab_bar.search"
     },
     {
-      "ios_symbol": "arrow.clockwise",
-      "harmony_resource": "\\u{1F504}",
+      "ios_symbol": "",
+      "harmony_resource": "",
       "mapping_type": "emoji",
-      "usage": "HomeView toolbar refresh button"
+      "usage": ""
     }
   ]
 }

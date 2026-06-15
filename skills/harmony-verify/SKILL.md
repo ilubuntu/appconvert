@@ -171,54 +171,54 @@ Step 7. 输出人工摘要
   },
   "features": [
     {
-      "feature_id": "feature.news.home_feed",
+      "feature_id": "",
       "status": "passed",
-      "harmony_files": ["pages/HomePage.ets"],
+      "harmony_files": [],
       "acceptance_results": [
-        { "criterion": "首页启动后不能空白", "status": "passed" }
+        { "criterion": "", "status": "passed" }
       ]
     }
   ],
   "navigations": [
     {
-      "from": "screen.home.feed",
-      "to": "screen.article.detail",
-      "trigger": "tap article card",
+      "from": "",
+      "to": "",
+      "trigger": "",
       "style": "navigation_push",
       "status": "passed",
-      "evidence": "HomePage.ets:45 router.pushUrl"
+      "evidence": ""
     }
   ],
   "interactions": [
     {
-      "screen_id": "screen.home.feed",
+      "screen_id": "",
       "type": "pull_to_refresh",
       "status": "passed",
-      "evidence": "HomePage.ets:78 Refresh component"
+      "evidence": ""
     }
   ],
   "concurrency": [
     {
-      "function_id": "services.news.fetchAllNews",
+      "function_id": "",
       "expected": "Promise.all batched, batch_size=5",
-      "actual": "Promise.all with BATCH_SIZE=5",
+      "actual": "",
       "status": "passed"
     }
   ],
   "data_sources": [
     {
-      "function_id": "services.news.fetchAllNews",
-      "ios_urls": ["http://rss.cnn.com/rss/edition.rss", "..."],
-      "harmony_urls": ["http://rss.cnn.com/rss/edition.rss", "..."],
+      "function_id": "",
+      "ios_urls": [],
+      "harmony_urls": [],
       "status": "passed"
     }
   ],
   "layout_spec": [
     {
-      "screen_id": "screen.home.feed",
-      "section_id": "sec.home.trending",
+      "screen_id": "",
+      "section_id": "",
       "status": "passed",
-      "evidence": "HomePage.ets:52-68 TrendingBar component with horizontal Scroll"
+      "evidence": ""
     }
   ]
 }
@@ -231,12 +231,12 @@ Step 7. 输出人工摘要
   "schema_version": "1.0",
   "gaps": [
     {
-      "id": "gap.nav.saved_to_detail",
+      "id": "",
       "dimension": "navigation",
       "severity": "high",
-      "description": "SavedPage 没有跳转到 ArticleDetailPage 的代码",
-      "source": { "from": "screen.saved.list", "to": "screen.article.detail" },
-      "suggested_fix": "在 SavedPage 的 ArticleCard 点击事件中添加 router.pushUrl 跳转"
+      "description": "",
+      "source": { "from": "", "to": "" },
+      "suggested_fix": ""
     }
   ]
 }

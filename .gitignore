@@ -4,9 +4,10 @@ NewsMobileHarmony/
 .DS_Store
 .hvigor-home/
 .preview-clt/
-output/
+/output/
+/output_*/
 Bean-Juice-main/
-
+BeanJuiceHarmony/
 
 *.pyc
 __pycache__/

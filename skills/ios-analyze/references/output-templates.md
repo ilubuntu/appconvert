@@ -47,11 +47,11 @@
 {
   "features": [
     {
-      "id": "feature.news.home_feed",
-      "level1": "新闻浏览",
-      "level2": "首页信息流",
-      "level3": "新闻列表加载与展示",
-      "name": "首页新闻流",
+      "id": "",
+      "level1": "",
+      "level2": "",
+      "level3": "",
+      "name": "",
       "description": "",
       "user_value": "",
       "entry_points": [],
@@ -83,8 +83,8 @@
 {
   "items": [
     {
-      "id": "services.news.fetchArticles",
-      "module_id": "services.news",
+      "id": "",
+      "module_id": "",
       "file": "",
       "type": "",
       "kind": "view|model|service|store|view_model|app|widget|extension|utility",
@@ -109,17 +109,12 @@
 
 ```json
 {
-  "id": "models.article.source_bias",
+  "id": "",
   "kind": "model",
-  "type": "SourceBias",
+  "type": "",
   "member": "enum",
   "type_definition": [
-    {"case": "left", "color": "#2196F3", "description": "左倾"},
-    {"case": "leanLeft", "color": "#64B5F6", "description": "偏左"},
-    {"case": "center", "color": "#4CAF50", "description": "中立"},
-    {"case": "leanRight", "color": "#E57373", "description": "偏右"},
-    {"case": "right", "color": "#F44336", "description": "右倾"},
-    {"case": "unknown", "color": "#9E9E9E", "description": "未知"}
+    {"case": "", "color": "", "description": ""}
   ]
 }
 ```
@@ -130,9 +125,9 @@
 {
   "screens": [
     {
-      "id": "screen.home.feed",
-      "name": "首页信息流",
-      "ios_view": "HomeView",
+      "id": "",
+      "name": "",
+      "ios_view": "",
       "feature_ids": [],
       "route": "",
       "states": ["loading", "populated", "empty", "error"],
@@ -143,24 +138,24 @@
         "background": "",
         "sections": [
           {
-            "id": "sec.home.weather",
+            "id": "",
             "type": "conditional_widget",
-            "condition": "settings.enableWeatherWidget == true",
+            "condition": "",
             "layout": { "direction": "horizontal", "padding": { "horizontal": 16 } },
-            "content_ref": "WeatherWidget"
+            "content_ref": ""
           },
           {
-            "id": "sec.home.trending",
+            "id": "",
             "type": "conditional_list",
-            "condition": "trendingTopics.isNotEmpty",
+            "condition": "",
             "layout": { "direction": "vertical", "spacing": 8 },
             "elements": [
               {
                 "role": "header",
                 "layout": { "direction": "horizontal", "spacing": 4, "padding": { "horizontal": 16 } },
                 "children": [
-                  { "role": "icon", "system_name": "chart.line.uptrend.xyaxis", "color": "#FF9500" },
-                  { "role": "text", "content": "Trending", "font_size": 15, "font_weight": "semibold" }
+                  { "role": "icon", "system_name": "", "color": "" },
+                  { "role": "text", "content": "", "font_size": 15, "font_weight": "semibold" }
                 ]
               },
               {
@@ -171,54 +166,54 @@
                 "item_template": {
                   "layout": { "direction": "horizontal", "spacing": 6, "padding": { "horizontal": 12, "vertical": 8 }, "corner_radius": 20, "background": "tertiarySystemBackground" },
                   "children": [
-                    { "role": "icon", "source": "category.icon", "font_size": 12, "color": "category.color" },
-                    { "role": "text", "source": "topic.name", "font_size": 15 },
-                    { "role": "badge", "source": "topic.articleCount", "font_size": 10, "color": "#FFFFFF", "background": "#FF9500", "padding": { "horizontal": 6, "vertical": 2 }, "corner_radius": 8 }
+                    { "role": "icon", "source": "", "font_size": 12, "color": "" },
+                    { "role": "text", "source": "", "font_size": 15 },
+                    { "role": "badge", "source": "", "font_size": 10, "color": "", "background": "", "padding": { "horizontal": 6, "vertical": 2 }, "corner_radius": 8 }
                   ]
                 }
               }
             ]
           },
           {
-            "id": "sec.home.category_picker",
+            "id": "",
             "type": "scroll_row",
             "axis": "horizontal",
             "layout": { "padding": { "horizontal": 0 } },
             "item_template": {
               "layout": { "direction": "horizontal", "spacing": 6, "padding": { "horizontal": 14, "vertical": 8 }, "corner_radius": 999 },
-              "background_selected": "category.color",
-              "background_unselected": "gray.opacity(0.2)",
+              "background_selected": "",
+              "background_unselected": "",
               "children": [
-                { "role": "icon", "source": "category.icon", "font_size": 14 },
-                { "role": "text", "source": "category.rawValue", "font_size": 14, "font_weight_selected": "semibold", "font_weight_unselected": "regular" }
+                { "role": "icon", "source": "", "font_size": 14 },
+                { "role": "text", "source": "", "font_size": 14, "font_weight_selected": "semibold", "font_weight_unselected": "regular" }
               ]
             }
           },
           {
-            "id": "sec.home.article_list",
+            "id": "",
             "type": "lazy_list",
             "spacing": 12,
             "layout": { "padding": { "horizontal": 16 } },
             "item_template": {
-              "content_ref": "ArticleCard"
+              "content_ref": ""
             }
           }
         ],
         "navigation_bar": {
-          "title": "News",
+          "title": "",
           "title_mode": "large",
           "trailing_items": [
             {
               "type": "conditional",
-              "condition": "isLoading",
+              "condition": "",
               "when_true": { "type": "progress_indicator" },
-              "when_false": { "type": "button", "icon": "arrow.clockwise", "action": "refresh" }
+              "when_false": { "type": "button", "icon": "", "action": "" }
             }
           ]
         }
       },
       "component_specs": {
-        "ArticleCard": {
+        "": {
           "container": {
             "direction": "vertical",
             "alignment": "leading",
@@ -232,22 +227,22 @@
               "role": "meta_row",
               "layout": { "direction": "horizontal", "spacing": 6 },
               "children": [
-                { "role": "icon", "source": "article.category.icon", "color": "article.category.color" },
-                { "role": "text", "source": "article.source.name", "font_size": 12, "font_weight": "medium" },
+                { "role": "icon", "source": "", "color": "" },
+                { "role": "text", "source": "", "font_size": 12, "font_weight": "medium" },
                 { "role": "spacer" },
-                { "role": "text", "source": "article.timeAgo", "font_size": 12, "color": "secondary" }
+                { "role": "text", "source": "", "font_size": 12, "color": "secondary" }
               ]
             },
             {
               "role": "title",
-              "source": "article.title",
+              "source": "",
               "font_size": 17,
               "font_weight": "headline",
               "max_lines": 3
             },
             {
               "role": "description",
-              "source": "article.rssDescription",
+              "source": "",
               "font_size": 15,
               "color": "secondary",
               "max_lines": 2,
@@ -257,41 +252,41 @@
               "role": "badges_row",
               "layout": { "direction": "horizontal", "spacing": 8 },
               "children": [
-                { "role": "sentiment_badge", "optional": true, "condition": "settings.showSentimentColors && article.sentiment != null", "content_ref": "SentimentBadge" },
-                { "role": "bias_badge", "optional": true, "condition": "settings.showBiasIndicators", "content_ref": "BiasIndicatorBadge" },
+                { "role": "sentiment_badge", "optional": true, "condition": "", "content_ref": "" },
+                { "role": "bias_badge", "optional": true, "condition": "", "content_ref": "" },
                 { "role": "spacer" },
-                { "role": "bookmark_button", "icon": "bookmark / bookmark.fill", "action": "toggleSaved" }
+                { "role": "bookmark_button", "icon": "", "action": "" }
               ]
             }
           ]
         },
-        "SentimentBadge": {
+        "": {
           "layout": { "direction": "horizontal", "spacing": 4, "padding": { "horizontal": 8, "vertical": 4 }, "corner_radius": 8 },
-          "background": "sentiment.label.color.opacity(0.15)",
+          "background": "",
           "children": [
-            { "role": "icon", "source": "sentiment.label.icon", "color": "sentiment.label.color" },
-            { "role": "text", "source": "sentiment.label.rawValue", "font_size": 12, "color": "sentiment.label.color" }
+            { "role": "icon", "source": "", "color": "" },
+            { "role": "text", "source": "", "font_size": 12, "color": "" }
           ]
         },
-        "BiasIndicatorBadge": {
+        "": {
           "layout": { "direction": "horizontal", "spacing": 4, "padding": { "horizontal": 8, "vertical": 4 }, "corner_radius": 8 },
-          "background": "bias.color.opacity(0.15)",
+          "background": "",
           "children": [
-            { "role": "circle", "size": 6, "color": "bias.color" },
-            { "role": "text", "source": "bias.rawValue", "font_size": 12, "color": "bias.color" }
+            { "role": "circle", "size": 6, "color": "" },
+            { "role": "text", "source": "", "font_size": 12, "color": "" }
           ]
         }
       },
-      "resource_refs": ["tab.home"],
+      "resource_refs": [],
       "screenshot": "",
       "screenshot_required": false,
       "screenshot_reason": "",
       "snapshot_arg": "",
-      "source_refs": ["MyApp/Views/HomeView.swift"],
+      "source_refs": [],
       "navigates_to": [
         {
-          "target": "screen.article.detail",
-          "trigger": "tap article card",
+          "target": "",
+          "trigger": "",
           "style": "navigation_push|sheet|full_screen_cover|popover|overlay",
           "source_ref": ""
         }
@@ -299,30 +294,30 @@
       "interactions": [
         {
           "type": "pull_to_refresh",
-          "modifier": ".refreshable",
+          "modifier": "",
           "source_ref": ""
         },
         {
           "type": "search",
-          "modifier": ".searchable",
+          "modifier": "",
           "source_ref": ""
         },
         {
           "type": "swipe_action",
-          "modifier": ".swipeActions",
+          "modifier": "",
           "direction": "trailing|leading",
           "source_ref": ""
         },
         {
           "type": "toolbar",
-          "modifier": ".toolbar",
-          "items": ["refresh_button", "loading_indicator"],
+          "modifier": "",
+          "items": [],
           "source_ref": ""
         },
         {
           "type": "on_disappear",
-          "modifier": ".onDisappear",
-          "behavior": "track view duration for personalization",
+          "modifier": "",
+          "behavior": "",
           "source_ref": ""
         }
       ]
@@ -391,7 +386,7 @@
 
 #### component_specs
 
-页面内复用的子组件（如 ArticleCard、SentimentBadge），结构与 section 的 element 一致。用 `content_ref` 在 section 中引用。
+页面内复用的子组件，结构与 section 的 element 一致。用 `content_ref` 在 section 中引用。
 
 #### 提取规则
 
@@ -429,7 +424,7 @@
 {
   "resources": [
     {
-      "id": "tab.home",
+      "id": "",
       "type": "sf_symbol|asset_catalog|screenshot_crop|color|font|layout_metric",
       "ios_name": "",
       "usage": "bottom_tab",
