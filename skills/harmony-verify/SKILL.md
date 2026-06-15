@@ -145,13 +145,15 @@ output_{{PROJECT_NAME}}/harmony-verify/
   - 如果 `triggers_sheet` 非空，onClick 是否设置了 bindSheet 的 visible 状态
   - **不允许只渲染图标但没有 onClick**（即"看到了按钮但点了没用"）
 - 关键视觉参数（font_size、corner_radius、spacing、padding）是否在代码中体现。
+- **禁止硬编码颜色和字号**：扫描所有 .ets 文件，检查是否存在 `.fontColor('#XXXXXX')`、`.backgroundColor('#XXXXXX')`、`.color('#XXXXXX')` 等硬编码颜色值，或 `.fontSize(数字)` 等硬编码字号。颜色必须使用 `$r('app.color.xxx')`，字号必须使用 `$r('app.float.xxx')`。发现硬编码则标记为 `hardcoded_value`。
+- **暗色模式资源完整性**：`resources/dark/element/color.json` 中的颜色 name 必须与 `resources/base/element/color.json` 一一对应。缺失暗色配对的资源标记为 `dark_color_missing`。
 - 条件渲染（`condition` 字段）是否保留为 if 分支。
 - **tab_bar 的每个 item 必须有 icon**。检查 `.tabBar()` 调用是否有图标参数，不能只有文字。
 - **form_section 的每个 picker row 必须有 Select 组件**。不能只生成 label 文字。
 - **每个 screen 必须有对应的页面文件**。screens.json 中每个 screen id 的 ios_view 必须在 Harmony 工程中有对应的 .ets 页面文件。
 - **空态/错误态**：每个 screen 的 states 中如果有 `empty`/`error`，对应页面必须有空态/错误态 UI。
 
-每个 layout_spec section 的验证结果：`passed` / `section_missing` / `component_missing` / `params_lost` / `condition_lost` / `tab_icon_missing` / `picker_missing` / `page_missing` / `state_missing` / **`quick_action_missing`**（toolbar 按钮未实现或 onClick 为空）。
+每个 layout_spec section 的验证结果：`passed` / `section_missing` / `component_missing` / `params_lost` / `condition_lost` / `tab_icon_missing` / `picker_missing` / `page_missing` / `state_missing` / `hardcoded_value` / `dark_color_missing` / **`quick_action_missing`**（toolbar 按钮未实现或 onClick 为空）。
 
 ### 8b. 快捷操作入口可达验证
 
