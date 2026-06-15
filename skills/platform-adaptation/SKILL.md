@@ -40,7 +40,6 @@ output_{{PROJECT_NAME}}/platform-adaptation/
   implementation-guidance.json
   risks.json
   interaction-adaptation.json
-  concurrency-adaptation.json
   reports/平台能力适配摘要.md
 ```
 
@@ -249,30 +248,6 @@ skills/platform-adaptation/references/platform-capabilities.json
 
 `navigation_map` 来自所有 screen 的 `navigates_to` 字段聚合。后续 harmony-generate 必须按这个 map 生成路由注册和导航调用。
 
-### Step 5c. 并发原语适配
-
-从 `functions.json` 的 `concurrency` 字段提取所有并发模式，逐个匹配参考库中 `category: "concurrency"` 的条目。
-
-输出 `concurrency-adaptation.json`：
-
-```json
-{
-  "schema_version": "1.0",
-  "concurrency_map": [
-    {
-      "function_id": "",
-      "ios_pattern": "task_group",
-      "ios_detail": "withTaskGroup(maxConcurrency=N)",
-      "harmony_pattern": "Promise.all batched",
-      "batch_size": 0,
-      "implementation_note": "将任务数组按 N 个一组切片，每组 Promise.all，串联执行所有批次"
-    }
-  ]
-}
-```
-
-后续 harmony-generate 遇到 `task_group` 时必须按 batch_size 分批并发，禁止退化为串行循环。
-
 ### Step 5d. SF Symbol 图标映射
 
 从 `screens.json` 的 `layout_spec`、`component_specs` 和 `resources.json` 中提取所有 `system_name` 字段（iOS SF Symbol 名），逐个映射为 HarmonyOS 可用的图标。
@@ -368,5 +343,4 @@ output_{{PROJECT_NAME}}/platform-adaptation/reports/平台能力适配摘要.md
 - 不允许把基础 UI 控件映射塞进平台能力库。
 - `screens.json` 中所有页面的 `interactions` 必须出现在 `interaction-adaptation.json` 中。
 - `screens.json` 中所有 `navigates_to` 条目必须聚合到 `interaction-adaptation.json` 的 `navigation_map` 中。
-- `functions.json` 中所有 `concurrency` 不为 `none` 的函数必须出现在 `concurrency-adaptation.json` 中。
 - `screens.json` 的 `layout_spec` 和 `component_specs` 中出现的每个 `system_name` 必须出现在 `interaction-adaptation.json` 的 `symbol_map` 中。

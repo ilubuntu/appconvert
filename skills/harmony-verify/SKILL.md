@@ -23,7 +23,6 @@ output_{{PROJECT_NAME}}/ios-analyze/specs/resources.json
 output_{{PROJECT_NAME}}/platform-adaptation/capability-coverage.json
 output_{{PROJECT_NAME}}/platform-adaptation/feature-adaptation.json
 output_{{PROJECT_NAME}}/platform-adaptation/interaction-adaptation.json
-output_{{PROJECT_NAME}}/platform-adaptation/concurrency-adaptation.json
 output_{{PROJECT_NAME}}/platform-adaptation/implementation-guidance.json
 output_{{PROJECT_NAME}}/platform-adaptation/risks.json
 output_{{PROJECT_NAME}}/harmony-generate/harmony模块实现计划.json
@@ -83,13 +82,15 @@ output_{{PROJECT_NAME}}/harmony-verify/
 
 ### 5. 并发还原验证
 
-读取 `concurrency-adaptation.json`，逐条检查：
+读取 `functions.json` 中所有 `concurrency` 不为 `none` 的函数，逐个检查：
 
-- 对应的 Harmony 服务函数是否使用了正确的并发模式。
-- `task_group` 映射为 Promise.all 分批，不是串行 for 循环。
-- `batch_size` 是否保留。
+- 对应的 Harmony 服务函数是否使用了正确的并发模式（查 `platform-capabilities.json` 中 `category: "concurrency"` 条目）。
+- `task_group` 是否映射为 `Promise.all`（有 `maxConcurrency` 时检查分批逻辑）。
+- `timer_publish` 是否映射为 `setInterval`，interval 值是否保留，组件销毁时是否 `clearInterval`。
+- `dispatch_async` 是否映射为 `setTimeout`，delay 值是否保留。
+- `concurrency_detail` 中的参数（interval、delay、maxConcurrency 等）是否在代码中体现。
 
-每个并发映射的验证结果：`passed` / `degraded_to_serial` / `missing`。
+每个并发函数的验证结果：`passed` / `degraded_to_serial` / `missing` / `pattern_mismatch`。
 
 ### 6. 真实数据验证
 
@@ -248,7 +249,9 @@ Step 7. 输出人工摘要
   "concurrency": [
     {
       "function_id": "",
-      "expected": "Promise.all batched, batch_size=5",
+      "ios_pattern": "timer_publish",
+      "ios_detail": "interval=1s",
+      "expected": "setInterval 1000ms + clearInterval on destroy",
       "actual": "",
       "status": "passed"
     }

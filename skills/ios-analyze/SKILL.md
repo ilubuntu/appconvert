@@ -209,14 +209,31 @@ output_{{PROJECT_NAME}}/ios-analyze/scan/
   "used_by_features": [],
   "called_by": [],
   "migration_action": "model|service|store|arkui_component|platform_adapter|merge|delete_with_reason",
-  "concurrency": "none|async_await|task_group|async_let|callback|combine|gcd",
+  "concurrency": "none|async_await|task_group|async_let|callback|combine|gcd|actor|async_stream|timer_publish|dispatch_async",
   "concurrency_detail": ""
 }
 ```
 
-`concurrency` 必须标注，枚举值为：`none` / `async_await` / `task_group` / `async_let` / `callback` / `combine` / `gcd`。
+`concurrency` 必须标注，枚举值为：
 
-`concurrency_detail` 填具体参数（并发数上限、调度队列、优先级等）。
+- `none` — 同步函数
+- `async_await` — Swift async/await
+- `task_group` — withTaskGroup / withThrowingTaskGroup
+- `async_let` — async let 并发绑定
+- `callback` — completion handler / delegate 回调
+- `combine` — Combine 框架（@Published、Publisher、Sink 等）
+- `gcd` — DispatchQueue.async、DispatchSemaphore 等 GCD API
+- `actor` — Swift actor 隔离的方法
+- `async_stream` — AsyncStream / AsyncSequence
+- `timer_publish` — Timer.publish / Timer.scheduledTimer / CADisplayLink
+- `dispatch_async` — DispatchQueue.main.asyncAfter / DispatchQueue.main.async
+
+`concurrency_detail` 填具体参数。示例：
+- task_group 有并发上限：`"maxConcurrency=5"`
+- timer 有间隔：`"interval=1s, repeatForever"`
+- dispatch_async 有延迟：`"delay=5s, queue=main"`
+- gcd 指定队列：`"queue=global(qos:.background)"`
+- actor 隔离上下文：`"isolated by MyActor"`
 
 `kind=model` 且为 enum 或 struct 时，必须用 `type_definition` 列出所有 case 及其关联属性（颜色、描述、rawValue 等），不可省略。
 

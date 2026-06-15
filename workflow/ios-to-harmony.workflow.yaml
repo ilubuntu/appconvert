@@ -41,7 +41,6 @@
         "output_{{PROJECT_NAME}}/platform-adaptation/feature-adaptation.json",
         "output_{{PROJECT_NAME}}/platform-adaptation/implementation-guidance.json",
         "output_{{PROJECT_NAME}}/platform-adaptation/interaction-adaptation.json",
-        "output_{{PROJECT_NAME}}/platform-adaptation/concurrency-adaptation.json",
         "output_{{PROJECT_NAME}}/platform-adaptation/risks.json",
         "output_{{PROJECT_NAME}}/platform-adaptation/reports/平台能力适配摘要.md"
       ]
@@ -60,7 +59,6 @@
         "output_{{PROJECT_NAME}}/platform-adaptation/feature-adaptation.json",
         "output_{{PROJECT_NAME}}/platform-adaptation/implementation-guidance.json",
         "output_{{PROJECT_NAME}}/platform-adaptation/interaction-adaptation.json",
-        "output_{{PROJECT_NAME}}/platform-adaptation/concurrency-adaptation.json",
         "output_{{PROJECT_NAME}}/platform-adaptation/risks.json",
         "skills/harmony-generate/references/project-template"
       ],
@@ -81,7 +79,6 @@
         "output_{{PROJECT_NAME}}/ios-analyze/specs/functions.json",
         "output_{{PROJECT_NAME}}/ios-analyze/specs/capabilities.json",
         "output_{{PROJECT_NAME}}/platform-adaptation/interaction-adaptation.json",
-        "output_{{PROJECT_NAME}}/platform-adaptation/concurrency-adaptation.json",
         "output_{{PROJECT_NAME}}/platform-adaptation/implementation-guidance.json",
         "output_{{PROJECT_NAME}}/harmony-generate/harmony模块实现计划.json"
       ],

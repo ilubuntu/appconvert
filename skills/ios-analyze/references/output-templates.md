@@ -96,7 +96,7 @@
       "used_by_features": [],
       "called_by": [],
       "migration_action": "model|service|store|arkui_component|platform_adapter|merge|delete_with_reason",
-      "concurrency": "none|async_await|task_group|async_let|callback|combine|gcd",
+      "concurrency": "none|async_await|task_group|async_let|callback|combine|gcd|actor|async_stream|timer_publish|dispatch_async",
       "concurrency_detail": "",
       "type_definition": []
     }
@@ -104,7 +104,7 @@
 }
 ```
 
-`concurrency` 记录异步执行模式，`concurrency_detail` 记录具体参数（并发数、调度策略等）。
+`concurrency` 记录异步执行模式（枚举值见 ios-analyze SKILL.md），`concurrency_detail` 记录具体参数（如 `maxConcurrency=5`、`interval=1s`、`delay=5s`）。
 
 `type_definition` 仅用于 `kind=model` 的 enum/struct 类型，列出完整定义：
 
