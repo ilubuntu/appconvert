@@ -134,6 +134,55 @@
       "states": ["loading", "populated", "empty", "error"],
       "key_controls": [],
       "layout_notes": [],
+      "layout_confidence": "high|medium|low",
+      "source_evidence": [
+        {
+          "type": "swift_syntax|source_review",
+          "view": "",
+          "file": "",
+          "node_path": "",
+          "notes": ""
+        }
+      ],
+      "runtime_ui_tree_evidence": [
+        {
+          "path": "",
+          "source": "xctest_accessibility",
+          "runtime_state": "empty|populated|sheet|alert|error|unknown",
+          "element_count": 0,
+          "key_elements": [
+            {
+              "type": "button|text|image|tab|input|list|navigation_bar|unknown",
+              "label": "",
+              "value": "",
+              "identifier": "",
+              "frame": { "x": 0, "y": 0, "width": 0, "height": 0 },
+              "enabled": true,
+              "selected": false,
+              "exists": true
+            }
+          ],
+          "ast_runtime_diff": ""
+        }
+      ],
+      "screenshot_evidence": [
+        {
+          "path": "",
+          "runtime_state": "empty|populated|sheet|alert|error|unknown",
+          "supplements": ["font_hierarchy", "image_crop", "spacing", "system_control_style"],
+          "ast_visual_diff": ""
+        }
+      ],
+      "visual_notes": [],
+      "screenshot_plan": [
+        {
+          "screen_id": "",
+          "runtime_state": "empty|populated|sheet|alert|error",
+          "trigger_action": "",
+          "required": false,
+          "reason": ""
+        }
+      ],
       "layout_spec": {
         "container": "NavigationStack > ScrollView",
         "background": "",
@@ -395,7 +444,8 @@
   "background": "背景色",
   "corner_radius": 12,
   "children": [],
-  "content_ref": "引用 component_specs 中的组件"
+  "content_ref": "引用 component_specs 中的组件",
+  "visual_confirmed_by": "截图路径，可为空"
 }
 ```
 
@@ -441,9 +491,29 @@
 
 页面内复用的子组件，结构与 section 的 element 一致。用 `content_ref` 在 section 中引用。
 
+```json
+{
+  "ItemRowView": {
+    "source_evidence": [
+      {
+        "type": "swift_syntax",
+        "view": "ItemRowView",
+        "file": "Views/ItemRowView.swift",
+        "node_path": "body.NavigationLink.HStack"
+      }
+    ],
+    "layout": { "direction": "horizontal", "spacing": 8 },
+    "elements": [
+      { "role": "image", "source": "", "shape": "circle", "visual_confirmed_by": "" },
+      { "role": "text", "source": "", "font_size": 20 }
+    ]
+  }
+}
+```
+
 #### 提取规则
 
-1. **必须从 SwiftUI body 的 View hierarchy 逐层提取**，不能只写概述。
+1. **必须优先从 `scan/swiftui_view_tree.json` 的 SwiftSyntax View Tree 逐层提取**，不能只写概述。
 2. 每个 VStack/HStack/List/ScrollView/Section 都必须反映到 sections 或 elements 中。
 3. **视觉参数必须提取**：`font` (.system(size:, weight:))、`foregroundColor`、`padding`、`cornerRadius`、`spacing`、`background`、`lineLimit`。
 4. `color` 优先提取具体 hex 值；如果用的是系统色（.blue, .secondary），写语义名。
@@ -452,6 +522,10 @@
 7. NavigationStack/NavigationSplitView 的 `.navigationTitle`、`.toolbar` 提取到 `navigation_bar`。
 8. TabView 的 tab items 提取到 `tab_bar`。
 9. 样式修饰符（.listStyle、.buttonStyle）记录在对应 element 的 `style` 字段。
+10. 每个 screen 必须记录 `layout_confidence`、`source_evidence`、`runtime_ui_tree_evidence`；有截图时必须记录 `screenshot_evidence`。
+11. `runtime_ui_tree_evidence` 来自 XCUITest Accessibility Tree，用于记录运行时真实渲染元素、label/value/identifier、frame、enabled/selected/exists。
+12. 截图用于补充字体层级、颜色、间距、图片裁剪、系统控件真实样式和运行态分支，不能替代源码、AST 或运行时 UI 树。
+13. 如果 SwiftSyntax、运行时 UI 树和截图不一致，保留三种证据，并在 `visual_notes` / `ast_runtime_diff` / `ast_visual_diff` 中记录差异。
 
 ## capabilities.json
 

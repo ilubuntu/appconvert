@@ -1,0 +1,49 @@
+{
+  "fonts": {
+    ".largeTitle": { "size": 34, "weight": "regular" },
+    ".title": { "size": 28, "weight": "regular" },
+    ".title2": { "size": 22, "weight": "regular" },
+    ".title3": { "size": 20, "weight": "regular" },
+    ".headline": { "size": 17, "weight": "semibold" },
+    ".subheadline": { "size": 15, "weight": "regular" },
+    ".body": { "size": 17, "weight": "regular" },
+    ".callout": { "size": 16, "weight": "regular" },
+    ".footnote": { "size": 13, "weight": "regular" },
+    ".caption": { "size": 12, "weight": "regular" },
+    ".caption2": { "size": 11, "weight": "regular" },
+    ".extraLargeTitle": { "size": 40, "weight": "regular" },
+    ".extraLargeTitle2": { "size": 36, "weight": "regular" }
+  },
+  "font_weights": {
+    ".ultraLight": "ultralight",
+    ".thin": "thin",
+    ".light": "light",
+    ".regular": "regular",
+    ".medium": "medium",
+    ".semibold": "semibold",
+    ".bold": "bold",
+    ".heavy": "heavy",
+    ".black": "black"
+  },
+  "colors": {
+    ".red": { "light": "#FF3B30", "dark": "#FF453A" },
+    ".blue": { "light": "#007AFF", "dark": "#0A84FF" },
+    ".green": { "light": "#34C759", "dark": "#30D158" },
+    ".orange": { "light": "#FF9500", "dark": "#FF9F0A" },
+    ".yellow": { "light": "#FFCC00", "dark": "#FFD60A" },
+    ".purple": { "light": "#AF52DE", "dark": "#BF5AF2" },
+    ".pink": { "light": "#FF2D55", "dark": "#FF375F" },
+    ".brown": { "light": "#A2845E", "dark": "#AC8E68" },
+    ".cyan": { "light": "#30D0FF", "dark": "#40C8E0" },
+    ".teal": { "light": "#30B0C7", "dark": "#40CBE0" },
+    ".indigo": { "light": "#5856D6", "dark": "#5E5CE6" },
+    ".mint": { "light": "#00C7BE", "dark": "#66D4CF" },
+    ".primary": { "light": "#000000", "dark": "#FFFFFF" },
+    ".secondary": { "light": "#3C3C43", "dark": "#EBEBF5" },
+    ".white": { "light": "#FFFFFF", "dark": "#FFFFFF" },
+    ".black": { "light": "#000000", "dark": "#000000" },
+    ".gray": { "light": "#8E8E93", "dark": "#8E8E93" },
+    ".clear": { "light": "transparent", "dark": "transparent" }
+  },
+  "default_font": { "size": 17, "weight": "regular" }
+}
