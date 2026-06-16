@@ -203,7 +203,7 @@ class FileVisitor: SyntaxAnyVisitor {
                                 }
                             }
                         case .getter(let getterBody):
-                            if let firstStmt = getterBody.statements.first {
+                            if let firstStmt = getterBody.first {
                                 viewStruct.body = extractViewNode(firstStmt.item)
                             }
                         }
@@ -432,8 +432,8 @@ func main() throws {
         }
     }
 
-    let rootURL = URL(fileURLWithPath: projectRoot).resolvingSymlinks()
-    let outputURL = URL(fileURLWithPath: outputDir).resolvingSymlinks()
+    let rootURL = URL(fileURLWithPath: projectRoot).resolvingSymlinksInPath()
+    let outputURL = URL(fileURLWithPath: outputDir).resolvingSymlinksInPath()
     let fm = FileManager.default
 
     var swiftFiles: [URL] = []
@@ -454,7 +454,7 @@ func main() throws {
         }
     }
     walk(rootURL)
-    swiftFiles.sort()
+    swiftFiles.sort { $0.path < $1.path }
     if verbose { print("Found \(swiftFiles.count) Swift files") }
 
     var allViews: [ViewStruct] = []

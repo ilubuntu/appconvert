@@ -155,6 +155,19 @@ output_{{PROJECT_NAME}}/harmony-verify/
 
 每个 layout_spec section 的验证结果：`passed` / `section_missing` / `component_missing` / `params_lost` / `condition_lost` / `tab_icon_missing` / `picker_missing` / `page_missing` / `state_missing` / `hardcoded_value` / `dark_color_missing` / **`quick_action_missing`**（toolbar 按钮未实现或 onClick 为空）。
 
+### 8a. 运行时 UI 树对齐验证
+
+读取 `screens.json` 的 `runtime_ui_tree_evidence`，逐个页面检查：
+
+- 如果 `runtime_ui_tree_evidence` 标记缺失，则该页不能判定为已完成运行态结构对齐，记录 `runtime_tree_missing`。
+- `key_elements` 中的主要 text/button/tab/input/cell 是否在 Harmony 页面代码中有对应可见元素。
+- `selected` 状态是否在 Tabs、Segment、Picker 等控件中体现。
+- `enabled: false` 的按钮或输入控件是否在 Harmony 中体现禁用态。
+- UI 树显示空态时，Harmony 页面是否有空态；UI 树显示列表/单元格时，Harmony 页面不能只有空白态。
+- 如果 `frame` 暗示元素在底部 Tab、顶部导航、列表区域，Harmony 页面不能把元素放到明显错误的位置。
+
+每个 runtime UI tree 的验证结果：`passed` / `runtime_tree_missing` / `element_missing` / `state_mismatch` / `region_mismatch`。
+
 ### 8b. 快捷操作入口可达验证
 
 对 `navigation_bar.trailing_items` 和 `leading_items` 中的每个 item，检查点击后的用户流程是否可达：

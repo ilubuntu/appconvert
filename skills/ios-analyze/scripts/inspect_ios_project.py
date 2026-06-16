@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 import argparse
 import json
+import os
 import re
+import subprocess
+import time
 from pathlib import Path
 
 
@@ -164,6 +167,76 @@ def build_module_index(files: list[dict]) -> list[dict]:
     return sorted(result, key=lambda item: item["id"])
 
 
+def tail(text: str, limit: int = 4000) -> str:
+    if len(text) <= limit:
+        return text
+    return text[-limit:]
+
+
+def run_swiftui_parser(root: Path, output_dir: Path, scan_dir: Path) -> None:
+    parser_dir = Path(__file__).resolve().parent / "swiftui-parser"
+    status_path = scan_dir / "swiftui_parser_status.json"
+    command = [
+        "swift",
+        "run",
+        "--disable-sandbox",
+        "SwiftUIParser",
+        "--project-root",
+        str(root),
+        "--output-dir",
+        str(output_dir),
+    ]
+    started = time.monotonic()
+    status = {
+        "tool": "SwiftUIParser",
+        "command": command,
+        "working_directory": str(parser_dir),
+        "success": False,
+        "duration_seconds": 0.0,
+        "output": str(scan_dir / "swiftui_view_tree.json"),
+        "stdout_tail": "",
+        "stderr_tail": "",
+        "error": "",
+    }
+
+    if not parser_dir.exists():
+        status["error"] = f"SwiftUI parser directory not found: {parser_dir}"
+        status_path.write_text(json.dumps(status, ensure_ascii=False, indent=2), encoding="utf-8")
+        return
+
+    swift_home = output_dir / ".swift-home"
+    module_cache = output_dir / ".clang-module-cache"
+    swift_home.mkdir(parents=True, exist_ok=True)
+    module_cache.mkdir(parents=True, exist_ok=True)
+    env = os.environ.copy()
+    env["HOME"] = str(swift_home)
+    env["CLANG_MODULE_CACHE_PATH"] = str(module_cache)
+
+    try:
+        result = subprocess.run(
+            command,
+            cwd=parser_dir,
+            check=False,
+            text=True,
+            capture_output=True,
+            env=env,
+        )
+        status["success"] = result.returncode == 0
+        status["returncode"] = result.returncode
+        status["stdout_tail"] = tail(result.stdout)
+        status["stderr_tail"] = tail(result.stderr)
+        if result.returncode != 0:
+            status["error"] = "SwiftUIParser exited with a non-zero status"
+    except FileNotFoundError as exc:
+        status["error"] = f"swift command not found: {exc}"
+    except Exception as exc:  # noqa: BLE001 - scanner must not fail the base index
+        status["error"] = str(exc)
+    finally:
+        status["duration_seconds"] = round(time.monotonic() - started, 3)
+        status["view_tree_exists"] = (scan_dir / "swiftui_view_tree.json").exists()
+        status_path.write_text(json.dumps(status, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Create a neutral JSON scan index for an iOS project.")
     parser.add_argument("--project-root", required=True)
@@ -230,6 +303,7 @@ def main() -> None:
         json.dumps({"imports": imports, "capability_hints": capability_hints}, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
+    run_swiftui_parser(root, output_dir, scan_dir)
 
 
 if __name__ == "__main__":

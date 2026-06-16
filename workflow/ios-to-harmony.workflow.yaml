@@ -19,9 +19,7 @@
         "output_{{PROJECT_NAME}}/ios-analyze/specs/screens.json",
         "output_{{PROJECT_NAME}}/ios-analyze/specs/capabilities.json",
         "output_{{PROJECT_NAME}}/ios-analyze/specs/resources.json",
-        "output_{{PROJECT_NAME}}/ios-analyze/reports/ios工程分析.md",
-        "output_{{PROJECT_NAME}}/ios-analyze/reports/ios功能摘要.md",
-        "output_{{PROJECT_NAME}}/ios-analyze/reports/ios界面摘要.md"
+        "output_{{PROJECT_NAME}}/ios-analyze/reports/ios分析摘要.md"
       ]
     },
     {
