@@ -1,0 +1,380 @@
+{
+  "schema_version": "1.1",
+  "category": "concurrency",
+  "description": "Swift concurrency and async patterns mapped to ArkTS implementation patterns. These are not platform capabilities and do not enter feature_adaptation.",
+  "capabilities": [
+    {
+      "id": "concurrency.task_group",
+      "category": "concurrency",
+      "ios": {
+        "frameworks": [
+          "Swift"
+        ],
+        "apis": [
+          "withTaskGroup",
+          "TaskGroup",
+          "withThrowingTaskGroup"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkTS",
+        "api_area": "Promise.all / Promise.allSettled",
+        "target_boundary": "services/*"
+      },
+      "strategy": "api_replacement",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "medium",
+      "implementation_notes": [
+        "Swift withTaskGroup → ArkTS Promise.all 并发执行",
+        "如果 ios-spec.json.functions concurrency_detail 含 maxConcurrency=N，则按 N 个一组分批 Promise.all，否则一次性全部并发",
+        "禁止简化为串行 for 循环"
+      ],
+      "fallback": "无。并发是性能关键路径，不允许退化。"
+    },
+    {
+      "id": "concurrency.async_let",
+      "category": "concurrency",
+      "ios": {
+        "frameworks": [
+          "Swift"
+        ],
+        "apis": [
+          "async let"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkTS",
+        "api_area": "Promise.all",
+        "target_boundary": "services/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "low",
+      "implementation_notes": [
+        "Swift async let a = fetchA(); async let b = fetchB(); return await (a, b)",
+        "→ ArkTS const [a, b] = await Promise.all([fetchA(), fetchB()])",
+        "多个 async let 并发发起 → 合并为一个 Promise.all"
+      ],
+      "fallback": "无。"
+    },
+    {
+      "id": "concurrency.callback",
+      "category": "concurrency",
+      "ios": {
+        "frameworks": [
+          "Foundation"
+        ],
+        "apis": [
+          "completion handler",
+          "delegate pattern"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkTS",
+        "api_area": "Promise / async-await wrapper",
+        "target_boundary": "services/*"
+      },
+      "strategy": "api_replacement",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "low",
+      "implementation_notes": [
+        "iOS callback/completion handler → ArkTS Promise 封装",
+        "iOS delegate pattern → ArkTS 回调函数或事件回调",
+        "保持异步调用链的清晰度，不要嵌套回调"
+      ],
+      "fallback": "无。"
+    },
+    {
+      "id": "concurrency.async_await",
+      "category": "concurrency",
+      "ios": {
+        "frameworks": [
+          "Swift"
+        ],
+        "apis": [
+          "async",
+          "await",
+          "Task",
+          "Task.detached"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkTS",
+        "api_area": "async/await + Promise",
+        "target_boundary": "services/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "low",
+      "implementation_notes": [
+        "Swift async func → ArkTS async func，保持 async/await 语法",
+        "Swift Task { ... } → ArkTS Promise 或直接 async 调用"
+      ],
+      "fallback": "无。"
+    },
+    {
+      "id": "concurrency.combine",
+      "category": "concurrency",
+      "ios": {
+        "frameworks": [
+          "Combine",
+          "SwiftUI"
+        ],
+        "apis": [
+          "@Published",
+          "Publisher",
+          "sink",
+          "assign",
+          "onReceive"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkUI V2 State",
+        "api_area": "@ObservedV2 + @Trace + @Monitor",
+        "target_boundary": "stores/*, pages/*"
+      },
+      "strategy": "api_replacement",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "medium",
+      "implementation_notes": [
+        "iOS @Published var x → @Trace x: Type",
+        "iOS sink/assign 订阅 → @Monitor 监听变化",
+        "SwiftUI .onReceive(Just(value)) → @Monitor 或 onChange"
+      ],
+      "fallback": "用 setTimeout 轮询模拟（不推荐）"
+    },
+    {
+      "id": "concurrency.gcd",
+      "category": "concurrency",
+      "ios": {
+        "frameworks": [
+          "Foundation"
+        ],
+        "apis": [
+          "DispatchQueue.global().async",
+          "DispatchSemaphore",
+          "DispatchGroup"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkTS",
+        "api_area": "TaskPool / Worker / Promise",
+        "target_boundary": "services/*"
+      },
+      "strategy": "api_replacement",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "medium",
+      "implementation_notes": [
+        "DispatchQueue.global().async { } → TaskPool.execute 或 new Promise",
+        "DispatchGroup.wait() → Promise.all + 计数器",
+        "DispatchSemaphore → 自定义计数锁或串行化队列"
+      ],
+      "fallback": "用 Promise 串行执行"
+    },
+    {
+      "id": "concurrency.actor",
+      "category": "concurrency",
+      "ios": {
+        "frameworks": [
+          "Swift"
+        ],
+        "apis": [
+          "actor",
+          "isolated",
+          "nonisolated",
+          "@GlobalActor"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkTS",
+        "api_area": "class + 单实例序列化",
+        "target_boundary": "services/*, stores/*"
+      },
+      "strategy": "api_replacement",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "medium",
+      "implementation_notes": [
+        "Swift actor → 普通 class，方法加 async 标记",
+        "Actor 的数据隔离 → 用单例 + Promise 串行化保证线程安全",
+        "如果有 MainActor → 确保在 UI 线程执行（ArkUI 默认在 UI 线程）"
+      ],
+      "fallback": "无。"
+    },
+    {
+      "id": "concurrency.async_stream",
+      "category": "concurrency",
+      "ios": {
+        "frameworks": [
+          "Swift"
+        ],
+        "apis": [
+          "AsyncStream",
+          "AsyncSequence",
+          "AsyncThrowingStream"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkTS",
+        "api_area": "回调函数 / 事件监听 / 轮询",
+        "target_boundary": "services/*"
+      },
+      "strategy": "api_replacement",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "medium",
+      "implementation_notes": [
+        "AsyncStream { continuation in ... } → 回调函数 + 状态收集",
+        "for await item in stream → 注册回调或 setInterval 轮询",
+        "如果流有取消逻辑 → 提供 cancel() 方法"
+      ],
+      "fallback": "用数组缓存 + 定时轮询"
+    },
+    {
+      "id": "concurrency.timer_publish",
+      "category": "concurrency",
+      "ios": {
+        "frameworks": [
+          "SwiftUI",
+          "Foundation"
+        ],
+        "apis": [
+          "Timer.publish",
+          "Timer.scheduledTimer",
+          "CADisplayLink",
+          "Timer.connect"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkTS",
+        "api_area": "setInterval / setTimeout",
+        "target_boundary": "components/*, pages/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "low",
+      "implementation_notes": [
+        "Timer.publish(every: 1, on: .main, in: .common).autoconnect() → setInterval(() => {...}, 1000)",
+        "SwiftUI .onReceive(timer) → 直接在 setInterval 回调中更新状态",
+        "concurrency_detail 中的 interval 值必须保留（ms 单位）",
+        "组件销毁时必须 clearInterval 防止泄漏"
+      ],
+      "fallback": "无。"
+    },
+    {
+      "id": "concurrency.dispatch_async",
+      "category": "concurrency",
+      "ios": {
+        "frameworks": [
+          "Foundation"
+        ],
+        "apis": [
+          "DispatchQueue.main.asyncAfter",
+          "DispatchQueue.main.async"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkTS",
+        "api_area": "setTimeout / Promise.resolve().then()",
+        "target_boundary": "pages/*, components/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "low",
+      "implementation_notes": [
+        "DispatchQueue.main.asyncAfter(deadline: .now() + 5) → setTimeout(() => {...}, 5000)",
+        "DispatchQueue.main.async { } → setTimeout(() => {...}, 0) 或 Promise.resolve().then(() => {...})",
+        "concurrency_detail 中的 delay 值必须保留（转为 ms）"
+      ],
+      "fallback": "无。"
+    }
+  ]
+}

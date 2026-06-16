@@ -1,6 +1,6 @@
 # iOS Analyze JSON 输出模板
 
-这些模板定义 `ios-spec.json` 的顶层 section。Markdown 摘要只能从 `ios-spec.json` 派生。
+这些模板定义 `ios-spec.json` 的顶层 section。`ios工程分析报告.md` 只能从 `ios-spec.json` 和源码证据派生，不能成为新的事实源。
 
 ## ios-spec.json.project
 
@@ -9,11 +9,12 @@
   "project_name": "",
   "root": "",
   "targets": [],
-  "schemes": [],
   "bundle_ids": [],
   "entry_points": [],
-  "dependencies": [],
-  "build_notes": []
+  "dependencies": {
+    "frameworks": [],
+    "external": []
+  }
 }
 ```
 
@@ -28,12 +29,7 @@
       "ios_paths": [],
       "responsibility": "",
       "public_interfaces": [],
-      "inputs": [],
-      "outputs": [],
       "depends_on": [],
-      "used_by": [],
-      "feature_ids": [],
-      "apple_capabilities": [],
       "source_refs": [],
       "suggested_harmony_boundary": ""
     }
@@ -52,15 +48,11 @@
       "level2": "",
       "level3": "",
       "name": "",
-      "description": "",
-      "user_value": "",
       "entry_points": [],
       "screens": [],
       "modules": [],
       "functions": [],
       "capabilities": [],
-      "resources": [],
-      "source_refs": [],
       "data_sources": [
         {
           "type": "network|local|database|system|fixed_sample",
@@ -70,8 +62,7 @@
         }
       ],
       "states": ["loading", "populated", "empty", "error"],
-      "user_actions": [],
-      "acceptance": [],
+      "acceptance": ["list_populated", "detail_open"],
       "migration_priority": "high|medium|low"
     }
   ]
@@ -93,8 +84,6 @@
       "inputs": [],
       "outputs": [],
       "side_effects": [],
-      "used_by_features": [],
-      "called_by": [],
       "migration_action": "model|service|store|arkui_component|platform_adapter|merge|delete_with_reason",
       "concurrency": "none|async_await|task_group|async_let|callback|combine|gcd|actor|async_stream|timer_publish|dispatch_async",
       "concurrency_detail": "",
@@ -132,8 +121,6 @@
       "feature_ids": [],
       "route": "",
       "states": ["loading", "populated", "empty", "error"],
-      "key_controls": [],
-      "layout_notes": [],
       "layout_confidence": "high|medium|low",
       "source_evidence": [
         {
@@ -165,24 +152,7 @@
           "ast_runtime_diff": ""
         }
       ],
-      "screenshot_evidence": [
-        {
-          "path": "",
-          "runtime_state": "empty|populated|sheet|alert|error|unknown",
-          "supplements": ["font_hierarchy", "image_crop", "spacing", "system_control_style"],
-          "ast_visual_diff": ""
-        }
-      ],
       "visual_notes": [],
-      "screenshot_plan": [
-        {
-          "screen_id": "",
-          "runtime_state": "empty|populated|sheet|alert|error",
-          "trigger_action": "",
-          "required": false,
-          "reason": ""
-        }
-      ],
       "layout_spec": {
         "container": "NavigationStack > ScrollView",
         "background": "",
@@ -338,10 +308,6 @@
         }
       },
       "resource_refs": [],
-      "screenshot": "",
-      "screenshot_required": false,
-      "screenshot_reason": "",
-      "snapshot_arg": "",
       "source_refs": [],
       "navigates_to": [
         {
@@ -385,6 +351,8 @@
   ]
 }
 ```
+
+如果实际采集了截图，screen 可追加 `screenshot_evidence`；未采集时不要输出空数组或截图计划字段。
 
 ### layout_spec 字段说明
 
@@ -455,6 +423,7 @@
 
 ```json
 {
+  "position": "bottom",
   "items": [
     {
       "label": "Tab 标题",
@@ -465,6 +434,8 @@
   "accent_color": "#RRGGBB"
 }
 ```
+
+`position` 取值：`bottom|top|side|unknown`。SwiftUI 根 `TabView` 在 iPhone 形态默认写 `bottom`。
 
 #### form_section rows 结构
 
@@ -522,7 +493,7 @@
 7. NavigationStack/NavigationSplitView 的 `.navigationTitle`、`.toolbar` 提取到 `navigation_bar`。
 8. TabView 的 tab items 提取到 `tab_bar`。
 9. 样式修饰符（.listStyle、.buttonStyle）记录在对应 element 的 `style` 字段。
-10. 每个 screen 必须记录 `layout_confidence`、`source_evidence`、`runtime_ui_tree_evidence`；有截图时必须记录 `screenshot_evidence`。
+10. 每个 screen 必须记录 `layout_confidence`、`source_evidence`、`runtime_ui_tree_evidence`；有截图时才记录 `screenshot_evidence`。
 11. `runtime_ui_tree_evidence` 来自 XCUITest Accessibility Tree，用于记录运行时真实渲染元素、label/value/identifier、frame、enabled/selected/exists。
 12. 截图用于补充字体层级、颜色、间距、图片裁剪、系统控件真实样式和运行态分支，不能替代源码、AST 或运行时 UI 树。
 13. 如果 SwiftSyntax、运行时 UI 树和截图不一致，保留三种证据，并在 `visual_notes` / `ast_runtime_diff` / `ast_visual_diff` 中记录差异。
@@ -537,9 +508,7 @@
       "capability": "URLSession",
       "source_refs": [],
       "runtime_behavior": "",
-      "permission_or_entitlement": "",
-      "feature_ids": [],
-      "notes": ""
+      "permission_or_entitlement": ""
     }
   ]
 }
@@ -549,19 +518,31 @@
 
 ```json
 {
-  "resources": [
-    {
-      "id": "",
-      "type": "sf_symbol|asset_catalog|screenshot_crop|color|font|layout_metric",
-      "ios_name": "",
-      "usage": "bottom_tab",
-      "screen_id": "",
-      "used_by_features": [],
-      "source_ref": "",
-      "archive_path": "",
-      "crop_ref": "",
-      "fidelity_requirement": "exact_or_vector_equivalent"
+  "resources": {
+    "colors": {
+      "category.us": {
+        "ios_name": "NewsCategory.us.color",
+        "usage": "category_color",
+        "value": "#4ECDC4",
+        "value_light": "#4ECDC4",
+        "value_dark": "#4ECDC4",
+        "source_ref": "Models/NewsModels.swift"
+      }
+    },
+    "symbols": {
+      "tab.home": {
+        "ios_name": "newspaper.fill",
+        "usage": "tab_bar.home",
+        "source_ref": "ContentView.swift"
+      }
+    },
+    "images": {
+      "logo": {
+        "path": "Assets.xcassets/logo.imageset",
+        "usage": "brand_logo",
+        "source_ref": ""
+      }
     }
-  ]
+  }
 }
 ```

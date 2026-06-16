@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.1",
+  "category": "media",
+  "description": "Audio, image, camera, photo and media capabilities. Extend with camera/photo library mappings as needed.",
+  "capabilities": [
+    {
+      "id": "audio.avspeech",
+      "category": "audio",
+      "ios": {
+        "frameworks": [
+          "AVFoundation"
+        ],
+        "apis": [
+          "AVSpeechSynthesizer",
+          "AVSpeechUtterance",
+          "AVAudioSession"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "Speech Kit / Audio Kit",
+        "api_area": "textToSpeech and audio session equivalent",
+        "target_boundary": "platform/TextToSpeechAdapter"
+      },
+      "strategy": "api_replacement",
+      "permission": {
+        "required": false,
+        "notes": "TTS engine availability and voice selection differ."
+      },
+      "manifest": {
+        "required": false,
+        "notes": "Add audio-related configuration only if required by selected Kit."
+      },
+      "risk_level": "medium",
+      "implementation_notes": [
+        "Expose start/pause/resume/next/previous/stop state machine.",
+        "Keep current item index and item state in store to drive UI.",
+        "Do not bind UI directly to platform TTS object."
+      ],
+      "fallback": "Show textual briefing list if TTS engine is unavailable."
+    }
+  ]
+}

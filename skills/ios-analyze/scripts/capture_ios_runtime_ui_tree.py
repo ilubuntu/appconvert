@@ -2,6 +2,7 @@
 import argparse
 import json
 import re
+import subprocess
 from pathlib import Path
 
 
@@ -187,8 +188,112 @@ def count_elements(node: dict) -> int:
     return total
 
 
+def run_command(cmd: list[str], cwd: Path | None = None) -> dict:
+    try:
+        result = subprocess.run(cmd, cwd=cwd, text=True, capture_output=True, timeout=60)
+        return {
+            "command": cmd,
+            "returncode": result.returncode,
+            "stdout": result.stdout,
+            "stderr": result.stderr,
+        }
+    except FileNotFoundError as exc:
+        return {
+            "command": cmd,
+            "returncode": 127,
+            "stdout": "",
+            "stderr": str(exc),
+        }
+    except subprocess.TimeoutExpired as exc:
+        return {
+            "command": cmd,
+            "returncode": 124,
+            "stdout": exc.stdout or "",
+            "stderr": exc.stderr or "command timed out",
+        }
+
+
+def parse_xcode_targets(text: str) -> list[str]:
+    targets: list[str] = []
+    in_targets = False
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped == "Targets:":
+            in_targets = True
+            continue
+        if in_targets and stripped.endswith(":"):
+            break
+        if in_targets and stripped:
+            targets.append(stripped)
+    return targets
+
+
+def preflight(project_root: Path, project_path: str | None, workspace_path: str | None, scheme: str | None) -> dict:
+    checks: dict = {}
+
+    simctl = run_command(["xcrun", "simctl", "list", "devices", "booted"])
+    checks["simulator"] = simctl
+    if simctl["returncode"] != 0:
+        return {
+            "status": "failed",
+            "reason": "simulator_unavailable",
+            "details": "xcrun simctl list devices booted failed in the current process.",
+            "checks": checks,
+        }
+    if "(Booted)" not in simctl["stdout"]:
+        return {
+            "status": "failed",
+            "reason": "simulator_unavailable",
+            "details": "No booted simulator is visible from the current process.",
+            "checks": checks,
+        }
+
+    list_cmd = ["xcodebuild", "-list"]
+    if workspace_path:
+        list_cmd.extend(["-workspace", workspace_path])
+        if scheme:
+            list_cmd.extend(["-scheme", scheme])
+    elif project_path:
+        list_cmd.extend(["-project", project_path])
+    xcode_list = run_command(list_cmd, cwd=project_root)
+    checks["xcodebuild_list"] = xcode_list
+    if xcode_list["returncode"] != 0:
+        return {
+            "status": "failed",
+            "reason": "xcodebuild_list_failed",
+            "details": "xcodebuild -list failed.",
+            "checks": checks,
+        }
+
+    targets = parse_xcode_targets(xcode_list["stdout"])
+    ui_test_targets = [target for target in targets if target.endswith("UITests") or "UITests" in target]
+    checks["targets"] = {
+        "all": targets,
+        "ui_test_targets": ui_test_targets,
+    }
+    if not ui_test_targets:
+        return {
+            "status": "failed",
+            "reason": "ui_test_target_missing",
+            "details": "No *UITests target found. Unit test targets are not enough for XCUITest runtime UI tree capture.",
+            "checks": checks,
+        }
+
+    return {
+        "status": "passed",
+        "reason": "",
+        "details": "Booted simulator and UI Test target are visible.",
+        "checks": checks,
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Create or parse an XCUITest runtime UI tree dump.")
+    parser.add_argument("--preflight", action="store_true", help="Check simulator and UI Test target availability")
+    parser.add_argument("--project-root", help="iOS project root for xcodebuild -list")
+    parser.add_argument("--project", help="Relative or absolute .xcodeproj path")
+    parser.add_argument("--workspace", help="Relative or absolute .xcworkspace path")
+    parser.add_argument("--scheme", help="Scheme used with workspace-based xcodebuild -list")
     parser.add_argument("--emit-helper", help="Write RuntimeUITreeDumpTests.swift to this path")
     parser.add_argument("--xcodebuild-log", help="Parse an xcodebuild test log containing JSON markers")
     parser.add_argument("--screen-id", default="screen.unknown")
@@ -198,6 +303,16 @@ def main() -> None:
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+
+    if args.preflight:
+        project_root = Path(args.project_root or ".").resolve()
+        payload = preflight(project_root, args.project, args.workspace, args.scheme)
+        (output_dir / "preflight.json").write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        return
 
     if args.emit_helper:
         helper_path = Path(args.emit_helper)

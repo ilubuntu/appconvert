@@ -1,0 +1,296 @@
+{
+  "schema_version": "1.1",
+  "category": "ui_interactions",
+  "description": "SwiftUI/UIKit interaction and control patterns mapped to ArkUI components and interaction rules.",
+  "capabilities": [
+    {
+      "id": "interaction.pull_to_refresh",
+      "category": "interaction",
+      "ios": {
+        "frameworks": [
+          "SwiftUI"
+        ],
+        "apis": [
+          ".refreshable"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkUI",
+        "api_area": "Refresh component",
+        "target_boundary": "pages/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "low",
+      "implementation_notes": [
+        "SwiftUI .refreshable → ArkUI Refresh 组件包裹 List 或 Scroll",
+        "Refresh 组件接收 refreshing 状态和 onRefresh 回调",
+        "必须在 ios-spec.json.screens interactions 中标记了 pull_to_refresh 的页面都实现"
+      ],
+      "fallback": "页面顶部放刷新按钮作为替代入口"
+    },
+    {
+      "id": "interaction.search",
+      "category": "interaction",
+      "ios": {
+        "frameworks": [
+          "SwiftUI"
+        ],
+        "apis": [
+          ".searchable",
+          ".searchable(text:)"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkUI",
+        "api_area": "Search component",
+        "target_boundary": "pages/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "low",
+      "implementation_notes": [
+        "SwiftUI .searchable → ArkUI Search 组件",
+        "搜索结果中的文本高亮需要手动实现：将匹配关键词拆分为 Text span 并分别设置样式",
+        "iOS 的 AttributedString 高亮在 ArkUI 中需要用 ContainerSpan 或多个 Text 拼接"
+      ],
+      "fallback": "搜索无高亮，只显示结果列表"
+    },
+    {
+      "id": "interaction.swipe_action",
+      "category": "interaction",
+      "ios": {
+        "frameworks": [
+          "SwiftUI"
+        ],
+        "apis": [
+          ".swipeActions"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkUI",
+        "api_area": "ListItem.swipeAction",
+        "target_boundary": "pages/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "low",
+      "implementation_notes": [
+        "SwiftUI .swipeActions → ArkUI ListItem 的 swipeAction 属性",
+        "支持 leading 和 trailing 方向",
+        "常用于删除、收藏、标记已读等操作"
+      ],
+      "fallback": "长按菜单替代"
+    },
+    {
+      "id": "interaction.toolbar",
+      "category": "interaction",
+      "ios": {
+        "frameworks": [
+          "SwiftUI"
+        ],
+        "apis": [
+          ".toolbar",
+          "ToolbarItem"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkUI",
+        "api_area": "Navigation Toolbar builder",
+        "target_boundary": "pages/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "low",
+      "implementation_notes": [
+        "SwiftUI .toolbar + ToolbarItem → ArkUI Navigation 的 toolbarConfiguration + @Builder",
+        "toolbar items 必须从 ios-spec.json.screens interactions 中搬运，不可省略",
+        "常见 item：刷新按钮、加载指示器、分享按钮、编辑按钮"
+      ],
+      "fallback": "将 toolbar 按钮放在页面顶部 Row 中"
+    },
+    {
+      "id": "interaction.tab_bar",
+      "category": "interaction",
+      "ios": {
+        "frameworks": [
+          "SwiftUI"
+        ],
+        "apis": [
+          "TabView",
+          ".tabItem"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkUI",
+        "api_area": "Tabs / TabContent.tabBar",
+        "target_boundary": "pages/Index"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "low",
+      "implementation_notes": [
+        "SwiftUI root TabView → ArkUI Tabs",
+        "tab_bar.position=bottom → Tabs({ index: currentIndex, barPosition: BarPosition.End })",
+        "tab_bar.position=top → Tabs({ index: currentIndex, barPosition: BarPosition.Start })",
+        "每个 TabContent.tabBar 必须包含 icon + label + selected 状态",
+        "不要省略 barPosition；ArkUI Tabs 默认在顶部，iOS iPhone TabView 默认在底部"
+      ],
+      "fallback": "如果 side/unknown 无法等价映射，记录待确认并优先按 bottom 实现手机形态"
+    },
+    {
+      "id": "interaction.sheet",
+      "category": "interaction",
+      "ios": {
+        "frameworks": [
+          "SwiftUI"
+        ],
+        "apis": [
+          ".sheet",
+          ".fullScreenCover",
+          ".popover"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkUI",
+        "api_area": "bindSheet / CustomDialog / Navigation.push",
+        "target_boundary": "pages/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "low",
+      "implementation_notes": [
+        ".sheet → bindSheet（半模态）",
+        ".fullScreenCover → Navigation.push 全屏页面",
+        ".popover → CustomDialog 或 bindSheet",
+        "ios-spec.json.screens navigates_to 中 style 字段决定用哪种"
+      ],
+      "fallback": "用 Navigation.push 替代所有弹窗"
+    },
+    {
+      "id": "interaction.on_disappear",
+      "category": "interaction",
+      "ios": {
+        "frameworks": [
+          "SwiftUI"
+        ],
+        "apis": [
+          ".onDisappear",
+          ".onAppear"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "ArkUI",
+        "api_area": "aboutToDisappear / aboutToAppear",
+        "target_boundary": "pages/*"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "low",
+      "implementation_notes": [
+        ".onDisappear → aboutToDisappear（组件生命周期）",
+        ".onAppear → aboutToAppear",
+        "ios-spec.json.screens interactions 中 on_disappear 的 behavior 字段描述了具体行为，必须实现",
+        "常见 behavior：记录阅读时长、更新个性化权重、保存状态"
+      ],
+      "fallback": "在页面切换时手动触发"
+    },
+    {
+      "id": "interaction.share",
+      "category": "interaction",
+      "ios": {
+        "frameworks": [
+          "SwiftUI"
+        ],
+        "apis": [
+          "ShareLink"
+        ],
+        "entitlements": [],
+        "permissions": []
+      },
+      "harmony": {
+        "kit": "Share Kit",
+        "api_area": "system share sheet",
+        "target_boundary": "platform/ShareAdapter"
+      },
+      "strategy": "native_equivalent",
+      "permission": {
+        "required": false,
+        "notes": ""
+      },
+      "manifest": {
+        "required": false,
+        "notes": ""
+      },
+      "risk_level": "low",
+      "implementation_notes": [
+        "SwiftUI ShareLink → HarmonyOS Share Kit 的系统分享面板",
+        "不能降级为仅复制到剪贴板"
+      ],
+      "fallback": "复制到剪贴板 + 提示"
+    }
+  ]
+}
