@@ -1,8 +1,8 @@
 # iOS Analyze JSON 输出模板
 
-这些模板定义后续迁移模型的主输入。Markdown 摘要只能从这些 JSON 派生。
+这些模板定义 `ios-spec.json` 的顶层 section。Markdown 摘要只能从 `ios-spec.json` 派生。
 
-## project.json
+## ios-spec.json.project
 
 ```json
 {
@@ -17,7 +17,7 @@
 }
 ```
 
-## modules.json
+## ios-spec.json.modules
 
 ```json
 {
@@ -41,7 +41,7 @@
 }
 ```
 
-## features.json
+## ios-spec.json.features
 
 ```json
 {
@@ -78,7 +78,7 @@
 }
 ```
 
-## functions.json
+## ios-spec.json.functions
 
 ```json
 {
@@ -120,7 +120,7 @@
 }
 ```
 
-## screens.json
+## ios-spec.json.screens
 
 ```json
 {
@@ -527,7 +527,7 @@
 12. 截图用于补充字体层级、颜色、间距、图片裁剪、系统控件真实样式和运行态分支，不能替代源码、AST 或运行时 UI 树。
 13. 如果 SwiftSyntax、运行时 UI 树和截图不一致，保留三种证据，并在 `visual_notes` / `ast_runtime_diff` / `ast_visual_diff` 中记录差异。
 
-## capabilities.json
+## ios-spec.json.capabilities
 
 ```json
 {
@@ -545,7 +545,7 @@
 }
 ```
 
-## resources.json
+## ios-spec.json.resources
 
 ```json
 {
