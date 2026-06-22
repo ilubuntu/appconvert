@@ -13,7 +13,7 @@
       "required_inputs": ["{{IOS_PROJECT}}"],
       "expected_outputs": [
         "output_{{PROJECT_NAME}}/ios-analyze/ios-spec.json",
-        "output_{{PROJECT_NAME}}/ios-analyze/reports/ios工程分析报告.md"
+        "output_{{PROJECT_NAME}}/ios-analyze/ios-report.md"
       ]
     },
     {
@@ -22,7 +22,7 @@
       "profile": "platform-adaptation",
       "required_inputs": [
         "output_{{PROJECT_NAME}}/ios-analyze/ios-spec.json",
-        "output_{{PROJECT_NAME}}/ios-analyze/reports/ios工程分析报告.md",
+        "output_{{PROJECT_NAME}}/ios-analyze/ios-report.md",
         "skills/platform-adaptation/references/platform-capabilities.json",
         "skills/platform-adaptation/references/system-capabilities.json",
         "skills/platform-adaptation/references/ui-interactions.json",
@@ -40,7 +40,7 @@
       "profile": "harmony-generate",
       "required_inputs": [
         "output_{{PROJECT_NAME}}/ios-analyze/ios-spec.json",
-        "output_{{PROJECT_NAME}}/ios-analyze/reports/ios工程分析报告.md",
+        "output_{{PROJECT_NAME}}/ios-analyze/ios-report.md",
         "output_{{PROJECT_NAME}}/platform-adaptation/platform-adaptation.json",
         "skills/harmony-generate/references/project-template"
       ],
@@ -56,7 +56,7 @@
       "required_inputs": [
         "{{PROJECT_NAME}}Harmony",
         "output_{{PROJECT_NAME}}/ios-analyze/ios-spec.json",
-        "output_{{PROJECT_NAME}}/ios-analyze/reports/ios工程分析报告.md",
+        "output_{{PROJECT_NAME}}/ios-analyze/ios-report.md",
         "output_{{PROJECT_NAME}}/platform-adaptation/platform-adaptation.json",
         "output_{{PROJECT_NAME}}/harmony-generate/harmony-implementation.json"
       ],

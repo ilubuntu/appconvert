@@ -437,13 +437,23 @@ func main() throws {
     let fm = FileManager.default
 
     var swiftFiles: [URL] = []
-    let excludedDirs: Set<String> = [".build", ".git", "build", "DerivedData", "Pods", "Carthage", ".swiftpm", "Tests", "NewsMobileTests", "NewsMobileWidget"]
+    let excludedDirNames: Set<String> = [".build", ".git", "build", "DerivedData", "Pods", "Carthage", ".swiftpm"]
+
+    func shouldExcludeDir(_ name: String) -> Bool {
+        if excludedDirNames.contains(name) { return true }
+        if name == "Tests" { return true }
+        if name.hasSuffix("Tests") || name.hasSuffix("UITests") { return true }
+        if name.hasSuffix("Widget") || name.hasSuffix("Widgets") { return true }
+        if name.hasSuffix("Extension") || name.hasSuffix("Extensions") { return true }
+        if name == "SnapshotSupport" { return true }
+        return false
+    }
 
     func walk(_ dir: URL) {
         guard let entries = try? fm.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil) else { return }
         for entry in entries {
             let name = entry.lastPathComponent
-            if excludedDirs.contains(name) { continue }
+            if shouldExcludeDir(name) { continue }
             var isDir: ObjCBool = false
             fm.fileExists(atPath: entry.path, isDirectory: &isDir)
             if isDir.boolValue {

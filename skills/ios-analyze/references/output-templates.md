@@ -1,6 +1,6 @@
 # iOS Analyze JSON 输出模板
 
-这些模板定义 `ios-spec.json` 的顶层 section。`ios工程分析报告.md` 只能从 `ios-spec.json` 和源码证据派生，不能成为新的事实源。
+这些模板定义 `ios-spec.json` 的顶层 section。`ios-report.md` 只能从 `ios-spec.json` 和源码证据派生，不能成为新的事实源。
 
 ## ios-spec.json.project
 
@@ -44,10 +44,21 @@
   "features": [
     {
       "id": "",
+      "title": "",
       "level1": "",
       "level2": "",
       "level3": "",
-      "name": "",
+      "summary": "",
+      "user_flow": [
+        "用户从哪里进入",
+        "系统读取或准备什么数据",
+        "不同状态下展示什么",
+        "用户操作后产生什么结果"
+      ],
+      "behavior": [
+        "业务规则、排序、分组、过滤、校验、点击、删除、编辑等行为事实"
+      ],
+      "states": ["loading", "populated", "empty", "error"],
       "entry_points": [],
       "screens": [],
       "modules": [],
@@ -61,9 +72,14 @@
           "fallback": ""
         }
       ],
-      "states": ["loading", "populated", "empty", "error"],
-      "acceptance": ["list_populated", "detail_open"],
-      "migration_priority": "high|medium|low"
+      "acceptance": [
+        {
+          "id": "",
+          "description": ""
+        }
+      ],
+      "migration_priority": "high|medium|low",
+      "source_refs": []
     }
   ]
 }
@@ -158,64 +174,37 @@
         "background": "",
         "sections": [
           {
-            "id": "",
-            "type": "conditional_widget",
+            "id": "section.empty",
+            "type": "empty_state",
             "condition": "",
-            "layout": { "direction": "horizontal", "padding": { "horizontal": 16 } },
-            "content_ref": ""
-          },
-          {
-            "id": "",
-            "type": "conditional_list",
-            "condition": "",
-            "layout": { "direction": "vertical", "spacing": 8 },
+            "layout": { "direction": "vertical", "spacing": 8, "padding": { "horizontal": 16 } },
             "elements": [
-              {
-                "role": "header",
-                "layout": { "direction": "horizontal", "spacing": 4, "padding": { "horizontal": 16 } },
-                "children": [
-                  { "role": "icon", "system_name": "", "color": "" },
-                  { "role": "text", "content": "", "font_size": 15, "font_weight": "semibold" }
-                ]
-              },
-              {
-                "role": "scroll_row",
-                "axis": "horizontal",
-                "spacing": 10,
-                "padding": { "horizontal": 16 },
-                "item_template": {
-                  "layout": { "direction": "horizontal", "spacing": 6, "padding": { "horizontal": 12, "vertical": 8 }, "corner_radius": 20, "background": "tertiarySystemBackground" },
-                  "children": [
-                    { "role": "icon", "source": "", "font_size": 12, "color": "" },
-                    { "role": "text", "source": "", "font_size": 15 },
-                    { "role": "badge", "source": "", "font_size": 10, "color": "", "background": "", "padding": { "horizontal": 6, "vertical": 2 }, "corner_radius": 8 }
-                  ]
-                }
-              }
+              { "role": "image", "source": "", "resource_ref": "", "size": 72 },
+              { "role": "text", "content": "", "font_size": "title2", "font_weight": "semibold", "color": "" },
+              { "role": "text", "content": "", "font_size": "body", "color": "secondary" }
             ]
           },
           {
-            "id": "",
-            "type": "scroll_row",
-            "axis": "horizontal",
-            "layout": { "padding": { "horizontal": 0 } },
-            "item_template": {
-              "layout": { "direction": "horizontal", "spacing": 6, "padding": { "horizontal": 14, "vertical": 8 }, "corner_radius": 999 },
-              "background_selected": "",
-              "background_unselected": "",
-              "children": [
-                { "role": "icon", "source": "", "font_size": 14 },
-                { "role": "text", "source": "", "font_size": 14, "font_weight_selected": "semibold", "font_weight_unselected": "regular" }
-              ]
-            }
-          },
-          {
-            "id": "",
-            "type": "lazy_list",
+            "id": "section.items",
+            "type": "list",
+            "name": "",
+            "condition": "",
+            "data_binding": "",
+            "empty_state_ref": "section.empty",
             "spacing": 12,
             "layout": { "padding": { "horizontal": 16 } },
-            "item_template": {
-              "content_ref": ""
+            "row": {
+              "component_ref": "",
+              "layout": { "direction": "horizontal", "spacing": 8, "padding": { "horizontal": 12, "vertical": 10 }, "corner_radius": 12 },
+              "elements": [
+                { "role": "image", "binding": "", "resource_ref": "", "size": 40 },
+                { "role": "text", "binding": "", "font_size": "body", "font_weight": "semibold", "color": "" },
+                { "role": "text", "binding": "", "font_size": "caption", "color": "secondary", "optional": true }
+              ],
+              "actions": [
+                { "type": "tap", "target": "", "source_ref": "" },
+                { "type": "swipe_delete", "direction": "trailing", "source_ref": "" }
+              ]
             }
           }
         ],
@@ -244,66 +233,10 @@
       },
       "component_specs": {
         "": {
-          "container": {
-            "direction": "vertical",
-            "alignment": "leading",
-            "spacing": 10,
-            "padding": 16,
-            "background": "secondarySystemBackground",
-            "corner_radius": 12
-          },
+          "container": { "direction": "vertical", "spacing": 8, "padding": 12, "corner_radius": 12 },
           "elements": [
-            {
-              "role": "meta_row",
-              "layout": { "direction": "horizontal", "spacing": 6 },
-              "children": [
-                { "role": "icon", "source": "", "color": "" },
-                { "role": "text", "source": "", "font_size": 12, "font_weight": "medium" },
-                { "role": "spacer" },
-                { "role": "text", "source": "", "font_size": 12, "color": "secondary" }
-              ]
-            },
-            {
-              "role": "title",
-              "source": "",
-              "font_size": 17,
-              "font_weight": "headline",
-              "max_lines": 3
-            },
-            {
-              "role": "description",
-              "source": "",
-              "font_size": 15,
-              "color": "secondary",
-              "max_lines": 2,
-              "optional": true
-            },
-            {
-              "role": "badges_row",
-              "layout": { "direction": "horizontal", "spacing": 8 },
-              "children": [
-                { "role": "sentiment_badge", "optional": true, "condition": "", "content_ref": "" },
-                { "role": "bias_badge", "optional": true, "condition": "", "content_ref": "" },
-                { "role": "spacer" },
-                { "role": "bookmark_button", "icon": "", "action": "" }
-              ]
-            }
-          ]
-        },
-        "": {
-          "layout": { "direction": "horizontal", "spacing": 4, "padding": { "horizontal": 8, "vertical": 4 }, "corner_radius": 8 },
-          "background": "",
-          "children": [
-            { "role": "icon", "source": "", "color": "" },
-            { "role": "text", "source": "", "font_size": 12, "color": "" }
-          ]
-        },
-        "": {
-          "layout": { "direction": "horizontal", "spacing": 4, "padding": { "horizontal": 8, "vertical": 4 }, "corner_radius": 8 },
-          "background": "",
-          "children": [
-            { "role": "circle", "size": 6, "color": "" },
-            { "role": "text", "source": "", "font_size": 12, "color": "" }
+            { "role": "text", "binding": "", "font_size": "body", "font_weight": "semibold" },
+            { "role": "text", "binding": "", "font_size": "caption", "color": "secondary", "optional": true }
           ]
         }
       },
@@ -505,10 +438,14 @@
   "capabilities": [
     {
       "id": "network.urlsession",
-      "capability": "URLSession",
+      "category": "network",
+      "ios_framework": "Foundation",
+      "ios_apis": ["URLSession"],
+      "usage": "",
       "source_refs": [],
-      "runtime_behavior": "",
-      "permission_or_entitlement": ""
+      "permission_or_entitlement": [],
+      "migration_risk": "low|medium|high",
+      "fallback_required": false
     }
   ]
 }
@@ -520,27 +457,33 @@
 {
   "resources": {
     "colors": {
-      "category.us": {
-        "ios_name": "NewsCategory.us.color",
-        "usage": "category_color",
+      "accent.primary": {
+        "ios_name": "AppTheme.primaryColor",
+        "usage": "primary_accent",
         "value": "#4ECDC4",
         "value_light": "#4ECDC4",
         "value_dark": "#4ECDC4",
-        "source_ref": "Models/NewsModels.swift"
+        "source_ref": "Theme/AppTheme.swift",
+        "asset_path": "",
+        "target_name": "AppTheme.primaryColor"
       }
     },
     "symbols": {
-      "tab.home": {
-        "ios_name": "newspaper.fill",
-        "usage": "tab_bar.home",
-        "source_ref": "ContentView.swift"
+      "tab.main": {
+        "ios_name": "house.fill",
+        "usage": "tab_bar.main",
+        "source_ref": "RootView.swift",
+        "asset_path": "",
+        "target_name": "house.fill"
       }
     },
     "images": {
       "logo": {
-        "path": "Assets.xcassets/logo.imageset",
+        "ios_name": "logo",
         "usage": "brand_logo",
-        "source_ref": ""
+        "source_ref": "Assets.xcassets/logo.imageset",
+        "asset_path": "assets/ios/logo.png",
+        "target_name": "logo"
       }
     }
   }

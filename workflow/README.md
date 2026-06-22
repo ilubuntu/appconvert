@@ -14,5 +14,5 @@
 - `skills/` — 可复用的迁移 skill
 - `output/` — 生成的 specs、适配产物、验收报告
 - `方案.md` — 迁移方案
-- `NewsMobile/` — 源 iOS 工程
-- `NewsMobileHarmony/` — 目标 HarmonyOS NEXT 工程
+- `{{IOS_PROJECT}}/` — 源 iOS 工程
+- `{{PROJECT_NAME}}Harmony/` — 目标 HarmonyOS NEXT 工程
